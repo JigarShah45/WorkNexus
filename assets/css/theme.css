@@ -1,0 +1,125 @@
+/* ============================================================
+   THEME - Dark mode overrides
+   ============================================================ */
+
+html[data-theme="dark"] .navbar {
+    background: rgba(17, 24, 39, 0.92);
+}
+
+html[data-theme="dark"] .table-card,
+html[data-theme="dark"] .detail-card,
+html[data-theme="dark"] .card {
+    box-shadow: var(--shadow-md);
+}
+
+html[data-theme="dark"] .dataTables_wrapper .dataTables-toolbar {
+    background: linear-gradient(180deg, var(--surface-soft) 0%, var(--surface) 100%);
+}
+
+html[data-theme="dark"] .dataTables_wrapper .dataTables-filter input,
+html[data-theme="dark"] .dataTables_wrapper .dataTables-length select {
+    background-color: var(--surface-soft);
+}
+
+html[data-theme="dark"] .swal2-popup {
+    background: var(--surface);
+    color: var(--text);
+}
+
+html[data-theme="dark"] .swal2-title {
+    color: var(--text);
+}
+
+html[data-theme="dark"] .swal2-html-container {
+    color: var(--muted);
+}
+
+html[data-theme="dark"] .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .form-select:focus,
+html[data-theme="dark"] select:focus,
+html[data-theme="dark"] textarea:focus {
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+/* Bootstrap Table Theme Override */
+
+[data-theme="dark"] .table{
+
+    --bs-table-bg: var(--surface);
+
+    --bs-table-striped-bg: var(--surface-soft);
+
+    --bs-table-hover-bg: var(--primary-soft);
+
+    --bs-table-color: var(--text);
+
+    --bs-table-border-color: var(--border);
+
+    color:var(--text);
+
+}
+
+/* ============================================================
+   MODAL - Dark mode overrides (all modals)
+   ============================================================ */
+
+html[data-theme="dark"] .modal-content {
+    background-color: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+html[data-theme="dark"] .modal-header {
+    border-bottom-color: var(--border);
+}
+
+html[data-theme="dark"] .modal-header .modal-title {
+    color: var(--text);
+}
+
+html[data-theme="dark"] .modal-header .btn-close {
+    filter: invert(1);
+}
+
+html[data-theme="dark"] .modal-body {
+    color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .modal-body .form-label,
+html[data-theme="dark"] .modal-body label {
+    color: var(--text);
+}
+
+html[data-theme="dark"] .modal-body .form-control,
+html[data-theme="dark"] .modal-body .form-select,
+html[data-theme="dark"] .modal-body textarea {
+    background-color: var(--surface-soft);
+    color: var(--text);
+    border-color: var(--border);
+}
+
+html[data-theme="dark"] .modal-body .form-control::placeholder {
+    color: var(--muted);
+}
+
+html[data-theme="dark"] .modal-body .form-control:focus,
+html[data-theme="dark"] .modal-body .form-select:focus,
+html[data-theme="dark"] .modal-body textarea:focus {
+    background-color: var(--surface);
+    color: var(--text);
+    border-color: var(--primary);
+}
+
+html[data-theme="dark"] .modal-footer {
+    border-top-color: var(--border);
+}
+
+/* Dark mode SweetAlert confirm button fix */
+html[data-theme="dark"] .swal2-styled {
+    border: none;
+}

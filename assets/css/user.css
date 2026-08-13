@@ -1,0 +1,279 @@
+/* ============================================================
+   USER TABLE COLUMN BORDERS
+   ============================================================ */
+
+#userTable {
+    width: 100%;
+    border-collapse: collapse !important;
+}
+
+#userTable thead th {
+    border-right: 1px solid var(--border) !important;
+    border-bottom: 1px solid var(--border) !important;
+    background: var(--surface-soft);
+}
+
+#userTable tbody td {
+    border-right: 1px solid var(--border) !important;
+    border-bottom: 1px solid var(--border) !important;
+    background: var(--surface);
+}
+
+#userTable thead th:last-child,
+#userTable tbody td:last-child {
+    border-right: none !important;
+}
+
+#userTable tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+
+/* ============================================================
+   FEATURE ACCESS PERMISSIONS — scoped to .permissions-section
+   
+   Root conflict resolved:
+   - Bootstrap's bg-light on .card-header applied hardcoded #f8f9fa
+   - Bootstrap's .card used --bs-body-* vars not mapped to app theme
+   - Bootstrap's .form-check-label used default body color
+   
+   Fix: replaced .card.bg-light with themed .perm-group classes
+   ============================================================ */
+
+
+/* ---- Section Title ("Feature Access Permissions") ---- */
+
+.perm-section-title {
+    color: var(--text);
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-light);
+    margin-bottom: 16px;
+}
+
+.perm-section-title i {
+    color: var(--primary);
+}
+
+
+/* ---- Permission Group Panel ---- */
+
+.permissions-section {
+    margin-top: 8px;
+}
+
+.perm-group {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 14px;
+    transition: border-color var(--transition);
+}
+
+.perm-group:hover {
+    border-color: var(--border);
+}
+
+
+/* ---- Group Header ("Data Access", "Page Access", "Security") ---- */
+
+.perm-group-header {
+    padding: 10px 16px;
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text);
+}
+
+.perm-group-header h6 {
+    color: var(--text);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0;
+}
+
+
+/* ---- Group Body ---- */
+
+.perm-group-body {
+    padding: 14px 16px 10px;
+}
+
+
+/* ---- Permission Grid (CSS Grid, not Bootstrap row) ---- */
+
+.perm-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px 16px;
+}
+
+
+/* ---- Individual Permission Item ---- */
+
+.perm-item {
+    display: flex;
+    align-items: center;
+}
+
+
+/* ---- Checkbox + Label Unit ---- */
+
+.perm-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 6px 0;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+    border-radius: 6px;
+}
+
+.perm-check:hover {
+    background: var(--primary-soft);
+}
+
+.perm-check .form-check-input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    flex-shrink: 0;
+
+    background-color: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+}
+
+.perm-check .form-check-input::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: auto;
+    border-radius: 2px;
+    background: transparent;
+    transition: background 0.15s ease;
+}
+
+.perm-check .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.perm-check .form-check-input:checked::before {
+    background: #fff;
+    /* Checkmark via SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M5.5 10.5l3 3 6-6'/%3E%3C/svg%3E");
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.perm-check .form-check-input:focus {
+    box-shadow: 0 0 0 3px var(--primary-soft);
+    border-color: var(--primary);
+    outline: none;
+}
+
+.perm-check .form-check-input:indeterminate {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.perm-check .form-check-input:indeterminate::before {
+    background: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' d='M5 10h10'/%3E%3C/svg%3E");
+    background-size: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.perm-check .form-check-label {
+    color: var(--text);
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1.3;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+
+/* ============================================================
+   DARK THEME OVERRIDES
+   ============================================================ */
+
+[data-theme="dark"] .perm-group {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .perm-group-header {
+    background: var(--surface-soft);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .perm-group-header h6 {
+    color: var(--text);
+}
+
+[data-theme="dark"] .perm-check .form-check-input {
+    background-color: var(--surface-soft);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .perm-check .form-check-input:checked {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+[data-theme="dark"] .perm-check .form-check-label {
+    color: var(--text);
+}
+
+[data-theme="dark"] .perm-check:hover {
+    background: var(--primary-soft);
+}
+
+[data-theme="dark"] .perm-section-title {
+    color: var(--text);
+}
+
+
+/* ============================================================
+   RESPONSIVE — TABLET (2 columns)
+   ============================================================ */
+
+@media (max-width: 991px) {
+    .perm-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* ============================================================
+   RESPONSIVE — MOBILE (1 column)
+   ============================================================ */
+
+@media (max-width: 575px) {
+    .perm-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .perm-group-body {
+        padding: 10px 12px 8px;
+    }
+
+    .perm-group-header {
+        padding: 8px 12px;
+    }
+}

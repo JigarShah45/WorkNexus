@@ -1,0 +1,586 @@
+/* ============================================================
+   AUDIT TRAIL - Page-specific styles
+   ============================================================ */
+
+/* ---- Page Wrapper ---- */
+.audit-trail-page {
+    padding-bottom: 2rem;
+}
+
+/* ---- Page Header ---- */
+.audit-trail-page .page-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.audit-trail-page .page-header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--primary-soft);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.audit-trail-page .page-header h2 {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.audit-trail-page .page-header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.audit-trail-page .page-header-actions .btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* ---- Table Card ---- */
+.audit-trail-page .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.audit-trail-page .table-card .card-body {
+    padding: 20px;
+}
+
+/* ---- Filter Section ---- */
+.audit-trail-page .filter-form {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.audit-trail-page .filter-form .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+.audit-trail-page .filter-form .form-select,
+.audit-trail-page .filter-form .form-control {
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.audit-trail-page .filter-form .form-select:focus,
+.audit-trail-page .filter-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.audit-trail-page .filter-form .btn-search {
+    height: 42px;
+    border-radius: 10px;
+    padding: 0 18px;
+}
+
+/* ---- Table Wrapper ---- */
+.audit-trail-page .audit-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+/* ---- DataTable ---- */
+.audit-trail-page #auditTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    min-width: 0;
+}
+
+.audit-trail-page #auditTable thead th {
+    background: var(--surface-soft);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--border);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.audit-trail-page #auditTable thead th:last-child {
+    border-right: none;
+}
+
+.audit-trail-page #auditTable tbody td {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border-light);
+    border-right: 1px solid var(--border-light);
+    vertical-align: middle;
+    background: var(--surface);
+}
+
+.audit-trail-page #auditTable tbody td:last-child {
+    border-right: none;
+}
+
+.audit-trail-page #auditTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.audit-trail-page #auditTable tbody tr:hover td {
+    background: var(--primary-soft);
+}
+
+/* ---- Column Widths ---- */
+.audit-trail-page #auditTable th:nth-child(1),
+.audit-trail-page #auditTable td:nth-child(1) {
+    /* ID */
+    width: 55px;
+    min-width: 50px;
+    max-width: 60px;
+    text-align: center;
+}
+
+.audit-trail-page #auditTable th:nth-child(2),
+.audit-trail-page #auditTable td:nth-child(2) {
+    /* User */
+    width: 140px;
+    min-width: 120px;
+    max-width: 160px;
+}
+
+.audit-trail-page #auditTable th:nth-child(3),
+.audit-trail-page #auditTable td:nth-child(3) {
+    /* Action */
+    width: 85px;
+    min-width: 75px;
+    max-width: 95px;
+    text-align: center;
+}
+
+.audit-trail-page #auditTable th:nth-child(4),
+.audit-trail-page #auditTable td:nth-child(4) {
+    /* Table */
+    width: 120px;
+    min-width: 90px;
+    max-width: 140px;
+}
+
+.audit-trail-page #auditTable th:nth-child(5),
+.audit-trail-page #auditTable td:nth-child(5) {
+    /* Record ID */
+    width: 85px;
+    min-width: 70px;
+    max-width: 95px;
+    text-align: center;
+}
+
+.audit-trail-page #auditTable th:nth-child(6),
+.audit-trail-page #auditTable td:nth-child(6) {
+    /* Old Values */
+    width: 150px;
+    min-width: 100px;
+    max-width: 170px;
+}
+
+.audit-trail-page #auditTable th:nth-child(7),
+.audit-trail-page #auditTable td:nth-child(7) {
+    /* New Values */
+    width: 150px;
+    min-width: 100px;
+    max-width: 170px;
+}
+
+.audit-trail-page #auditTable th:nth-child(8),
+.audit-trail-page #auditTable td:nth-child(8) {
+    /* IP Address */
+    width: 95px;
+    min-width: 75px;
+    max-width: 110px;
+}
+
+.audit-trail-page #auditTable th:nth-child(9),
+.audit-trail-page #auditTable td:nth-child(9) {
+    /* Timestamp */
+    width: 175px;
+    min-width: 160px;
+    max-width: 190px;
+    white-space: nowrap;
+}
+
+/* ---- Cell Content Styles ---- */
+
+/* ID column */
+.audit-trail-page .audit-id {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* User column */
+.audit-trail-page .audit-user {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.audit-trail-page .audit-user-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.audit-trail-page .audit-user-employee {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Action badges */
+.audit-trail-page .audit-action-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.audit-trail-page .audit-action-badge.action-create {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+}
+
+.audit-trail-page .audit-action-badge.action-update {
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+}
+
+.audit-trail-page .audit-action-badge.action-delete {
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
+}
+
+/* Table name badge */
+.audit-trail-page .audit-table-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* Record ID */
+.audit-trail-page .audit-record-id {
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+}
+
+/* JSON value preview (Old/New Values) */
+.audit-trail-page .audit-value-preview {
+    display: block;
+    font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.audit-trail-page .audit-value-preview.value-empty {
+    color: var(--text-light);
+    font-style: italic;
+    font-family: inherit;
+}
+
+/* IP Address */
+.audit-trail-page .audit-ip {
+    font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* Timestamp */
+.audit-trail-page .audit-timestamp {
+    white-space: nowrap;
+    font-size: 12px;
+    color: var(--text);
+}
+
+/* ---- DataTables Overrides (scoped) ---- */
+.audit-trail-page .dataTables_wrapper {
+    padding: 0;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-toolbar {
+    padding: 0 0 16px 0;
+    border-bottom: none;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-table-wrapper {
+    padding: 0;
+    overflow: visible;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-footer {
+    padding: 16px 0 0 0;
+    border-top: 1px solid var(--border-light);
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-filter input {
+    width: 220px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 0 12px;
+    height: 42px;
+    font-size: 13px;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+    outline: none;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-length select {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    height: 42px;
+    font-size: 13px;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables-info {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    min-width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--primary-soft) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--primary) !important;
+    color: #fff !important;
+    border-color: var(--primary) !important;
+}
+
+.audit-trail-page .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* ============================================================
+   DARK THEME
+   ============================================================ */
+[data-theme="dark"] .audit-trail-page .table-card {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .audit-trail-page #auditTable thead th {
+    background: var(--surface-soft);
+}
+
+[data-theme="dark"] .audit-trail-page #auditTable tbody td {
+    background: var(--surface);
+}
+
+[data-theme="dark"] .audit-trail-page #auditTable tbody tr:hover td {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="dark"] .audit-trail-page .audit-value-preview {
+    color: var(--muted);
+}
+
+[data-theme="dark"] .audit-trail-page .audit-action-badge.action-create {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+}
+
+[data-theme="dark"] .audit-trail-page .audit-action-badge.action-update {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+[data-theme="dark"] .audit-trail-page .audit-action-badge.action-delete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+[data-theme="dark"] .audit-trail-page .audit-table-badge {
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
+    .audit-trail-page .table-card .card-body {
+        padding: 16px;
+    }
+
+    .audit-trail-page #auditTable th:nth-child(5),
+    .audit-trail-page #auditTable td:nth-child(5) {
+        /* Record ID */
+        min-width: 65px;
+    }
+
+    .audit-trail-page #auditTable th:nth-child(6),
+    .audit-trail-page #auditTable td:nth-child(6),
+    .audit-trail-page #auditTable th:nth-child(7),
+    .audit-trail-page #auditTable td:nth-child(7) {
+        min-width: 90px;
+        max-width: 140px;
+    }
+
+    .audit-trail-page #auditTable th:nth-child(9),
+    .audit-trail-page #auditTable td:nth-child(9) {
+        /* Timestamp */
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .audit-trail-page .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .audit-trail-page .page-header-actions {
+        width: 100%;
+    }
+
+    .audit-trail-page .page-header-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .audit-trail-page .table-card .card-body {
+        padding: 12px;
+    }
+
+    .audit-trail-page .filter-form .col-md-3,
+    .audit-trail-page .filter-form .col-md-2,
+    .audit-trail-page .filter-form .col-md-1 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .audit-trail-page .filter-form .btn-search {
+        width: 100%;
+    }
+
+    .audit-trail-page .audit-table-wrapper {
+        margin: 0 -12px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .audit-trail-page #auditTable {
+        min-width: 800px;
+    }
+
+    .audit-trail-page .dataTables_wrapper .dataTables-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .audit-trail-page .dataTables_wrapper .dataTables-filter input {
+        width: 100%;
+    }
+
+    .audit-trail-page .dataTables_wrapper .dataTables-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .audit-trail-page .table-card .card-body {
+        padding: 10px;
+    }
+
+    .audit-trail-page #auditTable {
+        min-width: 850px;
+    }
+
+    .audit-trail-page #auditTable thead th {
+        padding: 10px 10px;
+        font-size: 10px;
+    }
+
+    .audit-trail-page #auditTable tbody td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}

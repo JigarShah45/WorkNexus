@@ -1,0 +1,82 @@
+/* ============================================================
+   REPORTS / LEAVE / MEETINGS / HIKES 
+   Shared styles for report-like pages
+   ============================================================ */
+
+.report-chart-container {
+    padding: var(--space-4);
+}
+
+.report-chart-container h6 {
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+}
+
+.report-tile {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 100%;
+    padding: 24px;
+}
+
+.report-tile .btn {
+    align-self: flex-start;
+    margin-top: auto;
+}
+
+.report-meta {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.report-summary-card {
+    min-height: 120px;
+}
+
+.report-summary-card .card-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    width: 100%;
+}
+
+.report-summary-card h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.report-summary-card h4 {
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+.report-summary-card h5 {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.btn-review {
+    background: var(--primary-soft);
+    color: var(--primary);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+}
+
+.btn-review:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.stat-card.border-0.shadow-sm {
+    transition: all 0.2s ease;
+}
+
+.stat-card.border-0.shadow-sm:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+

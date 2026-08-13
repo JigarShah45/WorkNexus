@@ -1,0 +1,553 @@
+/* ============================================================
+   DATATABLE.CSS
+   Professional HRMS-style DataTable theme
+============================================================ */
+
+
+
+.dataTables_wrapper {
+    width: 100%;
+    color: var(--text);
+    padding: 0;
+}
+
+.dataTables_wrapper .dataTables-toolbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+    padding:1.25rem 1.5rem;
+
+    border-bottom:none;
+
+    background:transparent;
+}
+
+.dataTables_wrapper .dataTables-length,
+.dataTables_wrapper .dataTables-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 0;
+}
+
+.dataTables_wrapper .dataTables-length label,
+.dataTables_wrapper .dataTables-filter label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.dataTables_wrapper .dataTables-filter input {
+    width: 260px;
+    min-height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    padding: 0 1rem;
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.dataTables_wrapper .dataTables-filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+.dataTables_wrapper .dataTables-filter input::placeholder {
+    color: var(--text-light);
+}
+
+.dataTables_wrapper .dataTables-length select {
+    width: 92px;
+    min-height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    padding: 0 2.25rem 0 0.875rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath fill='%2364748b' d='M7 9.5a.6.6 0 0 1-.424-.176l-3.9-3.9a.6.6 0 1 1 .848-.848L7 8.152l3.476-3.476a.6.6 0 1 1 .848.848l-3.9 3.9A.6.6 0 0 1 7 9.5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.8rem center;
+    background-size: 14px;
+}
+
+.table-card,
+.report-table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.table-card .card-body,
+.report-table-card .card-body {
+    padding: 0;
+}
+
+.dataTables_wrapper .dataTables-table-wrapper {
+    padding: 0 1.5rem 0;
+    overflow-x: auto; /* scroll instead of squeezing columns when space is tight */
+}
+
+table.dataTable {
+    width: 100% !important;
+    min-width: 1020px; /* guarantees every column keeps its needed room at 100% zoom */
+    border-spacing: 0;
+    margin: 0;
+    border: 1px solid var(--border);
+    table-layout: auto; /* size columns to content instead of rigid % locks */
+    border-collapse: collapse;
+}
+
+table.dataTable thead {
+    background: var(--surface-soft);
+}
+
+table.dataTable thead th {
+    padding: 0.95rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+table.dataTable thead th:last-child,
+table.dataTable tbody td:last-child {
+    border-right: none;
+}
+
+table.dataTable tbody td {
+    padding: 1rem 1rem;
+    font-size: 0.95rem;
+    color: var(--text);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    vertical-align: middle;
+    transition: background-color var(--transition);
+}
+
+table.dataTable tbody tr:nth-child(even) td {
+    background: var(--surface-soft);
+}
+
+table.dataTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+table.dataTable tbody tr:hover td {
+    background: var(--primary-soft);
+}
+
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc:after {
+    font-size: 10px;
+    opacity: 0.5;
+}
+
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_desc:after {
+    color: var(--primary);
+    opacity: 1;
+}
+
+.dataTables_wrapper .dataTables-footer {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+    padding:0.85rem 1.5rem 1.25rem;
+    margin:0;
+
+    border-top:none;
+}
+
+.dataTables_info {
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+    color: var(--muted);
+    font-size: 0.875rem;
+}
+
+.dataTables_paginate {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.dataTables_paginate .paginate_button {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-weight: 600;
+    transition: all var(--transition);
+}
+
+.dataTables_paginate .paginate_button:hover,
+.dataTables_paginate .paginate_button:focus {
+    background: var(--primary-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.dataTables_paginate .paginate_button.current {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+@media (max-width: 767.98px) {
+    .dataTables_wrapper .dataTables-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .dataTables_wrapper .dataTables-filter {
+        width: 100%;
+    }
+
+    .dataTables_wrapper .dataTables-filter input {
+        width: 100%;
+    }
+
+    .dataTables_wrapper .dataTables-footer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .dataTables_wrapper .dataTables-table-wrapper {
+        padding: 0 1rem 1rem;
+    }
+}
+
+/*==============================
+    Pagination
+==============================*/
+
+.dataTables_paginate{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    align-items:center;
+
+    gap:8px;
+
+
+}
+
+.dataTables_paginate .paginate_button{
+
+    min-width:38px;
+
+    height:38px;
+
+    display:flex!important;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border:1px solid var(--border)!important;
+
+    background:var(--surface)!important;
+
+    color:var(--text)!important;
+
+    border-radius:10px!important;
+
+    transition:.25s;
+
+}
+
+.dataTables_paginate .paginate_button:hover{
+
+    background:var(--primary-soft)!important;
+
+    border-color:var(--primary)!important;
+
+    color:var(--primary)!important;
+
+}
+
+.dataTables_paginate .paginate_button.current{
+
+    background:var(--primary)!important;
+
+    color:#fff!important;
+
+    border-color:var(--primary)!important;
+
+}
+
+.dataTables_paginate .paginate_button.disabled{
+
+    opacity:.45;
+
+}
+
+/*==============================
+    Export Buttons
+==============================*/
+
+.dt-buttons{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+}
+
+.dt-buttons .btn{
+
+    border-radius:10px;
+
+}
+
+/*==============================
+    Dark Theme
+==============================*/
+
+[data-theme="dark"] table.dataTable{
+
+    border-color:var(--border);
+
+}
+
+[data-theme="dark"] table.dataTable thead th{
+
+    background:var(--surface-soft);
+
+}
+
+[data-theme="dark"] table.dataTable tbody td{
+
+    background:var(--surface);
+
+}
+
+[data-theme="dark"] table.dataTable tbody tr:hover td{
+
+    background:rgba(59,130,246,.15);
+
+}
+
+/* Hikes Table Column Widths */
+#hikesTable th:nth-child(1),
+#hikesTable td:nth-child(1){
+    min-width:50px;
+}
+
+#hikesTable th:nth-child(2),
+#hikesTable td:nth-child(2){
+    min-width:180px;
+}
+
+#hikesTable th:nth-child(3),
+#hikesTable td:nth-child(3){
+    min-width:140px;
+}
+
+#hikesTable th:nth-child(4),
+#hikesTable td:nth-child(4){
+    min-width:130px;
+}
+
+#hikesTable th:nth-child(5),
+#hikesTable td:nth-child(5){
+    min-width:140px;
+}
+
+/* Employee Table Column Widths
+   table-layout:auto above means these are now minimum-content guides,
+   not hard locks, so long content (phone numbers, emails) won't get clipped. */
+
+#employeeTable th:nth-child(1),
+#employeeTable td:nth-child(1){
+    min-width:100px;
+}
+
+#employeeTable th:nth-child(2),
+#employeeTable td:nth-child(2){
+    min-width:140px;
+}
+
+#employeeTable th:nth-child(3),
+#employeeTable td:nth-child(3){
+    min-width:190px;
+}
+
+#employeeTable th:nth-child(4),
+#employeeTable td:nth-child(4){
+    min-width:120px;
+}
+
+#employeeTable th:nth-child(5),
+#employeeTable td:nth-child(5){
+    min-width:150px;
+}
+
+#employeeTable th:nth-child(6),
+#employeeTable td:nth-child(6){
+    min-width:95px;
+}
+
+#employeeTable th:nth-child(7),
+#employeeTable td:nth-child(7){
+    min-width:110px;
+}
+
+#employeeTable th:nth-child(8),
+#employeeTable td:nth-child(8){
+    min-width:160px;
+}
+
+/* Only truncate columns where content can genuinely run long
+   (name, email). Everything else — ID, phone, salary, date —
+   must always render in full. max-width matches the min-width
+   above so text truncates only once it exceeds that column's
+   own generous allowance, not the moment the table feels tight. */
+#employeeTable td.employee-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 140px;
+}
+
+#employeeTable td.employee-email {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 190px;
+}
+
+#employeeTable td.employee-id,
+#employeeTable td.employee-phone,
+#employeeTable td.employee-salary,
+#employeeTable td.joined-date {
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+
+/*==============================
+    Responsive
+ ==============================*/
+
+@media(max-width:1199.98px){
+    table.dataTable{
+        min-width:900px;
+    }
+}
+
+@media(max-width:767.98px){
+    .dataTables_wrapper .dataTables-toolbar{
+        padding:14px 16px;
+    }
+    .dataTables_wrapper .dataTables-table-wrapper{
+        padding:0 0 0 16px;
+        margin:0 -16px 0 0;
+        padding-right:16px;
+        -webkit-overflow-scrolling:touch;
+    }
+    .dataTables_wrapper .dataTables-footer{
+        padding:12px 16px;
+    }
+    .table-card,
+    .report-table-card{
+        border-radius:14px;
+        overflow-x:auto;
+        -webkit-overflow-scrolling:touch;
+    }
+    table.dataTable{
+        min-width:800px;
+    }
+    table.dataTable thead th{
+        padding:0.75rem 0.75rem;
+        font-size:0.78rem;
+    }
+    table.dataTable tbody td{
+        padding:0.75rem;
+        font-size:0.85rem;
+    }
+    .dataTables_filter{
+        justify-content:flex-start;
+    }
+    .dataTables_filter input{
+        width:100%;
+    }
+    .dataTables_length{
+        margin-bottom:12px;
+    }
+    .dataTables_paginate{
+        justify-content:center;
+        margin-top:12px;
+    }
+    .dataTables_info{
+        text-align:center;
+    }
+    .dt-buttons{
+        gap:6px;
+    }
+    .dt-buttons .btn{
+        padding:4px 10px;
+        font-size:12px;
+    }
+}
+
+@media(max-width:575.98px){
+    table.dataTable{
+        min-width:700px;
+    }
+    .dataTables_wrapper .dataTables-toolbar{
+        padding:12px;
+        gap:8px;
+    }
+    .dataTables_wrapper .dataTables-footer{
+        padding:10px 12px;
+        gap:8px;
+    }
+    .dataTables_wrapper .dataTables-table-wrapper{
+        padding:0 12px;
+    }
+}

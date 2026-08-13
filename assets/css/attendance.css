@@ -1,0 +1,473 @@
+/* ==========================================================
+   ATTENDANCE MODULE
+   Employee Management System
+========================================================== */
+
+
+/* ==========================================================
+   FILTER CARD
+========================================================== */
+
+.attendance-filter-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    box-shadow:var(--shadow-sm);
+    overflow:hidden;
+    margin-bottom:24px;
+}
+
+.attendance-filter-card .card-header{
+    background:var(--surface-soft);
+    border-bottom:1px solid var(--border);
+    padding:18px 24px;
+}
+
+.attendance-filter-card .card-header h5{
+    margin:0;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--text);
+}
+
+.attendance-filter-card .card-body{
+    padding:24px;
+}
+
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.attendance-filter-card .form-label{
+    font-size:.875rem;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:8px;
+}
+
+.attendance-filter-card .form-select,
+.attendance-filter-card .form-control{
+
+    height:46px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:var(--surface);
+
+    color:var(--text);
+
+    transition:.25s;
+
+}
+
+.attendance-filter-card .form-select:focus,
+.attendance-filter-card .form-control:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 3px var(--primary-soft);
+
+}
+
+.attendance-filter-card .btn{
+
+    min-width:110px;
+
+}
+
+
+/* ==========================================================
+   ASSIGNED SHIFT CARD
+========================================================== */
+
+.assigned-shift-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.assigned-shift-card .card-header{
+
+    background:var(--surface-soft);
+
+    border-bottom:1px solid var(--border);
+
+    padding:18px 24px;
+
+}
+
+.assigned-shift-card .card-body{
+
+    padding:22px;
+
+}
+
+.assigned-shift-card .badge{
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================================
+   ATTENDANCE TABLE CARD
+========================================================== */
+
+.attendance-table-card{
+
+    background:var(--surface);
+
+    border:1px solid var(--border);
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.attendance-table-card .card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 24px;
+
+    background:var(--surface-soft);
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.attendance-table-card .card-header h5{
+
+    margin:0;
+
+    font-weight:700;
+
+    color:var(--text);
+
+}
+
+
+/* ==========================================================
+   TABLE
+========================================================== */
+
+#attendanceTable,
+#manageAttendanceTable{
+
+    width:100%;
+
+}
+
+#attendanceTable thead th,
+#manageAttendanceTable thead th{
+
+    background:var(--surface-soft);
+
+    color:var(--text);
+
+    font-size:.78rem;
+
+    text-transform:uppercase;
+
+    font-weight:700;
+
+    letter-spacing:.04em;
+
+}
+
+#attendanceTable tbody td,
+#manageAttendanceTable tbody td{
+
+    color:var(--text);
+
+    vertical-align:middle;
+
+}
+
+#attendanceTable tbody tr:hover td,
+#manageAttendanceTable tbody tr:hover td{
+
+    background:var(--primary-soft);
+
+}
+
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.shift-badge{
+
+    border-radius:999px;
+
+    padding:6px 14px;
+
+    font-weight:600;
+
+}
+
+.status-present{
+
+    background:#16a34a;
+
+    color:#fff;
+
+}
+
+.status-halfday{
+
+    background:#f59e0b;
+
+    color:#fff;
+
+}
+
+.status-late{
+
+    background:#7c3aed;
+
+    color:#fff;
+
+}
+
+.status-absent{
+
+    background:#dc2626;
+
+    color:#fff;
+
+}
+
+
+/* ==========================================================
+   TOTAL RECORDS
+========================================================== */
+
+.total-records{
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    font-size:.75rem;
+
+    font-weight:600;
+
+}
+
+
+/* ==========================================================
+   DATATABLE OVERRIDES
+========================================================== */
+
+#attendanceTable_wrapper,
+#manageAttendanceTable_wrapper{
+
+    padding:0;
+
+}
+
+#attendanceTable_wrapper .dataTables-toolbar,
+#manageAttendanceTable_wrapper .dataTables-toolbar{
+
+    padding:18px 24px;
+
+}
+
+#attendanceTable_wrapper .dataTables-footer,
+#manageAttendanceTable_wrapper .dataTables-footer{
+
+    padding:18px 24px;
+
+}
+
+
+/* ==========================================================
+   EMPTY TABLE
+========================================================== */
+
+.dataTables_empty{
+
+    text-align:center;
+
+    color:var(--muted);
+
+    padding:40px!important;
+
+}
+
+
+/* ==========================================================
+   DARK MODE
+========================================================== */
+
+[data-theme="dark"] .attendance-filter-card,
+[data-theme="dark"] .attendance-table-card,
+[data-theme="dark"] .assigned-shift-card{
+
+    background:var(--surface);
+
+    border-color:var(--border);
+
+}
+
+[data-theme="dark"] .attendance-filter-card .card-header,
+[data-theme="dark"] .attendance-table-card .card-header,
+[data-theme="dark"] .assigned-shift-card .card-header{
+
+    background:var(--surface-soft);
+
+}
+
+[data-theme="dark"] .attendance-filter-card .form-select,
+[data-theme="dark"] .attendance-filter-card .form-control{
+
+    background:var(--surface);
+
+    color:var(--text);
+
+}
+
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:992px){
+    .attendance-filter-card .card-body{
+        padding:20px;
+    }
+}
+
+@media(max-width:768px){
+    .attendance-filter-card .card-header{
+        padding:14px 18px;
+    }
+    .attendance-filter-card .card-body{
+        padding:16px;
+    }
+    .attendance-filter-card .btn{
+        width:100%;
+    }
+    .attendance-table-card{
+        overflow-x:auto;
+    }
+    .attendance-table-card .card-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+        padding:14px 18px;
+    }
+    #attendanceTable,
+    #manageAttendanceTable{
+        min-width:950px;
+    }
+    #attendanceTable_wrapper .dataTables-toolbar,
+    #manageAttendanceTable_wrapper .dataTables-toolbar{
+        padding:14px 18px;
+    }
+    #attendanceTable_wrapper .dataTables-footer,
+    #manageAttendanceTable_wrapper .dataTables-footer{
+        padding:14px 18px;
+    }
+}
+
+@media(max-width:575.98px){
+    .attendance-filter-card{
+        border-radius:14px;
+        margin-bottom:16px;
+    }
+    .attendance-table-card{
+        border-radius:14px;
+    }
+}
+
+/* ==========================================================
+   ATTENDANCE TABLE BORDERS
+========================================================== */
+
+#attendanceTable,
+#manageAttendanceTable{
+    width:100%;
+    border-collapse:collapse !important;
+    border:1px solid var(--border);
+}
+
+#attendanceTable thead th,
+#manageAttendanceTable thead th{
+
+    background:var(--surface-soft);
+
+    color:var(--text);
+
+    font-weight:700;
+
+    border-right:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    padding:14px 16px;
+
+    white-space:nowrap;
+
+}
+
+#attendanceTable tbody td,
+#manageAttendanceTable tbody td{
+
+    border-right:1px solid var(--border);
+
+    border-bottom:1px solid var(--border);
+
+    padding:14px 16px;
+
+    color:var(--text);
+
+    vertical-align:middle;
+
+}
+
+#attendanceTable thead th:last-child,
+#attendanceTable tbody td:last-child,
+#manageAttendanceTable thead th:last-child,
+#manageAttendanceTable tbody td:last-child{
+
+    border-right:none;
+
+}
+
+#attendanceTable tbody tr:last-child td,
+#manageAttendanceTable tbody tr:last-child td{
+
+    border-bottom:none;
+
+}
+
+#attendanceTable tbody tr:hover td,
+#manageAttendanceTable tbody tr:hover td{
+
+    background:var(--primary-soft);
+
+}

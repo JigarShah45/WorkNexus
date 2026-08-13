@@ -1,0 +1,1545 @@
+/* ============================================================
+   SALARY.CSS - Employee Salary Page Styles
+   Uses CSS variables from variables.css
+   ============================================================ */
+
+/* -----------------------------
+   Salary Card (shared)
+------------------------------ */
+
+.salary-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.salary-card:hover {
+    box-shadow: var(--shadow);
+}
+
+.salary-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-6);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.salary-card-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.salary-card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.salary-card-body {
+    padding: var(--space-6);
+}
+
+/* -----------------------------
+   Employee Detail Grid
+------------------------------ */
+
+.employee-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+}
+
+.employee-detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.employee-detail-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.employee-detail-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 2px;
+}
+
+.employee-detail-value {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.employee-detail-value.text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* -----------------------------
+   Salary Stats Grid
+------------------------------ */
+
+.salary-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+}
+
+.salary-stats-grid.salary-stats-grid-wide {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 720px;
+}
+
+.salary-stats-grid.salary-stats-grid-wide .salary-stat-card.featured {
+    grid-column: 1 / -1;
+}
+
+.salary-card.salary-card-centered {
+    max-width: 780px;
+    margin: 0 auto;
+}
+
+.salary-stat-card {
+    background: var(--surface-soft);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.salary-stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+.salary-stat-card.featured {
+    grid-column: 1 / -1;
+    background: var(--primary-soft);
+    border-color: var(--primary-200);
+}
+
+.salary-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    margin-bottom: var(--space-3);
+}
+
+.salary-stat-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--muted);
+    margin-bottom: var(--space-1);
+}
+
+.salary-stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.salary-stat-card.featured .salary-stat-value {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.salary-stat-value.salary-highlight {
+    color: var(--success);
+}
+
+.salary-stat-value.hike-highlight {
+    color: var(--primary);
+}
+
+/* -----------------------------
+   Empty State
+------------------------------ */
+
+.salary-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-10) var(--space-6);
+}
+
+.salary-empty-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-xl);
+    background: var(--surface-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--muted);
+    margin-bottom: var(--space-5);
+}
+
+.salary-empty-state h5 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: var(--space-2);
+}
+
+.salary-empty-state p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin: 0;
+    max-width: 280px;
+    line-height: 1.6;
+}
+
+/* -----------------------------
+   Background Soft Helpers
+------------------------------ */
+
+.bg-primary-soft {
+    background: var(--primary-soft);
+}
+
+.bg-success-soft {
+    background: var(--success-soft);
+}
+
+.bg-warning-soft {
+    background: var(--warning-soft);
+}
+
+.bg-info-soft {
+    background: var(--info-soft);
+}
+
+/* -----------------------------
+   Status Badge in Employee Card
+------------------------------ */
+
+.salary-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.salary-status-badge.active {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.salary-status-badge.inactive {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+/* -----------------------------
+   Responsive
+------------------------------ */
+
+@media (max-width: 991.98px) {
+    .employee-detail-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .salary-stats-grid.salary-stats-grid-wide {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .employee-detail-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .salary-stats-grid,
+    .salary-stats-grid.salary-stats-grid-wide {
+        grid-template-columns: 1fr;
+    }
+
+    .salary-stat-card.featured {
+        grid-column: auto;
+    }
+
+    .salary-stat-value {
+        font-size: 1.3rem;
+    }
+
+    .salary-stat-card.featured .salary-stat-value {
+        font-size: 1.6rem;
+    }
+
+    .salary-card-body {
+        padding: var(--space-4);
+    }
+
+    .salary-empty-state {
+        padding: var(--space-8) var(--space-4);
+    }
+}
+
+@media (max-width: 575.98px) {
+    .salary-card-header {
+        padding: var(--space-4) var(--space-5);
+    }
+
+    .employee-detail-item {
+        gap: var(--space-2);
+    }
+
+    .employee-detail-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 0.85rem;
+    }
+}
+
+/* -----------------------------
+   Dark Theme Overrides
+------------------------------ */
+
+[data-theme="dark"] .salary-stat-card {
+    background: var(--surface-soft);
+}
+
+[data-theme="dark"] .salary-stat-card.featured {
+    background: var(--primary-soft);
+}
+
+[data-theme="dark"] .salary-empty-icon {
+    background: var(--surface-muted);
+}
+
+/* ============================================================
+   SALARY COMPENSATION MODULE - HR & Admin Views
+   ============================================================ */
+
+/* Container */
+.container {
+    max-width: 1140px;
+}
+
+/* Page Header with actions */
+.page-header {
+    margin-bottom: 1.25rem;
+}
+
+.page-header h2 {
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.page-header p {
+    font-size: 0.85rem;
+}
+
+.page-header-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
+}
+
+.page-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.page-header-actions .btn-sm {
+    height: 34px;
+    padding: 0 14px;
+    font-size: 0.8rem;
+}
+
+/* Warning soft background */
+.bg-warning-soft {
+    background: var(--warning-soft) !important;
+}
+
+/* Alert custom variants */
+.alert-info {
+    background: var(--info-soft, rgba(59, 130, 246, 0.1));
+    border-color: var(--info-200, rgba(59, 130, 246, 0.3));
+}
+
+/* Form card improvements */
+.form-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    height: auto;
+    min-height: 0;
+}
+
+.form-card .card-header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-light);
+    padding: 0.85rem 1.25rem;
+}
+
+.form-card .card-header h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.form-card .card-body {
+    padding: 0;
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+}
+
+/* ============================================================
+   ADMIN SALARY OVERVIEW - KPI CARDS (.salary-kpi-grid / .salary-kpi-card)
+   Scoped ONLY to the Admin "Salary & Compensation Overview" page.
+   The parent .salary-kpi-grid handles LAYOUT ONLY (grid positioning).
+   Each .salary-kpi-card is a fully self-contained, independent card.
+   ============================================================ */
+
+.salary-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.salary-kpi-card {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 168px;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.55rem;
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.salary-kpi-card .kpi-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    flex-shrink: 0;
+}
+
+.salary-kpi-card .kpi-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text);
+    letter-spacing: -0.02em;
+}
+
+.salary-kpi-card .kpi-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    line-height: 1.35;
+}
+
+/* Dark mode: keep cards visually separate */
+html[data-theme="dark"] .salary-kpi-card {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+/* Responsive: collapse the 5-card grid on smaller screens */
+@media (max-width: 1199.98px) {
+    .salary-kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .salary-kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.75rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .salary-kpi-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   ADMIN SALARY DATATABLE (#adminHikesTable) - READABLE LAYOUT
+   Scoped ONLY to the Admin "Recent Compensation Activity" table.
+   Keeps the app's DataTables toolbar (length left, search right)
+   while improving typography to a readable ~14-15px size.
+
+   IMPORTANT:
+   - The GLOBAL datatable.css rule `table.dataTable { min-width: 1020px }`
+     forces every table wider than the admin card on common desktop
+     widths (e.g. 1366px @ 125% scaling), creating a horizontal overflow.
+     This block scopes a min-width:0 override to THIS table only so it
+     fills its container instead of overflowing it.
+   - Horizontal scrolling is therefore NOT the desktop behavior. On
+     tablet/mobile the wrapper scrolls only when genuinely necessary.
+   ============================================================ */
+
+#adminHikesTable_wrapper {
+    width: 100%;
+}
+
+/* No internal vertical scrolling - let the page handle scroll */
+#adminHikesTable_wrapper .dataTables_scroll,
+#adminHikesTable_wrapper .dataTables_scrollBody,
+#adminHikesTable_wrapper .dataTables_scrollHead {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+}
+
+/* Core table sizing ------------------------------------------------ */
+/* Override the global min-width:1020px/900px so the table fits the card. */
+#adminHikesTable,
+#adminHikesTable_wrapper table.dataTable {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    table-layout: auto;
+    margin: 0;
+}
+
+/* DataTables generated table wrapper. Desktop = no scroll; the table takes
+   the full card width. Scroll is re-enabled for tablet/mobile below. */
+#adminHikesTable_wrapper .dataTables-table-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 1.5rem;
+    overflow-x: visible;
+}
+
+/* Compact, consistent header ---------------------------------------- */
+#adminHikesTable_wrapper table.dataTable thead th {
+    padding: 0.75rem 0.85rem;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.25;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Column width distribution (table-layout:auto uses these as hints).
+   Content-heavy columns get the most space; compact ones stay small. */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(1) { width: 15%; } /* Employee */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(2) { width: 20%; } /* Department */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(3) { width: 12%; } /* Previous Salary */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(4) { width: 12%; } /* New Salary */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(5) { width: 8%;  } /* Hike % */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(6) { width: 9%;  } /* Status */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(7) { width: 13%; } /* Processed By */
+#adminHikesTable_wrapper table.dataTable thead th:nth-child(8) { width: 11%; } /* Date */
+
+/* Readable, vertically-centered body cells --------------------------- */
+#adminHikesTable_wrapper table.dataTable tbody td {
+    padding: 0.65rem 0.85rem;
+    font-size: 0.9rem; /* ~14.4px, within the 14-15px target */
+    line-height: 1.4;
+    vertical-align: middle;
+    color: var(--text);
+}
+
+/* Employee, Department and Processed By may wrap naturally instead of
+   truncating - keeps every name/department fully readable. */
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(1),
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(2),
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(7) {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+/* Compact single-line columns: salaries, hike %, status, date --------- */
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(3),
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(4),
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(5),
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(6),
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(8) {
+    white-space: nowrap;
+}
+
+/* Status badge stays compact (no excessive column width) -------------- */
+#adminHikesTable_wrapper table.dataTable tbody td:nth-child(6) .badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Controls: rely on the app's .dataTables-toolbar (length left, search right).
+   Only tune typography + control sizing for the admin table. */
+#adminHikesTable_wrapper .dataTables_length label,
+#adminHikesTable_wrapper .dataTables_filter label {
+    font-size: 0.875rem;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+#adminHikesTable_wrapper .dataTables_length select {
+    height: 38px;
+    min-height: 38px;
+    font-size: 0.875rem;
+    padding-right: 2rem;
+}
+
+#adminHikesTable_wrapper .dataTables_filter input {
+    height: 38px;
+    min-height: 38px;
+    font-size: 0.875rem;
+    padding: 0 0.9rem;
+    width: 260px;
+}
+
+#adminHikesTable_wrapper .dataTables_info {
+    padding: 0;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+#adminHikesTable_wrapper .dataTables_paginate {
+    padding: 0;
+}
+
+#adminHikesTable_wrapper .dataTables_paginate .paginate_button {
+    min-width: 34px;
+    height: 34px;
+    font-size: 0.875rem;
+}
+
+/* Desktop (>=768px): table fits the card, no horizontal scroll --------- */
+@media (min-width: 768px) {
+    #adminHikesTable_wrapper .dataTables-table-wrapper {
+        overflow-x: visible;
+    }
+}
+
+/* Tablet / mobile: horizontal scroll only when genuinely necessary ----- */
+@media (max-width: 767.98px) {
+    #adminHikesTable_wrapper .dataTables-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 0;
+    }
+
+    /* Keep a sensible minimum so columns stay readable while scrolling. */
+    #adminHikesTable_wrapper table.dataTable {
+        min-width: 720px;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   HR SALARY DATATABLE (#hikesEmployeeTable) - COMPACT LAYOUT
+   Scoped ONLY to the HR Salary & Compensation table.
+   Matches the density/cleanliness of the User Management table.
+   ============================================================ */
+
+/* No internal vertical scrolling - let the page handle scroll */
+#hikesEmployeeTable_wrapper,
+#hikesEmployeeTable_wrapper .dataTables_scroll,
+#hikesEmployeeTable_wrapper .dataTables_scrollBody,
+#hikesEmployeeTable_wrapper .dataTables_scrollHead {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+}
+
+#hikesEmployeeTable {
+    width: 100% !important;
+    border-collapse: collapse;
+}
+
+/* Compact, consistent header */
+#hikesEmployeeTable_wrapper table.dataTable thead th {
+    padding: 0.6rem 0.85rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+/* Compact, vertically-centered body cells */
+#hikesEmployeeTable_wrapper table.dataTable tbody td {
+    padding: 0.55rem 0.85rem;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Row number column stays centered */
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(1) {
+    text-align: center;
+}
+
+/* Employee names stay on one line, truncating only when truly needed */
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(2) {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Departments stay on one line, truncating only when truly needed */
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(3) {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Salary / Last Hike / Status stay compact */
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(4),
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(5),
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(6) {
+    white-space: nowrap;
+}
+
+/* Last hike date line stays tight */
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(5) small {
+    display: inline-block;
+    font-size: 0.7rem;
+    line-height: 1.2;
+    margin-top: 1px;
+}
+
+/* Action column stays compact & centered */
+#hikesEmployeeTable_wrapper table.dataTable tbody td:nth-child(7) {
+    text-align: center;
+    white-space: nowrap;
+}
+
+#hikesEmployeeTable_wrapper table.dataTable tbody td .btn {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Controls sit flush to the table, immediately after the rows */
+#hikesEmployeeTable_wrapper .dataTables_length,
+#hikesEmployeeTable_wrapper .dataTables_filter {
+    padding-top: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+#hikesEmployeeTable_wrapper .dataTables_length {
+    padding-left: 1rem;
+}
+
+#hikesEmployeeTable_wrapper .dataTables_filter {
+    padding-right: 1rem;
+}
+
+#hikesEmployeeTable_wrapper .dataTables_info {
+    padding: 0.85rem 0 0.9rem 1rem;
+}
+
+#hikesEmployeeTable_wrapper .dataTables_paginate {
+    padding: 0.65rem 1rem 0.9rem 0;
+}
+
+/* HR Employee Salary Overview - controls row (Show entries LEFT, Search RIGHT).
+   Uses the shared DataTables toolbar component (flex, space-between). Scoped to
+   this HR page so no other DataTable is affected. */
+#hikesEmployeeTable_wrapper .dataTables-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+#hikesEmployeeTable_wrapper .dataTables-length,
+#hikesEmployeeTable_wrapper .dataTables-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 0;
+}
+
+/* Search input keeps its existing WorkNexus styling: dark-theme safe
+   (CSS variables), no stretch, positioned right via flex. */
+#hikesEmployeeTable_wrapper .dataTables-filter input {
+    width: 240px;
+    min-height: 38px;
+    font-size: 0.875rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+#hikesEmployeeTable_wrapper .dataTables-filter input::placeholder {
+    color: var(--text-light);
+}
+
+#hikesEmployeeTable_wrapper .dataTables-filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+    outline: none;
+}
+
+#hikesEmployeeTable_wrapper .dataTables-length select {
+    min-height: 38px;
+    font-size: 0.875rem;
+    padding-right: 2rem;
+}
+
+/* Tablet & mobile: allow the controls to stack vertically when space is tight. */
+@media (max-width: 767.98px) {
+    #hikesEmployeeTable_wrapper .dataTables-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    #hikesEmployeeTable_wrapper .dataTables-filter {
+        width: 100%;
+    }
+
+    #hikesEmployeeTable_wrapper .dataTables-filter input {
+        width: 100%;
+    }
+}
+
+/* Pending badge in header */
+.form-card .badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+}
+
+/* Table improvements */
+.table thead th {
+    background: var(--surface-soft);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    font-weight: 700;
+    padding: 0.7rem 0.85rem;
+    border-bottom: 2px solid var(--border-light);
+    white-space: nowrap;
+}
+
+.table tbody td {
+    padding: 0.7rem 0.85rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.82rem;
+}
+
+.table tbody tr:hover {
+    background: var(--surface-soft);
+}
+
+/* Dark theme adjustments */
+[data-theme="dark"] .form-card {
+    background: var(--surface);
+    border-color: var(--border-light);
+}
+
+[data-theme="dark"] .form-card .card-header {
+    background: var(--surface);
+    border-color: var(--border-light);
+}
+
+[data-theme="dark"] .table thead th {
+    background: var(--surface-soft);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start !important;
+    }
+
+    .page-header-actions {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .form-card .card-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .form-card .card-body {
+        padding: 1rem;
+    }
+}
+
+/* ============================================================
+   DATATABLE CONTROLS
+   ============================================================ */
+
+.dataTables_wrapper .dataTables-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+}
+
+.dataTables_length,
+.dataTables_filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.dataTables_length label {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.dataTables_length select {
+    height: 34px;
+    min-width: 60px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    font-size: 0.82rem;
+    padding: 0 0.5rem;
+    padding-right: 1.5rem;
+    cursor: pointer;
+}
+
+.dataTables_filter label {
+    margin: 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.dataTables_filter input {
+    height: 34px;
+    width: 200px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    font-size: 0.82rem;
+    padding: 0 0.75rem;
+    outline: none;
+}
+
+.dataTables_filter input::placeholder {
+    color: var(--text-light);
+}
+
+.dataTables_filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-soft);
+}
+
+/* DataTable info + pagination footer */
+.dataTables_wrapper .dataTables-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+}
+
+.dataTables_info {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.dataTables_paginate {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.dataTables_paginate .paginate_button {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+    background: transparent;
+}
+
+.dataTables_paginate .paginate_button:hover {
+    background: var(--surface-soft);
+    color: var(--text);
+    border-color: var(--border-light);
+}
+
+.dataTables_paginate .paginate_button.current {
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-color: var(--primary-200);
+    font-weight: 600;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+.dataTables_paginate .paginate_button.previous,
+.dataTables_paginate .paginate_button.next {
+    width: auto;
+    padding: 0 0.5rem;
+}
+
+/* Sort icons */
+ table.dataTable thead .sorting {
+    cursor: pointer;
+    position: relative;
+}
+
+table.dataTable thead .sorting::after {
+    content: '\F127';
+    font-family: 'bootstrap-icons';
+    font-size: 0.65rem;
+    margin-left: 0.3rem;
+    opacity: 0.4;
+}
+
+table.dataTable thead .sorting_asc::after {
+    content: '\F128';
+    opacity: 1;
+    color: var(--primary);
+}
+
+table.dataTable thead .sorting_desc::after {
+    content: '\F124';
+    opacity: 1;
+    color: var(--primary);
+}
+
+/* ============================================================
+   SALARY STAT CARDS - Interactive Filter Cards
+   ============================================================ */
+
+.salary-stats-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 1.25rem;
+}
+
+.salary-stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    padding: 1.1rem 0.85rem;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.salary-stat-card[data-filter] {
+    cursor: pointer;
+}
+
+.salary-stat-card[data-filter]::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.salary-stat-card[data-filter]:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.salary-stat-card[data-filter]:hover::before {
+    opacity: 1;
+}
+
+.salary-stat-card[data-filter]:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.salary-stat-card.stat-card-pending::before {
+    background: var(--warning);
+}
+
+.salary-stat-card.stat-card-approved::before {
+    background: var(--success);
+}
+
+.salary-stat-card.stat-card-rejected::before {
+    background: var(--danger);
+}
+
+.salary-stat-card .stat-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    flex-shrink: 0;
+}
+
+.stat-card-pending .stat-icon {
+    background: var(--warning-soft);
+    color: var(--warning-600);
+}
+
+.stat-card-approved .stat-icon {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.stat-card-rejected .stat-icon {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.stat-card-info .stat-icon {
+    background: var(--info-soft);
+    color: var(--info);
+}
+
+.stat-card-primary .stat-icon {
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.salary-stat-card .stat-number {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+}
+
+.salary-stat-card .stat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--muted);
+    line-height: 1.3;
+}
+
+/* Active state for filter cards */
+.salary-stat-card.stat-card-active {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.salary-stat-card.stat-card-active::before {
+    opacity: 1;
+}
+
+.stat-card-pending.stat-card-active {
+    border-color: var(--warning);
+    background: var(--warning-soft);
+    box-shadow: 0 0 0 1px var(--warning), var(--shadow-md);
+}
+
+.stat-card-approved.stat-card-active {
+    border-color: var(--success);
+    background: var(--success-soft);
+    box-shadow: 0 0 0 1px var(--success), var(--shadow-md);
+}
+
+.stat-card-rejected.stat-card-active {
+    border-color: var(--danger);
+    background: var(--danger-soft);
+    box-shadow: 0 0 0 1px var(--danger), var(--shadow-md);
+}
+
+.salary-stat-card.stat-card-active .stat-icon {
+    transform: scale(1.1);
+}
+
+.salary-stat-card.stat-card-active .stat-number {
+    font-weight: 900;
+}
+
+/* ============================================================
+   SALARY FILTER BAR
+   ============================================================ */
+
+.salary-filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.salary-filter-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.salary-filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.75rem;
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.salary-clear-filter {
+    font-size: 0.8rem;
+    padding: 0.25rem 0.75rem;
+}
+
+/* ============================================================
+   SALARY BADGES
+   ============================================================ */
+
+.salary-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3em 0.7em;
+    border-radius: var(--radius-full);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+.badge-pending {
+    background: var(--warning-soft);
+    color: var(--warning-600);
+}
+
+.badge-approved {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.badge-rejected {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.badge-no-pending {
+    background: var(--surface-muted);
+    color: var(--muted);
+}
+
+.badge-hike-pct {
+    background: var(--info-soft);
+    color: var(--info);
+}
+
+/* ============================================================
+   SALARY TABLE ACTIONS
+   ============================================================ */
+
+.salary-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.salary-actions .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+}
+
+/* ============================================================
+   SALARY EMPTY STATE IN TABLE
+   ============================================================ */
+
+td.salary-empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+td.salary-empty-state .salary-empty-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-lg);
+    background: var(--surface-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--muted);
+    margin: 0 auto 1rem;
+}
+
+td.salary-empty-state h5 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+}
+
+td.salary-empty-state p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE - SALARY STAT CARDS
+   ============================================================ */
+
+@media (max-width: 1199.98px) {
+    .salary-stats-row {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .salary-stat-card:nth-child(4),
+    .salary-stat-card:nth-child(5) {
+        grid-column: span 1;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .salary-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .salary-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .salary-stat-card {
+        padding: 1rem 0.75rem;
+        min-height: 110px;
+    }
+
+    .salary-stat-card .stat-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .salary-stat-card .stat-number {
+        font-size: 1.4rem;
+    }
+
+    .salary-stat-card .stat-label {
+        font-size: 0.72rem;
+    }
+
+    .salary-filter-bar {
+        padding: 0.5rem 1rem;
+    }
+
+    .dataTables_wrapper .dataTables-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .dataTables_filter input {
+        width: 100%;
+    }
+
+    .dataTables_wrapper .dataTables-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .salary-stats-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .salary-stat-card:nth-child(5) {
+        grid-column: span 2;
+    }
+}
+
+/* ============================================================
+   DARK MODE - SALARY MODULE
+   ============================================================ */
+
+[data-theme="dark"] .salary-stat-card {
+    background: var(--surface);
+    border-color: var(--border-light);
+}
+
+[data-theme="dark"] .salary-stat-card[data-filter]:hover {
+    box-shadow: var(--shadow-md);
+}
+
+[data-theme="dark"] .stat-card-pending.stat-card-active {
+    background: rgba(245, 158, 11, 0.08);
+    border-color: var(--warning);
+    box-shadow: 0 0 0 1px var(--warning), var(--shadow-md);
+}
+
+[data-theme="dark"] .stat-card-approved.stat-card-active {
+    background: rgba(22, 163, 74, 0.08);
+    border-color: var(--success);
+    box-shadow: 0 0 0 1px var(--success), var(--shadow-md);
+}
+
+[data-theme="dark"] .stat-card-rejected.stat-card-active {
+    background: rgba(220, 38, 38, 0.08);
+    border-color: var(--danger);
+    box-shadow: 0 0 0 1px var(--danger), var(--shadow-md);
+}
+
+[data-theme="dark"] .salary-filter-bar {
+    background: var(--surface-soft);
+    border-color: var(--border-light);
+}
+
+[data-theme="dark"] .salary-filter-badge {
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+[data-theme="dark"] td.salary-empty-state .salary-empty-icon {
+    background: var(--surface-muted);
+}
+
+/* Dark mode DataTable controls */
+[data-theme="dark"] .dataTables_length select {
+    background: var(--surface-soft);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+[data-theme="dark"] .dataTables_filter input {
+    background: var(--surface-soft);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+[data-theme="dark"] .dataTables_filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-soft);
+}
+
+[data-theme="dark"] .dataTables_paginate .paginate_button {
+    color: var(--muted);
+}
+
+[data-theme="dark"] .dataTables_paginate .paginate_button:hover {
+    background: var(--surface-soft);
+    color: var(--text);
+    border-color: var(--border-light);
+}
+
+[data-theme="dark"] .dataTables_paginate .paginate_button.current {
+    background: var(--primary-soft);
+    color: var(--primary);
+    border-color: var(--primary-200);
+}
+
+[data-theme="dark"] .dataTables_info {
+    color: var(--muted);
+}

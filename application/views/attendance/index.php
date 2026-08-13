@@ -1,0 +1,158 @@
+<?php
+$this->load->view('layouts/header');
+$this->load->view('layouts/navbar');
+?>
+
+<div class="container py-4">
+
+    <?php $this->load->view('layouts/page_header', [
+        'title' => 'Attendance',
+        'subtitle' => 'Track employee attendance records.',
+        'icon' => 'bi-calendar2-week',
+        'show_back' => true,
+        'back_url' => site_url('dashboard'),
+        'back_label' => 'Back'
+    ]); ?>
+
+    <!-- Current Shifts -->
+    <?php if (!empty($employee_shifts)) { ?>
+        <div class="assigned-shift-card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="bi bi-arrow-repeat me-2"></i>
+                    Assigned Shifts
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    <?php foreach ($employee_shifts as $shift) { ?>
+                        <span class="badge bg-primary">
+                            <i class="bi bi-clock me-1"></i>
+                            <?= $shift->shift_name; ?>
+                        </span>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+    <!-- Filter Card -->
+    <div class="attendance-filter-card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">
+                <i class="bi bi-funnel-fill me-2"></i>
+                Filter Attendance
+            </h5>
+        </div>
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
+                <div class="col-md-3">
+                    <label class="form-label">Month</label>
+                    <select name="month" class="form-select">
+                        <option value="">All Months</option>
+                        <?php
+                        $months = [
+                            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+                            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+                            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+                        ];
+                        foreach ($months as $num => $name) { ?>
+                            <option value="<?= $num; ?>" <?= ($month == $num) ? 'selected' : ''; ?>>
+                                <?= $name; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Year</label>
+                    <select name="year" class="form-select">
+                        <option value="">All Years</option>
+                        <?php for ($y = 2024; $y <= 2026; $y++) { ?>
+                            <option value="<?= $y; ?>" <?= ($year == $y) ? 'selected' : ''; ?>>
+                                <?= $y; ?>
+                            </option>
+                        <?php } ?>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button class="btn btn-primary me-2">
+                        <i class="bi bi-funnel-fill me-1"></i> Apply
+                    </button>
+                    <a href="<?= site_url('attendance'); ?>" class="btn btn-secondary">Reset</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Attendance Table -->
+    <div class="attendance-table-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">
+                <i class="bi bi-table me-2"></i>
+                Attendance Records
+            </h5>
+            <span class="badge bg-primary">Total Records: <?= count($attendance); ?></span>
+        </div>
+        <div class="card-body p-0">
+            <table id="attendanceTable" class="table align-middle mb-0 attendance-grid">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Clock In</th>
+                        <th>Clock Out</th>
+                        <th>Shift</th>
+                        <th>Hours Worked</th>
+                        <th>Overtime</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($attendance as $row) { ?>
+                        <tr>
+                            <td><?= date('d M Y', strtotime($row->attendance_date)); ?></td>
+                            <td><?= !empty($row->clock_in) ? date('h:i A', strtotime($row->clock_in)) : '-'; ?></td>
+                            <td><?= !empty($row->clock_out) ? date('h:i A', strtotime($row->clock_out)) : '-'; ?></td>
+                            <td><span class="badge bg-primary"><?= $row->shift_name; ?></span></td>
+                            <td><?= !empty($row->hours_worked) ? $row->hours_worked . ' hrs' : '-'; ?></td>
+                            <td><?= !empty($row->overtime) ? $row->overtime . ' hrs' : '-'; ?></td>
+                            <td>
+                                <?php
+                                $status = isset($row->status) ? $row->status : '';
+                                if ($status == 'Present') { ?>
+                                    <span class="badge bg-success"><i class="bi bi-check-circle-fill me-1"></i> Present</span>
+                                <?php } elseif ($status == 'Absent') { ?>
+                                    <span class="badge bg-danger"><i class="bi bi-x-circle-fill me-1"></i> Absent</span>
+                                <?php } elseif ($status == 'Half-Day') { ?>
+                                    <span class="badge bg-warning"><i class="bi bi-dash-circle-fill me-1"></i> Half-Day</span>
+                                <?php } elseif ($status == 'Late') { ?>
+                                    <span class="badge badge-late"><i class="bi bi-alarm-fill me-1"></i> Late</span>
+                                <?php } else { ?>
+                                    <span class="badge bg-secondary"><?= $status; ?></span>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<?php
+$this->load->view('layouts/footer');
+?>
+
+<script>
+$(document).ready(function() {
+    initDataTable('#attendanceTable', {
+        order: [[0, 'desc']],
+        pageLength: 10,
+        language: {
+            emptyTable: "No attendance records found",
+            searchPlaceholder: "Search attendance...",
+        }
+    });
+});
+</script>

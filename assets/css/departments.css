@@ -1,0 +1,135 @@
+/* ============================================================
+   DEPARTMENTS - Department-specific styles
+   ============================================================ */
+
+.department-actions {
+    display: flex;
+    gap: var(--space-2);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.department-card {
+    transition: all 0.2s ease;
+}
+
+.department-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+}
+
+.department-card .card-body {
+    padding: 20px;
+}
+
+.department-card .department-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: var(--space-2);
+    color: var(--text);
+}
+
+.department-card .department-info {
+    font-size: 0.875rem;
+    color: var(--muted);
+    margin-bottom: var(--space-3);
+}
+
+.department-card .department-info i {
+    width: 16px;
+    margin-right: 4px;
+    color: var(--text-light);
+}
+
+/* Department Grid */
+.department-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-4);
+}
+
+/* Department Stats */
+.department-stats {
+    display: flex;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+}
+
+.department-stat {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.department-stat .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--primary-soft);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.department-stat .stat-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+}
+
+.department-stat .stat-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 992px) {
+    .department-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    .department-grid {
+        grid-template-columns: 1fr;
+    }
+    .department-stats {
+        flex-direction: column;
+        gap: var(--space-3);
+    }
+    .department-stat {
+        padding: var(--space-3);
+    }
+    .department-stat .stat-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+    }
+    .department-stat .stat-number {
+        font-size: 1.25rem;
+    }
+    .department-card .card-body {
+        padding: 16px;
+    }
+    .department-card .department-name {
+        font-size: 1rem;
+    }
+    .department-actions {
+        width: 100%;
+    }
+    .department-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+

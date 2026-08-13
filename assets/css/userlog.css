@@ -1,0 +1,509 @@
+/* ============================================================
+   USER LOGIN LOGS - Page-specific styles
+   Matches Audit Trail visual system.
+   Scoped to .user-logs-page — does not affect other DataTables.
+   ============================================================ */
+
+/* ---- Page Wrapper ---- */
+.user-logs-page {
+    padding-bottom: 2rem;
+}
+
+/* ---- Page Header ---- */
+.user-logs-page .page-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.user-logs-page .page-header-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius);
+    background: var(--primary-soft);
+    color: var(--primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.user-logs-page .page-header h2 {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 2px;
+}
+
+.user-logs-page .page-header p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.user-logs-page .page-header-actions .btn-back {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* ---- Table Card ---- */
+.user-logs-page .table-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.user-logs-page .table-card .card-body {
+    padding: 20px;
+}
+
+/* ---- Filter Section ---- */
+.user-logs-page .filter-form {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.user-logs-page .filter-form .form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+}
+
+.user-logs-page .filter-form .form-select,
+.user-logs-page .filter-form .form-control {
+    height: 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.user-logs-page .filter-form .form-select:focus,
+.user-logs-page .filter-form .form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+}
+
+.user-logs-page .filter-form .btn-search {
+    height: 42px;
+    border-radius: 10px;
+    padding: 0 18px;
+}
+
+/* ---- Table Wrapper ---- */
+.user-logs-page .logs-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+/* ---- DataTable ---- */
+.user-logs-page #logsTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    min-width: 0;
+}
+
+.user-logs-page #logsTable thead th {
+    background: var(--surface-soft);
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--border);
+    border-right: 1px solid var(--border);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.user-logs-page #logsTable thead th:last-child {
+    border-right: none;
+}
+
+.user-logs-page #logsTable tbody td {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border-light);
+    border-right: 1px solid var(--border-light);
+    vertical-align: middle;
+    background: var(--surface);
+}
+
+.user-logs-page #logsTable tbody td:last-child {
+    border-right: none;
+}
+
+.user-logs-page #logsTable tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.user-logs-page #logsTable tbody tr:hover td {
+    background: var(--primary-soft);
+}
+
+/* ---- Column Widths ---- */
+.user-logs-page #logsTable th:nth-child(1),
+.user-logs-page #logsTable td:nth-child(1) {
+    /* ID */
+    width: 55px;
+    min-width: 50px;
+    max-width: 60px;
+    text-align: center;
+}
+
+.user-logs-page #logsTable th:nth-child(2),
+.user-logs-page #logsTable td:nth-child(2) {
+    /* User */
+    width: 150px;
+    min-width: 130px;
+    max-width: 170px;
+}
+
+.user-logs-page #logsTable th:nth-child(3),
+.user-logs-page #logsTable td:nth-child(3) {
+    /* Action */
+    width: 90px;
+    min-width: 80px;
+    max-width: 100px;
+    text-align: center;
+}
+
+.user-logs-page #logsTable th:nth-child(4),
+.user-logs-page #logsTable td:nth-child(4) {
+    /* IP Address */
+    width: 100px;
+    min-width: 80px;
+    max-width: 120px;
+}
+
+.user-logs-page #logsTable th:nth-child(5),
+.user-logs-page #logsTable td:nth-child(5) {
+    /* User Agent */
+    width: 220px;
+    min-width: 150px;
+    max-width: 280px;
+}
+
+.user-logs-page #logsTable th:nth-child(6),
+.user-logs-page #logsTable td:nth-child(6) {
+    /* Timestamp */
+    width: 175px;
+    min-width: 160px;
+    max-width: 190px;
+    white-space: nowrap;
+}
+
+/* ---- Cell Content Styles ---- */
+
+/* ID column */
+.user-logs-page .log-id {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* User column */
+.user-logs-page .log-user {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.user-logs-page .log-user-name {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-logs-page .log-user-employee {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Action badges */
+.user-logs-page .log-action-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+.user-logs-page .log-action-badge.action-login {
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
+}
+
+.user-logs-page .log-action-badge.action-logout {
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
+}
+
+/* IP Address */
+.user-logs-page .log-ip {
+    font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+/* User Agent */
+.user-logs-page .log-user-agent {
+    display: block;
+    font-family: "SFMono-Regular", "Consolas", "Liberation Mono", "Menlo", monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--muted);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Timestamp */
+.user-logs-page .log-timestamp {
+    white-space: nowrap;
+    font-size: 12px;
+    color: var(--text);
+}
+
+/* ---- DataTables Overrides (scoped) ---- */
+.user-logs-page .dataTables_wrapper {
+    padding: 0;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-toolbar {
+    padding: 0 0 16px 0;
+    border-bottom: none;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-table-wrapper {
+    padding: 0;
+    overflow: visible;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-footer {
+    padding: 16px 0 0 0;
+    border-top: 1px solid var(--border-light);
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-filter input {
+    width: 220px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    padding: 0 12px;
+    height: 42px;
+    font-size: 13px;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-soft);
+    outline: none;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-length select {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    height: 42px;
+    font-size: 13px;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables-info {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface) !important;
+    color: var(--text) !important;
+    min-width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: var(--primary-soft) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: var(--primary) !important;
+    color: #fff !important;
+    border-color: var(--primary) !important;
+}
+
+.user-logs-page .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* ============================================================
+   DARK THEME
+   ============================================================ */
+[data-theme="dark"] .user-logs-page .table-card {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .user-logs-page #logsTable thead th {
+    background: var(--surface-soft);
+}
+
+[data-theme="dark"] .user-logs-page #logsTable tbody td {
+    background: var(--surface);
+}
+
+[data-theme="dark"] .user-logs-page #logsTable tbody tr:hover td {
+    background: rgba(59, 130, 246, 0.1);
+}
+
+[data-theme="dark"] .user-logs-page .log-action-badge.action-login {
+    background: rgba(34, 197, 94, 0.2);
+    color: #4ade80;
+}
+
+[data-theme="dark"] .user-logs-page .log-action-badge.action-logout {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 992px) {
+    .user-logs-page .table-card .card-body {
+        padding: 16px;
+    }
+
+    .user-logs-page #logsTable th:nth-child(5),
+    .user-logs-page #logsTable td:nth-child(5) {
+        /* User Agent */
+        min-width: 120px;
+        max-width: 200px;
+    }
+
+    .user-logs-page #logsTable th:nth-child(6),
+    .user-logs-page #logsTable td:nth-child(6) {
+        /* Timestamp */
+        min-width: 150px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .user-logs-page .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .user-logs-page .page-header-actions {
+        width: 100%;
+    }
+
+    .user-logs-page .page-header-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .user-logs-page .table-card .card-body {
+        padding: 12px;
+    }
+
+    .user-logs-page .filter-form .col-md-3,
+    .user-logs-page .filter-form .col-md-2,
+    .user-logs-page .filter-form .col-md-1 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .user-logs-page .filter-form .btn-search {
+        width: 100%;
+    }
+
+    .user-logs-page .logs-table-wrapper {
+        margin: 0 -12px;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+    }
+
+    .user-logs-page #logsTable {
+        min-width: 700px;
+    }
+
+    .user-logs-page .dataTables_wrapper .dataTables-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .user-logs-page .dataTables_wrapper .dataTables-filter input {
+        width: 100%;
+    }
+
+    .user-logs-page .dataTables_wrapper .dataTables-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .user-logs-page .table-card .card-body {
+        padding: 10px;
+    }
+
+    .user-logs-page #logsTable {
+        min-width: 750px;
+    }
+
+    .user-logs-page #logsTable thead th {
+        padding: 10px 10px;
+        font-size: 10px;
+    }
+
+    .user-logs-page #logsTable tbody td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}

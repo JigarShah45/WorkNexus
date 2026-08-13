@@ -1,0 +1,30 @@
+/* ============================================================
+   UTILITIES - Background soft colors and helpers
+   ============================================================ */
+
+/* Background Utilities */
+.bg-primary-soft {
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.bg-success-soft {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.bg-warning-soft {
+    background: var(--warning-soft);
+    color: var(--warning);
+}
+
+.bg-danger-soft {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+.bg-info-soft {
+    background: var(--info-soft);
+    color: var(--info);
+}
+

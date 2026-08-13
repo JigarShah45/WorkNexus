@@ -1,0 +1,606 @@
+/* ============================================================
+   REPORT DESIGN SYSTEM — Complete Rewrite (v3)
+   Single source of truth for all report summary/KPI cards.
+   Load order: after common.css, before theme.css
+   ============================================================ */
+
+/* ============================================================
+   1. KPI STAT GRID — 4-column responsive grid
+   ============================================================ */
+
+.report-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+/* 2-column variant for salary */
+.report-stat-grid--salary {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Single-card variant for active/inactive */
+.report-stat-grid--single {
+    grid-template-columns: 1fr;
+}
+
+.report-stat-grid--single .report-stat-card {
+    max-width: 320px;
+}
+
+/* 2-card variant */
+.report-stat-grid--2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* ============================================================
+   2. KPI STAT CARD — Real bordered card with horizontal layout
+   ============================================================ */
+
+.report-stat-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    min-height: 105px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.report-stat-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   3. KPI ICON — 48x48 colored container
+   ============================================================ */
+
+.report-stat-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    background-color: var(--surface-soft);
+    color: var(--muted);
+    line-height: 1;
+}
+
+/* Icon color variants — HIGH specificity to override generic .bg-* utilities */
+.report-stat-card .report-stat-icon.bg-primary-soft {
+    background-color: rgba(37, 99, 235, 0.1);
+    color: #2563eb;
+}
+
+.report-stat-card .report-stat-icon.bg-success-soft {
+    background-color: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+}
+
+.report-stat-card .report-stat-icon.bg-warning-soft {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.report-stat-card .report-stat-icon.bg-danger-soft {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+}
+
+.report-stat-card .report-stat-icon.bg-info-soft {
+    background-color: rgba(14, 165, 233, 0.1);
+    color: #0284c7;
+}
+
+/* ============================================================
+   4. KPI TEXT CONTENT
+   ============================================================ */
+
+.report-stat-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.report-stat-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.report-stat-value {
+    display: block;
+    font-size: 1.65rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+/* Featured variant (salary highlight) */
+.report-stat-card--featured {
+    grid-column: 1 / -1;
+    background-color: var(--primary-50);
+    border-color: var(--primary-200);
+}
+
+.report-stat-card--featured .report-stat-value {
+    color: var(--primary);
+    font-size: 1.8rem;
+}
+
+/* ============================================================
+   5. HIGHLIGHT CARD — Highest Paid Employee
+   ============================================================ */
+
+.report-highlight-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    margin-bottom: 18px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-highlight-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+}
+
+.report-highlight-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    min-height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    background-color: rgba(14, 165, 233, 0.1);
+    color: #0284c7;
+    line-height: 1;
+}
+
+.report-highlight-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+}
+
+.report-highlight-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.report-highlight-name {
+    display: block;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.report-highlight-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--success);
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* ============================================================
+   6. FILTER CARD
+   ============================================================ */
+
+.report-filter-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    margin-bottom: 24px;
+    margin-top: auto;
+    overflow: hidden;
+}
+
+.report-filter-card .card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border-light);
+    padding: 14px 20px;
+}
+
+.report-filter-card .card-header h5 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.report-filter-card .card-body {
+    padding: 20px;
+}
+
+/* ============================================================
+   7. TABLE CARD
+   ============================================================ */
+
+.report-table-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    overflow: hidden;
+}
+
+.report-table-card .card-header {
+    background: transparent;
+    border-bottom: 1px solid var(--border-light);
+    padding: 14px 20px;
+}
+
+.report-table-card .card-header h5 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.report-table-card .card-body {
+    padding: 0;
+}
+
+/* ============================================================
+   8. REPORT PAGE LAYOUT
+   ============================================================ */
+
+.report-page {
+    padding-top: 8px;
+}
+
+.report-page .page-header {
+    margin-bottom: 20px;
+}
+
+.report-meta {
+    color: var(--muted);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   9. REPORTS LANDING PAGE (tile grid)
+   ============================================================ */
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    margin-top: 24px;
+    align-items: stretch;
+}
+
+.report-item {
+    display: flex;
+    min-width: 0;
+}
+
+.report-tile {
+    background-color: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    padding: 22px 20px;
+    width: 100%;
+    height: 100%;
+    min-height: 285px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-tile:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.report-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    margin-bottom: 22px;
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.report-icon i {
+    line-height: 1;
+}
+
+.report-icon.bg-primary-soft {
+    background: rgba(59, 130, 246, 0.14);
+    color: #60a5fa;
+}
+
+.report-icon.bg-success-soft {
+    background: rgba(34, 197, 94, 0.14);
+    color: #22c55e;
+}
+
+.report-icon.bg-warning-soft {
+    background: rgba(245, 158, 11, 0.14);
+    color: #fbbf24;
+}
+
+.report-icon.bg-danger-soft {
+    background: rgba(239, 68, 68, 0.14);
+    color: #f87171;
+}
+
+.report-tile h5 {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+    margin: 0 0 8px 0;
+}
+
+.report-tile p {
+    color: var(--muted);
+    font-size: 0.84rem;
+    line-height: 1.55;
+    margin: 0 0 20px 0;
+}
+
+.report-tile .btn {
+    margin-top: auto;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.report-chart-container {
+    padding: 16px;
+}
+
+.report-chart-container h6 {
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* ============================================================
+   10. RESPONSIVE — KPI Cards
+   ============================================================ */
+
+@media (max-width: 1199.98px) {
+    .report-stat-grid,
+    .report-stat-grid--salary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 767.98px) {
+    .report-stat-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .report-stat-grid--salary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .report-stat-grid--single {
+        grid-template-columns: 1fr;
+    }
+
+    .report-stat-grid--single .report-stat-card {
+        max-width: 100%;
+    }
+
+    .report-stat-card {
+        padding: 14px 16px;
+        gap: 12px;
+        min-height: 90px;
+    }
+
+    .report-stat-icon {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 1.1rem;
+    }
+
+    .report-stat-label {
+        font-size: 0.72rem;
+    }
+
+    .report-stat-value {
+        font-size: 1.3rem;
+    }
+
+    .report-stat-card--featured .report-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .report-highlight-card {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+
+    .report-highlight-icon {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 1.2rem;
+    }
+
+    .report-highlight-value {
+        font-size: 1.2rem;
+    }
+
+    .report-filter-card .card-body {
+        padding: 16px;
+    }
+
+    .report-table-card .card-header {
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .report-stat-grid,
+    .report-stat-grid--salary {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .report-stat-card {
+        padding: 14px;
+    }
+
+    .report-stat-value {
+        font-size: 1.25rem;
+    }
+
+    .report-filter-card .card-body {
+        padding: 14px;
+    }
+}
+
+/* ============================================================
+   11. REPORTS LANDING RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1300px) {
+    .reports-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .reports-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .reports-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .report-tile {
+        min-height: 240px;
+        padding: 18px 16px;
+        border-radius: 12px;
+    }
+
+    .report-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.15rem;
+        margin-bottom: 16px;
+    }
+
+    .report-tile h5 {
+        font-size: 0.9rem;
+    }
+
+    .report-tile p {
+        font-size: 0.78rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .report-tile {
+        min-height: 200px;
+        padding: 16px;
+    }
+}
+
+/* ============================================================
+   12. DARK THEME OVERRIDES
+   ============================================================ */
+
+[data-theme="dark"] .report-stat-card {
+    background-color: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .report-stat-card--featured {
+    background-color: var(--primary-soft);
+    border-color: var(--primary-200);
+}
+
+[data-theme="dark"] .report-highlight-card {
+    background-color: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .report-filter-card {
+    background-color: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .report-table-card {
+    background-color: var(--surface);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] .report-tile {
+    background-color: var(--surface);
+    border-color: var(--border);
+}

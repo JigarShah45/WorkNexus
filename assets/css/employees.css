@@ -1,0 +1,185 @@
+/* ============================================================
+   EMPLOYEES - Employee-specific styles
+   ============================================================ */
+
+.employee-list-page .page-header {
+    margin-bottom: 1.5rem;
+}
+
+.detail-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.detail-card .card-header {
+    background: var(--surface-soft);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-3) var(--space-4);
+}
+
+.detail-card .card-body {
+    padding: var(--space-4);
+}
+
+.detail-card .card-footer {
+    background: var(--surface-soft);
+    border-top: 1px solid var(--border);
+    padding: var(--space-3) var(--space-4);
+}
+
+.employee-table .employee-id {
+    font-weight: 700;
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.employee-table .employee-name {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.employee-table .employee-email,
+.employee-table .employee-phone {
+    color: var(--muted);
+}
+
+.employee-table .department-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    background: var(--primary-soft);
+    color: var(--primary);
+}
+
+.employee-table .employee-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: nowrap;
+}
+
+.employee-table .employee-actions .btn-icon {
+    width: 2rem;
+    height: 2rem;
+    min-width: 2rem;
+    flex-shrink: 0;
+    padding: 0;
+    border-radius: 0.65rem;
+}
+
+.detail-profile-section {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-4);
+}
+
+.detail-profile-section .profile-img-wrap {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    border: 3px solid var(--primary);
+    background: var(--primary-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-profile-section .profile-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.detail-profile-section .profile-info {
+    flex: 1;
+}
+
+.detail-profile-section .profile-info h4 {
+    margin-bottom: var(--space-1);
+    font-weight: 700;
+}
+
+.detail-profile-section .profile-info p {
+    margin-bottom: var(--space-2);
+    color: var(--muted);
+}
+
+.detail-profile-section .badge {
+    margin-right: var(--space-1);
+}
+
+/* Employee Action Column
+   Width here matches the 8th-column min-width set in datatable.css (160px)
+   so the 3 icon buttons + gaps always fit without spilling into the
+   previous column. Keep these two files in sync if you change one. */
+#employeeTable th:last-child,
+#employeeTable td:last-child{
+    min-width:160px;
+    text-align:center;
+    white-space:nowrap;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.btn-icon{
+    width:34px;
+    height:34px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border-radius:10px;
+    flex-shrink:0;
+}
+
+@media (max-width: 767.98px) {
+    .employee-table .employee-actions {
+        justify-content: flex-start;
+    }
+
+    .detail-profile-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: var(--space-3);
+        gap: var(--space-3);
+    }
+
+    .detail-profile-section .profile-img-wrap {
+        width: 90px;
+        height: 90px;
+    }
+
+    .detail-profile-section .badge {
+        margin-right: 0;
+    }
+
+    .detail-card .card-body {
+        padding: var(--space-3);
+    }
+
+    #employeeTable th:last-child,
+    #employeeTable td:last-child {
+        min-width: 120px;
+    }
+
+    .employee-table .employee-actions .btn-icon {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        border-radius: 8px;
+    }
+
+    .employee-list-page .page-header {
+        margin-bottom: 1rem;
+    }
+}
