@@ -7,9 +7,9 @@ $CI =& get_instance();
 
 <link rel="stylesheet" href="<?= base_url('assets/css/salary.css'); ?>">
 
-<div class="container py-4">
+<div class="container py-4 my-compensation-page">
     <div class="page-header d-flex align-items-center gap-3 mb-4">
-        <div class="page-header-icon" style="background:var(--success-soft);">
+        <div class="page-header-icon page-header-icon-wallet" style="background:var(--success-soft);">
             <i class="bi bi-wallet2 text-success"></i>
         </div>
         <div class="flex-grow-1">
@@ -18,99 +18,107 @@ $CI =& get_instance();
         </div>
     </div>
 
-    <div class="row g-4 mb-4">
-        <div class="col-lg-4">
-            <div class="salary-card h-100">
-                <div class="salary-card-header">
-                    <div class="salary-card-icon bg-primary-soft">
-                        <i class="bi bi-person-badge text-primary"></i>
+    <div class="compensation-overview-grid mb-4">
+        <!-- Employee Details -->
+        <section class="comp-panel employee-details-panel">
+            <header class="comp-panel-header">
+                <span class="comp-panel-icon bg-primary-soft">
+                    <i class="bi bi-person-badge text-primary"></i>
+                </span>
+                <h5>Employee Details</h5>
+            </header>
+            <div class="comp-panel-body">
+                <div class="employee-details-grid">
+                    <div class="employee-detail">
+                        <span class="employee-detail-label">Employee Name</span>
+                        <span class="employee-detail-value"><?= htmlspecialchars($employee->employee_name) ?></span>
                     </div>
-                    <h5>Employee Details</h5>
-                </div>
-                <div class="salary-card-body">
-                    <div class="mb-3">
-                        <small class="text-muted d-block">Employee ID</small>
-                        <span class="fw-semibold">#EMP<?= str_pad($employee->employee_id, 4, '0', STR_PAD_LEFT) ?></span>
+                    <div class="employee-detail">
+                        <span class="employee-detail-label">Email</span>
+                        <span class="employee-detail-value"><?= htmlspecialchars($employee->employee_email) ?></span>
                     </div>
-                    <div class="mb-3">
-                        <small class="text-muted d-block">Name</small>
-                        <span class="fw-semibold"><?= htmlspecialchars($employee->employee_name) ?></span>
+                    <div class="employee-detail">
+                        <span class="employee-detail-label">Phone</span>
+                        <span class="employee-detail-value"><?= htmlspecialchars($employee->employee_phone) ?></span>
                     </div>
-                    <div class="mb-3">
-                        <small class="text-muted d-block">Department</small>
-                        <span class="fw-semibold"><?= htmlspecialchars($employee->department_name ?? 'N/A') ?></span>
+                    <div class="employee-detail">
+                        <span class="employee-detail-label">Department</span>
+                        <span class="employee-detail-value"><?= htmlspecialchars($employee->department_name ?? 'N/A') ?></span>
                     </div>
-                    <div class="mb-3">
-                        <small class="text-muted d-block">Joining Date</small>
-                        <span class="fw-semibold"><?= date('d M Y', strtotime($employee->joining_date)) ?></span>
+                    <div class="employee-detail">
+                        <span class="employee-detail-label">Salary</span>
+                        <span class="employee-detail-value">₹<?= number_format($employee->employee_salary, 0) ?></span>
                     </div>
-                    <div>
-                        <small class="text-muted d-block">Status</small>
+                    <div class="employee-detail">
+                        <span class="employee-detail-label">Status</span>
                         <span class="salary-status-badge <?= $employee->status === 'Active' ? 'active' : 'inactive' ?>">
                             <?= $employee->status ?>
                         </span>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-lg-8">
-            <div class="salary-card h-100">
-                <div class="salary-card-header">
-                    <div class="salary-card-icon bg-success-soft">
-                        <i class="bi bi-cash-stack text-success"></i>
-                    </div>
-                    <h5>Current Compensation</h5>
-                </div>
-                <div class="salary-card-body">
-                    <div class="salary-stats-grid salary-stats-grid-wide">
-                        <div class="salary-stat-card featured">
-                            <div class="salary-stat-icon bg-success-soft">
-                                <i class="bi bi-currency-dollar text-success"></i>
-                            </div>
-                            <span class="salary-stat-label">Current Salary</span>
-                            <span class="salary-stat-value salary-highlight">₹<?= number_format($employee->employee_salary, 0) ?></span>
-                        </div>
-
-                        <?php if ($latest_hike): ?>
-                        <div class="salary-stat-card">
-                            <div class="salary-stat-icon bg-primary-soft">
-                                <i class="bi bi-graph-up-arrow text-primary"></i>
-                            </div>
-                            <span class="salary-stat-label">Last Hike</span>
-                            <span class="salary-stat-value hike-highlight">+<?= number_format($latest_hike->hike_percentage, 1) ?>%</span>
-                        </div>
-
-                        <div class="salary-stat-card">
-                            <div class="salary-stat-icon bg-info-soft">
-                                <i class="bi bi-calendar-check text-info"></i>
-                            </div>
-                            <span class="salary-stat-label">Effective Date</span>
-                            <span class="salary-stat-value">
-                                <?= $latest_hike->effective_date ? date('d M Y', strtotime($latest_hike->effective_date)) : date('d M Y', strtotime($latest_hike->approved_at)) ?>
-                            </span>
-                        </div>
-
-                        <div class="salary-stat-card">
-                            <div class="salary-stat-icon bg-warning-soft">
-                                <i class="bi bi-cash text-warning"></i>
-                            </div>
-                            <span class="salary-stat-label">Previous Salary</span>
-                            <span class="salary-stat-value">₹<?= number_format($latest_hike->current_salary, 0) ?></span>
-                        </div>
-                        <?php else: ?>
-                        <div class="salary-empty-state">
-                            <div class="salary-empty-icon">
-                                <i class="bi bi-cash-stack"></i>
-                            </div>
-                            <h5>No Salary Hike History</h5>
-                            <p>Your salary is at the initial configured amount. No hikes have been applied yet.</p>
-                        </div>
-                        <?php endif; ?>
-                    </div>
+                <div class="employee-details-meta">
+                    <span class="employee-details-meta-label">Created At</span>
+                    <span class="employee-details-meta-value"><?= date('d M Y, h:i A', strtotime($employee->joining_date)) ?></span>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Current Compensation -->
+        <section class="comp-panel current-compensation-panel">
+            <header class="comp-panel-header">
+                <span class="comp-panel-icon bg-success-soft">
+                    <i class="bi bi-cash-stack text-success"></i>
+                </span>
+                <h5>Current Compensation</h5>
+            </header>
+            <div class="comp-panel-body">
+                <?php if ($latest_hike): ?>
+                <div class="compensation-metrics-grid">
+                    <div class="compensation-metric-card">
+                        <div class="compensation-metric-icon bg-success-soft">
+                            <i class="bi bi-currency-rupee text-success"></i>
+                        </div>
+                        <span class="compensation-metric-label">Current Salary</span>
+                        <span class="compensation-metric-value">₹<?= number_format($employee->employee_salary, 0) ?></span>
+                    </div>
+
+                    <div class="compensation-metric-card">
+                        <div class="compensation-metric-icon bg-primary-soft">
+                            <i class="bi bi-graph-up-arrow text-primary"></i>
+                        </div>
+                        <span class="compensation-metric-label">Last Hike</span>
+                        <span class="compensation-metric-value">+<?= number_format($latest_hike->hike_percentage, 1) ?>%</span>
+                    </div>
+
+                    <div class="compensation-metric-card">
+                        <div class="compensation-metric-icon bg-info-soft">
+                            <i class="bi bi-calendar-check text-info"></i>
+                        </div>
+                        <span class="compensation-metric-label">Effective Date</span>
+                        <span class="compensation-metric-value">
+                            <?= $latest_hike->effective_date ? date('d M Y', strtotime($latest_hike->effective_date)) : date('d M Y', strtotime($latest_hike->approved_at)) ?>
+                        </span>
+                    </div>
+
+                    <div class="compensation-metric-card">
+                        <div class="compensation-metric-icon bg-warning-soft">
+                            <i class="bi bi-cash text-warning"></i>
+                        </div>
+                        <span class="compensation-metric-label">Previous Salary</span>
+                        <span class="compensation-metric-value">₹<?= number_format($latest_hike->current_salary, 0) ?></span>
+                    </div>
+                </div>
+                <?php else: ?>
+                <div class="salary-empty-state">
+                    <div class="salary-empty-icon">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+                    <h5>No Salary Hike History</h5>
+                    <p>Your salary is at the initial configured amount. No hikes have been applied yet.</p>
+                </div>
+                <?php endif; ?>
+            </div>
+        </section>
     </div>
 
     <?php if (!empty($hike_history)): ?>
@@ -191,10 +199,14 @@ $CI =& get_instance();
 document.addEventListener('DOMContentLoaded', function() {
     if ($.fn.DataTable) {
         $('#compensationHistoryTable').DataTable({
-            responsive: true,
+            responsive: false,
             autoWidth: false,
             pageLength: 10,
             order: [[0, 'desc']],
+            dom:
+                "<'dataTables-toolbar'<'dataTables-length'l><'dataTables-filter'f>>" +
+                "<'dataTables-table-wrapper'tr>" +
+                "<'dataTables-footer'<'dataTables-info'i><'dataTables-pagination'p>>",
             language: {
                 search: '',
                 searchPlaceholder: 'Search history...',

@@ -16,6 +16,17 @@ class Attendance extends MY_Controller
     {
         $this->requirePermission('access_attendance');
 
+        // HR/Admin manage attendance for all employees - route them to the
+        // Manage Attendance page instead of the personal attendance page.
+        if ($this->isAdminOrHR())
+        {
+            redirect('attendance/manage');
+        }
+
+        // Safety net: close any open attendance record whose 7:00 PM IST
+        // shift end has already passed (no valid logout was received).
+        $this->Attendance_model->autoCloseOpenAttendance();
+
         $data['title'] = "My Attendance";
 
         $employee_id = $this->session->userdata('employee_id');
@@ -33,6 +44,18 @@ class Attendance extends MY_Controller
     public function manage()
     {
         $this->requirePermission('access_attendance');
+
+        // Manage Attendance shows records for ALL employees.
+        // Only Admin/HR are authorized to view it - deny everyone else.
+        if (!$this->isAdminOrHR())
+        {
+            $this->session->set_flashdata('error', 'You do not have permission to access this page.');
+            redirect('attendance');
+        }
+
+        // Safety net: close any open attendance record whose 7:00 PM IST
+        // shift end has already passed (no valid logout was received).
+        $this->Attendance_model->autoCloseOpenAttendance();
 
         $data['title'] = "Manage Attendance";
 
@@ -52,6 +75,13 @@ class Attendance extends MY_Controller
     public function assign_shift()
     {
         $this->requirePermission('access_attendance');
+
+        // Shift assignment is an attendance-management action - Admin/HR only.
+        if (!$this->isAdminOrHR())
+        {
+            $this->session->set_flashdata('error', 'You do not have permission to access this page.');
+            redirect('attendance');
+        }
 
         $employee_id = $this->input->post('employee_id');
         $shift_id = $this->input->post('shift_id');

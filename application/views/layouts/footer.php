@@ -1,3 +1,7 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+$CI =& get_instance();
+?>
     </div><!-- end .main-content -->
 
     <!-- jQuery -->
@@ -303,7 +307,7 @@
             { title: 'Departments', desc: 'Manage departments', icon: 'bi-building', url: 'department', permission: 'access_department' },
             { title: 'User Management', desc: 'Manage user accounts', icon: 'bi-person-gear', url: 'user', permission: 'access_user_management' },
             { title: 'Reports', desc: 'View reports & analytics', icon: 'bi-file-earmark-bar-graph', url: 'reports', permission: 'access_reports' },
-            { title: 'Attendance', desc: 'Track attendance', icon: 'bi-clock-history', url: 'attendance', permission: 'access_attendance' },
+            { title: '<?= $CI->isAdminOrHR() ? "Manage Attendance" : "My Attendance" ?>', desc: '<?= $CI->isAdminOrHR() ? "Manage all employee attendance" : "View your attendance" ?>', icon: 'bi-clock-history', url: '<?= $CI->isAdminOrHR() ? "attendance/manage" : "attendance" ?>', permission: 'access_attendance' },
             { title: 'Leave Management', desc: 'Manage leaves', icon: 'bi-calendar-x', url: 'leave', permission: 'access_leave' },
             { title: 'Client Meetings', desc: 'Manage meetings', icon: 'bi-easel', url: 'meetings', permission: 'access_meetings' },
             { title: 'Salary & Compensation', desc: 'Manage salary hikes & compensation', icon: 'bi-graph-up-arrow', url: 'hikes', permission: 'access_hike_management' },

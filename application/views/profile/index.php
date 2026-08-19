@@ -40,6 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="profile-card-body">
                 <form method="post" action="<?= site_url('profile/upload_photo') ?>" enctype="multipart/form-data" id="photoUploadForm">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="profile-photo-wrap">
                         <?php if (!empty($employee->profile_image)): ?>
                             <img src="data:image/jpeg;base64,<?= base64_encode($employee->profile_image) ?>" alt="Profile" class="profile-photo" id="profilePreview">
@@ -101,6 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div>
             <div class="profile-card-body">
                 <form method="post" action="<?= site_url('profile/update') ?>">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="profile-form-grid">
                         <div class="profile-form-group">
                             <label for="employee_name">Full Name *</label>
@@ -149,6 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 </div>
 
                 <form method="post" action="<?= site_url('profile/change_password') ?>">
+                    <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
                     <div class="profile-security-grid">
                         <div class="profile-form-group">
                             <label for="current_password">Current Password</label>

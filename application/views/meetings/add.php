@@ -121,8 +121,8 @@ document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
     var form = this;
     Swal.fire({
-        title: 'Save Meeting?',
-        text: 'A new meeting will be scheduled.',
+        title: 'Save Meeting and create a Google Meet?',
+        text: 'A Google Calendar event with a Google Meet link will be created.',
         icon: 'question',
         showCancelButton: true,
         confirmButtonColor: '#2563eb',

@@ -63,7 +63,7 @@ INSERT INTO `tbl_role_permissions` (`role`, `permission_id`, `is_enabled`) VALUE
 -- Default Shifts
 -- -----------------------------------------------------------
 INSERT INTO `tbl_shifts` (`shift_id`, `shift_name`, `start_time`, `end_time`) VALUES
-(1, 'Morning',   '09:00:00', '17:00:00'),
+(1, 'Day Shift', '11:00:00', '19:00:00'),
 (2, 'Afternoon', '13:00:00', '21:00:00'),
 (3, 'Night',     '21:00:00', '05:00:00');
 

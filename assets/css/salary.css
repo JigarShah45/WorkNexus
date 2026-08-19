@@ -1543,3 +1543,376 @@ td.salary-empty-state p {
 [data-theme="dark"] .dataTables_info {
     color: var(--muted);
 }
+
+/* ============================================================
+   MY COMPENSATION PAGE (EMPLOYEE ROLE) - #compensationHistoryTable
+   Scoped ONLY to the employee "My Compensation" page (.my-compensation-page)
+   so Admin / HR / other pages are not affected.
+   ============================================================ */
+
+/* ---- Header icon: [wallet] My Compensation ---- */
+.my-compensation-page .page-header-icon-wallet {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+/* ---- Main layout: Employee Details | Current Compensation (side by side) ---- */
+.my-compensation-page .compensation-overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 1.5rem;
+    align-items: stretch;
+}
+
+/* ---- Shared panel: ONE container per section ---- */
+.my-compensation-page .comp-panel {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+.my-compensation-page .comp-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.my-compensation-page .comp-panel-header h5 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.my-compensation-page .comp-panel-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.my-compensation-page .comp-panel-body {
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+/* ---- Employee Details: 2x2 -> 3x2 plain information fields (no inner cards) ---- */
+.my-compensation-page .employee-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 40px;
+    row-gap: 28px;
+}
+
+.my-compensation-page .employee-detail {
+    display: block;
+    min-width: 0;
+}
+
+.my-compensation-page .employee-detail-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+}
+
+.my-compensation-page .employee-detail-value {
+    display: block;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.35;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* Status: small colored pill badge (Active = green), NOT a full card */
+.my-compensation-page .employee-detail .salary-status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3em 0.8em;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.my-compensation-page .employee-detail .salary-status-badge.active {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.my-compensation-page .employee-detail .salary-status-badge.inactive {
+    background: var(--danger-soft);
+    color: var(--danger);
+}
+
+/* Created At: secondary metadata under the 6 fields, with a subtle divider */
+.my-compensation-page .employee-details-meta {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.my-compensation-page .employee-details-meta-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    line-height: 1.3;
+}
+
+.my-compensation-page .employee-details-meta-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.35;
+}
+
+/* ---- Current Compensation: exactly 4 real cards in a 2x2 grid ---- */
+.my-compensation-page .compensation-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.my-compensation-page .compensation-metric-card {
+    box-sizing: border-box;
+    min-height: 140px;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+    background: var(--surface-soft);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+}
+
+html[data-theme="dark"] .my-compensation-page .compensation-metric-card {
+    background: var(--surface);
+    border-color: var(--border-light);
+}
+
+.my-compensation-page .compensation-metric-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.my-compensation-page .compensation-metric-label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--muted);
+    line-height: 1.3;
+}
+
+.my-compensation-page .compensation-metric-value {
+    display: block;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* ---- Salary Revision History DataTable (scoped to this page) ---- */
+.my-compensation-page #compensationHistoryTable_wrapper {
+    width: 100%;
+}
+
+/* Remove the global min-width so the 8 columns fit the card on desktop */
+.my-compensation-page #compensationHistoryTable,
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-collapse: collapse;
+    border: 1px solid var(--border);
+    table-layout: auto;
+    margin: 0;
+}
+
+/* No unnecessary horizontal scroll inside the table wrapper on desktop;
+   the table itself now fits the card. */
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables-table-wrapper {
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: visible;
+}
+
+/* Readable ~14-15px typography, aligned header & body */
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable thead th {
+    padding: 0.75rem 0.9rem;
+    font-size: 0.875rem; /* 14px */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    line-height: 1.25;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.9rem; /* ~14.4px */
+    line-height: 1.4;
+    vertical-align: middle;
+    color: var(--text);
+}
+
+/* Compact single-line columns: salary, hike %, amount, status, date, # */
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(1),
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(2),
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(3),
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(4),
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(5),
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(6),
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(7) {
+    white-space: nowrap;
+}
+
+/* Remarks: allow natural wrapping so long text stays readable */
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(8) {
+    max-width: 260px;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+}
+
+/* Status badge stays compact */
+.my-compensation-page #compensationHistoryTable_wrapper table.dataTable tbody td:nth-child(6) .badge {
+    display: inline-block;
+    padding: 0.35em 0.65em;
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    line-height: 1.2;
+}
+
+/* Controls: Show-entries LEFT + Search RIGHT via shared flex toolbar */
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables-length,
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin: 0;
+}
+
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables_filter input {
+    width: 240px;
+    min-height: 38px;
+    font-size: 0.875rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+}
+
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables_filter input::placeholder {
+    color: var(--text-light);
+}
+
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables_filter input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-soft);
+    outline: none;
+}
+
+.my-compensation-page #compensationHistoryTable_wrapper .dataTables_length select {
+    min-height: 38px;
+    font-size: 0.875rem;
+    padding-right: 2rem;
+}
+
+/* Tablet: the two main panels stack; compensation cards stay 2x2 */
+@media (max-width: 991.98px) {
+    .my-compensation-page .compensation-overview-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile: allow horizontal scroll for the table only when truly needed */
+@media (max-width: 767.98px) {
+    .my-compensation-page #compensationHistoryTable_wrapper .dataTables-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .my-compensation-page #compensationHistoryTable_wrapper .dataTables-filter {
+        width: 100%;
+    }
+
+    .my-compensation-page #compensationHistoryTable_wrapper .dataTables_filter input {
+        width: 100%;
+    }
+
+    .my-compensation-page #compensationHistoryTable_wrapper .dataTables-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* Small phones: panels and 2x2 grids collapse to one column */
+@media (max-width: 575.98px) {
+    .my-compensation-page .employee-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .my-compensation-page .compensation-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -6,6 +6,9 @@ class Dashboard_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->config->load('attendance');
+        $tz = $this->config->item('attendance_timezone');
+        if ($tz) date_default_timezone_set($tz);
     }
 
     public function getEmployeesByDepartment()
@@ -55,9 +58,27 @@ class Dashboard_model extends CI_Model
      */
     public function getPresentToday()
     {
-        $this->db->where('attendance_date', date('Y-m-d'));
-        $this->db->where('status', 'Present');
-        return $this->db->count_all_results('tbl_attendance');
+        $today = date('Y-m-d');
+
+        $sql = "SELECT COUNT(DISTINCT a.employee_id) AS present
+                FROM tbl_attendance a
+                INNER JOIN tbl_employee e ON e.employee_id = a.employee_id
+                WHERE a.attendance_date = ?
+                  AND a.status IN ('Present', 'Half-Day')
+                  AND e.deleted_at IS NULL
+                  AND e.status = 'Active'
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM tbl_leave_requests lr
+                      WHERE lr.employee_id = a.employee_id
+                        AND lr.from_date <= ?
+                        AND lr.to_date >= ?
+                        AND lr.status = 'Approved'
+                  )";
+
+        $row = $this->db->query($sql, array($today, $today, $today))->row();
+
+        return $row ? (int) $row->present : 0;
     }
 
     /**
@@ -66,10 +87,18 @@ class Dashboard_model extends CI_Model
     public function getOnLeaveToday()
     {
         $today = date('Y-m-d');
-        $this->db->where('from_date <=', $today);
-        $this->db->where('to_date >=', $today);
-        $this->db->where('status', 'Approved');
-        return $this->db->count_all_results('tbl_leave_requests');
+        $this->db->select('COUNT(DISTINCT tbl_leave_requests.employee_id) AS on_leave');
+        $this->db->from('tbl_leave_requests');
+        $this->db->join('tbl_employee', 'tbl_employee.employee_id = tbl_leave_requests.employee_id');
+        $this->db->where('tbl_leave_requests.from_date <=', $today);
+        $this->db->where('tbl_leave_requests.to_date >=', $today);
+        $this->db->where('tbl_leave_requests.status', 'Approved');
+        $this->db->where('tbl_employee.deleted_at', NULL);
+        $this->db->where('tbl_employee.status', 'Active');
+
+        $row = $this->db->get()->row();
+
+        return $row ? (int) $row->on_leave : 0;
     }
 
     /**
@@ -108,18 +137,100 @@ class Dashboard_model extends CI_Model
     }
 
     /**
-     * Get today's attendance overview (Present, Absent, Late, Half-Day counts)
+     * Attendance exceptions for today, computed in a single aggregated query.
+     *
+     * The grace threshold (11:15 AM IST) is read from config/attendance.php so
+     * this consumes the exact same business rules as the Attendance module
+     * instead of redefining them:
+     *   - late_arrivals       : first login/clock-in after 11:15 AM IST
+     *                           (the stored clock_in is the effective clock-in,
+     *                           so clock_in > 11:15:00 is equivalent)
+     *   - half_day            : today's records with status = 'Half-Day'
+     *   - currently_working   : clocked in but no valid final clock-out yet
+     *   - overtime_employees  : today's records with overtime_hours > 0
+     *   - overtime_total_hours: total overtime hours today
      */
-    public function getTodayAttendanceOverview()
+    public function getAttendanceExceptionsToday()
+    {
+        $grace = $this->config->item('attendance_grace_end');
+        if (empty($grace))
+        {
+            $grace = '11:15:00';
+        }
+
+        $today = date('Y-m-d');
+
+        $sql = "SELECT
+            COUNT(CASE WHEN TIME(clock_in) > ? THEN 1 END) AS late_arrivals,
+            COUNT(CASE WHEN status = 'Half-Day' THEN 1 END) AS half_day,
+            COUNT(CASE WHEN clock_in IS NOT NULL AND clock_out IS NULL THEN 1 END) AS currently_working,
+            COUNT(CASE WHEN overtime_hours > 0 THEN 1 END) AS overtime_employees,
+            COALESCE(SUM(overtime_hours), 0) AS overtime_total_hours
+        FROM tbl_attendance
+        WHERE attendance_date = ?";
+
+        $row = $this->db->query($sql, array($grace, $today))->row();
+
+        if (!$row)
+        {
+            return (object) array(
+                'late_arrivals'        => 0,
+                'half_day'             => 0,
+                'currently_working'    => 0,
+                'overtime_employees'   => 0,
+                'overtime_total_hours' => 0
+            );
+        }
+
+        return $row;
+    }
+
+    /**
+     * Next scheduled client meetings (future only), soonest first.
+     *
+     * The current schema has no meeting status column - a meeting counts as
+     * "scheduled/upcoming" simply by existing with a future meeting_date.
+     * This matches the logic already used by Meetings::my_meetings().
+     */
+    public function getUpcomingMeetings($limit = 4)
+    {
+        $this->db->select('meeting_id, client_name, meeting_title, meeting_date, meeting_location');
+        $this->db->from('tbl_client_meetings');
+        $this->db->where('meeting_date >=', date('Y-m-d H:i:s'));
+        $this->db->order_by('meeting_date', 'ASC');
+        $this->db->limit($limit);
+        return $this->db->get()->result();
+    }
+
+    /**
+     * Latest pending salary hike proposals (status = 'Pending'), newest first.
+     */
+    public function getPendingSalaryHikes($limit = 3)
     {
         $this->db->select('
-            status,
-            COUNT(*) as total
+            tbl_salary_hikes.hike_id,
+            tbl_salary_hikes.hike_percentage,
+            tbl_salary_hikes.proposed_salary,
+            tbl_salary_hikes.proposed_at,
+            tbl_employee.employee_name,
+            tbl_department.department_name
         ');
-        $this->db->from('tbl_attendance');
-        $this->db->where('attendance_date', date('Y-m-d'));
-        $this->db->group_by('status');
+        $this->db->from('tbl_salary_hikes');
+        $this->db->join('tbl_employee', 'tbl_employee.employee_id = tbl_salary_hikes.employee_id');
+        $this->db->join('tbl_department', 'tbl_department.department_id = tbl_employee.department_id', 'left');
+        $this->db->where('tbl_salary_hikes.status', 'Pending');
+        $this->db->order_by('tbl_salary_hikes.created_at', 'DESC');
+        $this->db->limit($limit);
         return $this->db->get()->result();
+    }
+
+    /**
+     * Total number of pending salary hike proposals.
+     */
+    public function getPendingHikesCount()
+    {
+        $this->db->where('status', 'Pending');
+        return $this->db->count_all_results('tbl_salary_hikes');
     }
 
     /*

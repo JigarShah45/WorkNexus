@@ -9,6 +9,7 @@ class Dashboard extends MY_Controller
 
         $this->load->model('Employee_model');
         $this->load->model('Dashboard_model');
+        $this->load->model('Attendance_model');
         $this->load->model('Audit_model');
     }
 
@@ -48,14 +49,21 @@ class Dashboard extends MY_Controller
 
     private function _hrDashboard(&$data)
     {
-        $data['totalEmployees']      = $this->Employee_model->countEmployees();
-        $data['presentToday']        = $this->Dashboard_model->getPresentToday();
-        $data['onLeaveToday']        = $this->Dashboard_model->getOnLeaveToday();
-        $data['absentToday']         = $this->Dashboard_model->getAbsentToday();
-        $data['pendingLeaveCount']   = $this->Dashboard_model->getPendingLeaveCount();
-        $data['recentLeaveRequests'] = $this->Dashboard_model->getRecentLeaveRequests(5);
-        $data['departmentChart']     = $this->Dashboard_model->getEmployeesByDepartment();
-        $data['attendanceOverview']  = $this->Dashboard_model->getTodayAttendanceOverview();
+        // Keep the dashboard consistent with the Attendance module's 7:00 PM
+        // auto-close rule before computing today's attendance exceptions.
+        $this->Attendance_model->autoCloseOpenAttendance();
+
+        $data['totalEmployees']       = $this->Employee_model->countEmployees();
+        $data['presentToday']         = $this->Dashboard_model->getPresentToday();
+        $data['onLeaveToday']         = $this->Dashboard_model->getOnLeaveToday();
+        $data['absentToday']          = $this->Dashboard_model->getAbsentToday();
+        $data['pendingLeaveCount']    = $this->Dashboard_model->getPendingLeaveCount();
+        $data['recentLeaveRequests']  = $this->Dashboard_model->getRecentLeaveRequests(5);
+        $data['departmentChart']      = $this->Dashboard_model->getEmployeesByDepartment();
+        $data['attendanceExceptions'] = $this->Dashboard_model->getAttendanceExceptionsToday();
+        $data['upcomingMeetings']     = $this->Dashboard_model->getUpcomingMeetings(4);
+        $data['pendingHikes']         = $this->Dashboard_model->getPendingSalaryHikes(3);
+        $data['pendingHikesCount']    = $this->Dashboard_model->getPendingHikesCount();
 
         $this->load->view('dashboard/hr', $data);
     }

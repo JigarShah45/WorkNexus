@@ -135,6 +135,10 @@ $this->load->view('layouts/navbar');
 
 </div>
 
+<?php
+$this->load->view('layouts/footer');
+?>
+
 <script>
 document.querySelector('form').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -191,9 +195,4 @@ document.querySelector('form').addEventListener('submit', function(e) {
             }
         });
     });
-});
 </script>
-
-<?php
-$this->load->view('layouts/footer');
-?>

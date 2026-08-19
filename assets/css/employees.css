@@ -183,3 +183,231 @@
         margin-bottom: 1rem;
     }
 }
+
+/* ============================================================
+   EMPLOYEE VIEW - Profile detail page
+   ============================================================ */
+
+.employee-detail-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: var(--space-5);
+    align-items: flex-start;
+}
+
+.employee-profile-summary {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-5);
+    text-align: center;
+    position: sticky;
+    top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.employee-profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    border: 3px solid var(--primary-400);
+    background: var(--primary-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-2);
+    flex-shrink: 0;
+}
+
+.employee-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.employee-profile-avatar i {
+    font-size: 3rem;
+    color: var(--primary-300);
+}
+
+.employee-profile-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    word-break: break-word;
+}
+
+.employee-profile-id {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.employee-profile-dept {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin: var(--space-1) 0 var(--space-2);
+}
+
+.employee-info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    min-width: 0;
+}
+
+.employee-info-section {
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-4) var(--space-5);
+}
+
+.employee-info-section h5 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.employee-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-3);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.employee-info-row:last-child {
+    border-bottom: none;
+}
+
+.employee-info-label {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.employee-info-value {
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-align: right;
+    word-break: break-word;
+}
+
+.employee-detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: var(--space-1);
+}
+
+/* ============================================================
+   EMPLOYEE EDIT / ADD - Scoped overrides
+   ============================================================ */
+
+.employee-edit-page .photo-label,
+.employee-add-page .photo-label {
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.employee-edit-page .photo-section,
+.employee-add-page .photo-section {
+    background: var(--surface-soft);
+}
+
+.employee-edit-page .photo-avatar,
+.employee-add-page .photo-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.employee-edit-page .photo-avatar img,
+.employee-add-page .photo-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-full);
+}
+
+.employee-edit-page .form-card .form-footer,
+.employee-add-page .add-employee-card .form-footer {
+    background: var(--surface-soft);
+    border: none;
+    border-top: 1px solid var(--border-light);
+    border-radius: 0;
+    box-shadow: none;
+    padding: var(--space-3) var(--space-4);
+}
+
+.employee-edit-page .form-error,
+.employee-add-page .form-error {
+    color: var(--danger);
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.employee-edit-page .form-control[readonly] {
+    background: var(--surface-soft);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 991.98px) {
+    .employee-detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .employee-profile-summary {
+        position: static;
+    }
+
+    .employee-edit-page .employee-form-layout,
+    .employee-add-page .employee-form-layout {
+        flex-direction: column;
+    }
+
+    .employee-edit-page .photo-section,
+    .employee-edit-page .form-section,
+    .employee-add-page .photo-section,
+    .employee-add-page .form-section {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .employee-edit-page .form-section,
+    .employee-add-page .form-section {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .employee-info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+
+    .employee-info-value {
+        text-align: left;
+    }
+
+    .employee-edit-page .card-body,
+    .employee-add-page .card-body {
+        padding: var(--space-4);
+    }
+}

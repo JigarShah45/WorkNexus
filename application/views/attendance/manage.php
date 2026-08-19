@@ -107,8 +107,8 @@ $this->load->view('layouts/navbar');
                             <td><?= !empty($row->clock_in) ? date('h:i A', strtotime($row->clock_in)) : '-'; ?></td>
                             <td><?= !empty($row->clock_out) ? date('h:i A', strtotime($row->clock_out)) : '-'; ?></td>
                             <td><span class="badge bg-primary"><?= $row->shift_name; ?></span></td>
-                            <td><?= !empty($row->hours_worked) ? $row->hours_worked . ' hrs' : '-'; ?></td>
-                            <td><?= !empty($row->overtime) ? $row->overtime . ' hrs' : '-'; ?></td>
+                            <td><?= (!empty($row->hours_worked) && $row->hours_worked > 0) ? $row->hours_worked . ' hrs' : '-'; ?></td>
+                            <td><?= (!empty($row->overtime_hours) && $row->overtime_hours > 0) ? $row->overtime_hours . ' hrs' : '-'; ?></td>
                             <td>
                                 <?php
                                 $status = isset($row->status) ? $row->status : '';

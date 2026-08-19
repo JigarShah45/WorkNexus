@@ -166,6 +166,7 @@ CREATE TABLE IF NOT EXISTS `tbl_attendance` (
   `hours_worked` decimal(5,2) DEFAULT 0.00,
   `overtime_hours` decimal(5,2) DEFAULT 0.00,
   `status` enum('Present','Absent','Half-Day','Late') NOT NULL DEFAULT 'Present',
+  `auto_closed` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`attendance_id`),
   UNIQUE KEY `employee_date` (`employee_id`, `attendance_date`),
   KEY `shift_id` (`shift_id`)
@@ -206,6 +207,8 @@ CREATE TABLE IF NOT EXISTS `tbl_client_meetings` (
   `description` text DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `google_event_id` varchar(255) DEFAULT NULL,
+  `google_meet_link` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`meeting_id`),
   KEY `created_by` (`created_by`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

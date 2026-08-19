@@ -3,7 +3,8 @@ $this->load->view('layouts/header');
 $this->load->view('layouts/navbar');
 ?>
 
-<div class="container py-4">
+<div class="employee-add-page">
+    <div class="container py-4">
 
     <?php $this->load->view('layouts/page_header', [
         'title' => 'Add New Employee',
@@ -115,6 +116,7 @@ $this->load->view('layouts/navbar');
         </form>
     </div>
 
+    </div>
 </div>
 
 <script>

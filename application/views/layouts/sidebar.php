@@ -64,11 +64,19 @@ $CI =& get_instance();
 
             <?php if ($CI->hasPermission('access_attendance')): ?>
             <li class="nav-item">
+                <?php if ($CI->isAdminOrHR()): ?>
+                <a class="nav-link <?= $CI->router->fetch_class() === 'attendance' ? 'active' : ''; ?>"
+                   href="<?= site_url('attendance/manage'); ?>">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Manage Attendance</span>
+                </a>
+                <?php else: ?>
                 <a class="nav-link <?= $CI->router->fetch_class() === 'attendance' ? 'active' : ''; ?>"
                    href="<?= site_url('attendance'); ?>">
                     <i class="bi bi-clock-history"></i>
-                    <span>Attendance</span>
+                    <span>My Attendance</span>
                 </a>
+                <?php endif; ?>
             </li>
             <?php endif; ?>
 

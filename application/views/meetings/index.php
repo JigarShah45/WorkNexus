@@ -39,7 +39,7 @@ $this->load->view('layouts/navbar');
                         <th>Date</th>
                         <th>Location</th>
                         <th>Created By</th>
-                        <th width="170">Actions</th>
+                        <th width="210">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,6 +52,11 @@ $this->load->view('layouts/navbar');
                             <td><?= $row->meeting_location; ?></td>
                             <td><?= $row->created_by_name; ?></td>
                             <td class="employee-actions">
+                                <?php if (!empty($row->google_meet_link)) { ?>
+                                <a href="<?= htmlspecialchars($row->google_meet_link); ?>" class="btn btn-icon btn-success" title="Join Google Meet" target="_blank" rel="noopener">
+                                    <i class="bi bi-camera-video-fill"></i>
+                                </a>
+                                <?php } ?>
                                 <a href="<?= site_url('meetings/view/' . $row->meeting_id); ?>" class="btn btn-icon btn-view" title="View">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>

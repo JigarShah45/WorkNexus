@@ -43,7 +43,7 @@ class Meetings extends MY_Controller
     {
         $this->requirePermission('access_meetings');
 
-        if (!$this->isAdmin())
+        if (!$this->isAdminOrHR())
         {
             show_404();
         }
@@ -62,7 +62,7 @@ class Meetings extends MY_Controller
     {
         $this->requirePermission('access_meetings');
 
-        if (!$this->isAdmin())
+        if (!$this->isAdminOrHR())
         {
             show_404();
         }
@@ -78,12 +78,91 @@ class Meetings extends MY_Controller
             return;
         }
 
+        $upload_error = $this->validateMeetingUploads();
+
+        if ($upload_error !== '')
+        {
+            $this->session->set_flashdata('error', $upload_error);
+            $this->add();
+            return;
+        }
+
+        // ---------------------------------------------------------------
+        // Google Calendar + Google Meet: create the event FIRST.
+        // If it fails we do NOT save a local meeting.
+        // ---------------------------------------------------------------
+        $employee_ids = $this->input->post('employee_ids');
+
+        $attendee_emails = array();
+        if (!empty($employee_ids))
+        {
+            foreach ($employee_ids as $emp_id)
+            {
+                $emp_email = $this->Notification_model->getEmployeeEmail($emp_id);
+                if ($emp_email)
+                {
+                    $attendee_emails[] = $emp_email;
+                }
+            }
+        }
+
+        $this->load->library('Worknexusgoogle');
+
+        $meeting_title = $this->input->post('meeting_title');
+        $client_name   = $this->input->post('client_name');
+        $location      = $this->input->post('meeting_location');
+
+        $google_description = trim((string)$this->input->post('description'));
+
+        if ($google_description === '')
+        {
+            $google_description = 'Meeting with ' . $client_name . ' scheduled via WorkNexus.';
+        }
+        else
+        {
+            $google_description .= "\n\nScheduled via WorkNexus.";
+        }
+
+        $google_result = $this->worknexusgoogle->createMeetingEvent(array(
+            'summary'     => $client_name . ' - ' . $meeting_title,
+            'description' => $google_description,
+            'location'    => $location,
+            'start'       => $this->input->post('meeting_date'),
+            'attendees'   => $attendee_emails
+        ));
+
+        if (!$google_result['success'])
+        {
+            log_message('error', 'Meetings::store Google event creation failed: ' . $google_result['error']);
+
+            // Not authorized (no saved token, or refresh token rejected):
+            // send the user through the Google OAuth flow automatically and
+            // return them to the add-meeting form afterwards.
+            if (!empty($google_result['needs_auth']))
+            {
+                $this->session->set_userdata('google_after_auth', 'meetings/add');
+                redirect('google/connect');
+                return;
+            }
+
+            $this->session->set_flashdata('error', $google_result['error']);
+            $this->add();
+            return;
+        }
+
+        if ($google_result['event_id'])
+        {
+            log_message('debug', 'Meetings::store Google event created: ' . $google_result['event_id']);
+        }
+
         $meeting_data = array(
-            'client_name'      => $this->input->post('client_name'),
-            'meeting_title'    => $this->input->post('meeting_title'),
+            'client_name'      => $client_name,
+            'meeting_title'    => $meeting_title,
             'meeting_date'     => $this->input->post('meeting_date'),
-            'meeting_location' => $this->input->post('meeting_location'),
+            'meeting_location' => $location,
             'description'      => $this->input->post('description'),
+            'google_event_id'  => $google_result['event_id'],
+            'google_meet_link' => $google_result['meet_link'],
             'created_by'       => $this->session->userdata('user_id'),
             'created_at'       => date('Y-m-d H:i:s')
         );
@@ -91,7 +170,6 @@ class Meetings extends MY_Controller
         $meeting_id = $this->Meeting_model->insertMeeting($meeting_data);
 
         // Save employees
-        $employee_ids = $this->input->post('employee_ids');
         if (!empty($employee_ids))
         {
             $this->Meeting_model->saveMeetingEmployees($meeting_id, $employee_ids);
@@ -109,7 +187,7 @@ class Meetings extends MY_Controller
                     'recipient_user_id' => $emp_user_id,
                     'type'              => 'meeting',
                     'title'             => 'New Meeting Assigned',
-                    'message'           => 'You have been assigned to "' . htmlspecialchars($this->input->post('meeting_title')) . '" on ' . $meeting_date . ' at ' . $meeting_time . ' IST.',
+                    'message'           => 'You have been assigned to "' . htmlspecialchars($this->input->post('meeting_title')) . '" on ' . $meeting_date . ' at ' . $meeting_time . ' IST.' . ($google_result['meet_link'] ? ' Join Google Meet: ' . $google_result['meet_link'] : ''),
                     'related_module'    => 'meeting',
                     'related_record_id' => $meeting_id,
                     'target_url'        => 'meetings/employee_view/' . $meeting_id,
@@ -129,6 +207,10 @@ class Meetings extends MY_Controller
                     $body .= '<tr><td style="padding:8px 12px;font-weight:600;color:#374151;">Date</td><td style="padding:8px 12px;color:#374151;">' . $meeting_date . '</td></tr>';
                     $body .= '<tr><td style="padding:8px 12px;font-weight:600;color:#374151;">Time</td><td style="padding:8px 12px;color:#374151;">' . $meeting_time . ' IST</td></tr>';
                     $body .= '<tr><td style="padding:8px 12px;font-weight:600;color:#374151;">Location</td><td style="padding:8px 12px;color:#374151;">' . htmlspecialchars($this->input->post('meeting_location')) . '</td></tr>';
+                    if ($google_result['meet_link'])
+                    {
+                        $body .= '<tr><td style="padding:8px 12px;font-weight:600;color:#374151;">Google Meet</td><td style="padding:8px 12px;color:#374151;"><a href="' . htmlspecialchars($google_result['meet_link']) . '">Join Meeting</a></td></tr>';
+                    }
                     $body .= '</table>';
 
                     $this->worknexusmailer->send(
@@ -192,7 +274,7 @@ class Meetings extends MY_Controller
     {
         $this->requirePermission('access_meetings');
 
-        if (!$this->isAdmin())
+        if (!$this->isAdminOrHR())
         {
             show_404();
         }
@@ -220,7 +302,7 @@ class Meetings extends MY_Controller
     {
         $this->requirePermission('access_meetings');
 
-        if (!$this->isAdmin())
+        if (!$this->isAdminOrHR())
         {
             show_404();
         }
@@ -232,6 +314,15 @@ class Meetings extends MY_Controller
 
         if ($this->form_validation->run() == FALSE)
         {
+            $this->edit($id);
+            return;
+        }
+
+        $upload_error = $this->validateMeetingUploads();
+
+        if ($upload_error !== '')
+        {
+            $this->session->set_flashdata('error', $upload_error);
             $this->edit($id);
             return;
         }
@@ -322,7 +413,7 @@ class Meetings extends MY_Controller
     {
         $this->requirePermission('access_meetings');
 
-        if (!$this->isAdmin())
+        if (!$this->isAdminOrHR())
         {
             show_404();
         }
@@ -403,7 +494,7 @@ class Meetings extends MY_Controller
     {
         $this->requirePermission('access_meetings');
 
-        if (!$this->isAdmin())
+        if (!$this->isAdminOrHR())
         {
             show_404();
         }
@@ -543,30 +634,126 @@ class Meetings extends MY_Controller
 
     private function uploadMeetingFiles($meeting_id)
     {
-        // Upload minutes file
-        if (isset($_FILES['minutes_file']) && $_FILES['minutes_file']['error'] == 0)
+        foreach ($this->getMeetingUploadRules() as $field => $rules)
         {
-            $allowed = array('txt', 'pdf');
-            $ext = strtolower(pathinfo($_FILES['minutes_file']['name'], PATHINFO_EXTENSION));
+            $this->storeMeetingFile($meeting_id, $field, $rules);
+        }
+    }
 
-            if (in_array($ext, $allowed))
+    private function getMeetingUploadRules()
+    {
+        return array(
+            'minutes_file' => array(
+                'label' => 'Minutes file',
+                'ext'   => array('txt', 'pdf'),
+                'mime'  => array('text/plain', 'application/pdf', 'application/octet-stream')
+            ),
+            'presentation_file' => array(
+                'label' => 'Presentation file',
+                'ext'   => array('ppt', 'pptx'),
+                'mime'  => array(
+                    'application/vnd.ms-powerpoint',
+                    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                    'application/octet-stream',
+                    'application/zip',
+                    'application/x-zip-compressed'
+                )
+            )
+        );
+    }
+
+    private function validateMeetingUploads()
+    {
+        foreach ($this->getMeetingUploadRules() as $field => $rules)
+        {
+            if ( ! isset($_FILES[$field]))
             {
-                $data = file_get_contents($_FILES['minutes_file']['tmp_name']);
-                $this->Meeting_model->saveFile($meeting_id, $_FILES['minutes_file']['name'], $_FILES['minutes_file']['type'], 'minutes', $data);
+                continue;
+            }
+
+            $file = $_FILES[$field];
+
+            if ($file['error'] === UPLOAD_ERR_NO_FILE)
+            {
+                continue;
+            }
+
+            if ($file['error'] !== UPLOAD_ERR_OK)
+            {
+                return $this->meetingUploadErrorMessage($file['error'], $rules['label']);
+            }
+
+            if ( ! is_uploaded_file($file['tmp_name']))
+            {
+                return 'The ' . $rules['label'] . ' could not be uploaded. Please try again.';
+            }
+
+            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+            if ( ! in_array($ext, $rules['ext']))
+            {
+                return 'Invalid ' . $rules['label'] . ' type. Allowed: ' . implode(', ', $rules['ext']) . '.';
+            }
+
+            if ( ! in_array($file['type'], $rules['mime']))
+            {
+                return 'The ' . $rules['label'] . ' has an invalid format. Please upload a valid file.';
             }
         }
 
-        // Upload presentation file
-        if (isset($_FILES['presentation_file']) && $_FILES['presentation_file']['error'] == 0)
-        {
-            $allowed = array('ppt', 'pptx');
-            $ext = strtolower(pathinfo($_FILES['presentation_file']['name'], PATHINFO_EXTENSION));
+        return '';
+    }
 
-            if (in_array($ext, $allowed))
-            {
-                $data = file_get_contents($_FILES['presentation_file']['tmp_name']);
-                $this->Meeting_model->saveFile($meeting_id, $_FILES['presentation_file']['name'], $_FILES['presentation_file']['type'], 'presentation', $data);
-            }
+    private function meetingUploadErrorMessage($code, $label)
+    {
+        switch ($code)
+        {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                return 'The ' . $label . ' is too large to upload.';
+            case UPLOAD_ERR_PARTIAL:
+                return 'The ' . $label . ' was only partially uploaded. Please try again.';
+            case UPLOAD_ERR_NO_TMP_DIR:
+                return 'A temporary folder is missing on the server. Please try again.';
+            case UPLOAD_ERR_CANT_WRITE:
+                return 'The server could not write the ' . $label . ' to disk. Please try again.';
+            case UPLOAD_ERR_EXTENSION:
+                return 'The ' . $label . ' upload was blocked by a PHP extension.';
+            default:
+                return 'The ' . $label . ' could not be uploaded. Please try again.';
         }
+    }
+
+    private function storeMeetingFile($meeting_id, $field, $rules)
+    {
+        if ( ! isset($_FILES[$field]) || $_FILES[$field]['error'] !== UPLOAD_ERR_OK)
+        {
+            return;
+        }
+
+        $file = $_FILES[$field];
+
+        if ( ! is_uploaded_file($file['tmp_name']))
+        {
+            return;
+        }
+
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if ( ! in_array($ext, $rules['ext']) || ! in_array($file['type'], $rules['mime']))
+        {
+            return;
+        }
+
+        $data = @file_get_contents($file['tmp_name']);
+
+        if ($data === FALSE)
+        {
+            return;
+        }
+
+        $category = ($field === 'minutes_file') ? 'minutes' : 'presentation';
+
+        $this->Meeting_model->saveFile($meeting_id, $file['name'], $file['type'], $category, $data);
     }
 }

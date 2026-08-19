@@ -1,0 +1,571 @@
+/* ============================================================
+   MEETINGS - Page-scoped styles
+   Scoped under .meetings-page (My Meetings) and
+   .meeting-details-page (Meeting Details / Employee View)
+   Uses design tokens from variables.css; light + dark aware.
+   ============================================================ */
+
+/* ---- Scoped helpers ---- */
+.meetings-page .min-width-0,
+.meeting-details-page .min-width-0 { min-width: 0; }
+
+/* ---- Accessibility ---- */
+.meetings-page a:focus-visible,
+.meeting-details-page a:focus-visible,
+.meetings-page .btn:focus-visible,
+.meeting-details-page .btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   MY MEETINGS PAGE
+   ============================================================ */
+
+/* ---- Stat cards ---- */
+.meetings-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin-bottom: var(--space-5);
+}
+
+.meetings-stat-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.meetings-stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow);
+}
+
+.meetings-stat-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.meetings-stat-icon--primary { background: var(--primary-soft); color: var(--primary); }
+.meetings-stat-icon--success { background: var(--success-soft); color: var(--success); }
+.meetings-stat-icon--neutral { background: var(--surface-soft); color: var(--text-secondary); border: 1px solid var(--border-light); }
+
+.meetings-stat-content { min-width: 0; }
+
+.meetings-stat-label {
+    font-size: .75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--muted);
+    margin-bottom: 2px;
+}
+
+.meetings-stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--text);
+}
+
+/* ---- Tabs ---- */
+.meetings-tabs {
+    border-bottom: 1px solid var(--border);
+    gap: var(--space-2);
+}
+
+.meetings-tabs .nav-link {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: .85rem;
+    padding: 10px 18px;
+    margin-bottom: -1px;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.meetings-tabs .nav-link:hover {
+    color: var(--primary);
+    background: transparent;
+}
+
+.meetings-tabs .nav-link.active {
+    color: var(--primary);
+    background: transparent;
+    border-bottom-color: var(--primary);
+}
+
+.meetings-tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    margin-left: 6px;
+    border-radius: var(--radius-full);
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: .7rem;
+    font-weight: 700;
+}
+
+/* ---- Meeting cards grid ---- */
+.meetings-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+    .meetings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1200px) {
+    .meetings-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.meetings-page .meeting-card {
+    position: relative;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+    height: 100%;
+    transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+}
+
+.meetings-page .meeting-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-md);
+}
+
+/* Completed chip (CSS-only, no extra markup) */
+.meetings-page .meeting-card-completed::after {
+    content: "Completed";
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: .66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    pointer-events: none;
+}
+
+/* Date badge */
+.meetings-page .meeting-date-badge {
+    width: 54px;
+    height: 58px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.meetings-page .meeting-date-badge-completed {
+    background: linear-gradient(135deg, var(--text-light), var(--muted));
+    box-shadow: none;
+}
+
+.meetings-page .meeting-date-day {
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.meetings-page .meeting-date-month {
+    font-size: .66rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-weight: 600;
+    opacity: .95;
+}
+
+/* Card title / client */
+.meetings-page .meeting-card-title {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.meetings-page .meeting-card-client {
+    font-size: .78rem;
+    color: var(--muted);
+}
+
+/* Info rows */
+.meetings-page .meeting-info-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--space-4);
+}
+
+.meetings-page .meeting-info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: .82rem;
+    color: var(--text-secondary);
+}
+
+.meetings-page .meeting-info-row i {
+    width: 16px;
+    text-align: center;
+    font-size: .8rem;
+    color: var(--text-light);
+    flex-shrink: 0;
+}
+
+.meetings-page .meeting-info-row span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Card action buttons (stacked, equal width) */
+.meetings-page .meeting-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meetings-page .meeting-card-actions .btn {
+    width: 100%;
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+/* ---- Empty state ---- */
+.meetings-empty {
+    border: 1px dashed var(--border);
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    box-shadow: none;
+}
+
+.meetings-empty-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-3);
+    border-radius: var(--radius-full);
+    background: var(--surface-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    color: var(--text-light);
+}
+
+.meetings-empty-text {
+    color: var(--muted);
+    font-size: .9rem;
+    margin: 0;
+}
+
+/* ============================================================
+   MEETING DETAILS PAGE
+   ============================================================ */
+
+/* Centered container ~90-95% of the layout width */
+.meeting-details-page { max-width: 1080px; }
+
+/* Prominent Join Google Meet button */
+.meeting-details-page .meetings-join-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--space-4);
+}
+
+.meetings-join-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    background: linear-gradient(135deg, #22c55e, #15803d);
+    border: 1px solid transparent;
+    color: #fff;
+    font-weight: 600;
+    font-size: .9rem;
+    text-decoration: none;
+    box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+    transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.meetings-join-btn:hover,
+.meetings-join-btn:focus {
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(22, 163, 74, 0.35);
+}
+
+/* Details layout: Meeting Information (2fr) + Attendees (1fr) */
+.meetings-details-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+}
+
+@media (min-width: 992px) {
+    .meetings-details-layout {
+        grid-template-columns: 2fr 1fr;
+        align-items: start;
+    }
+}
+
+/* Panel header (local equivalent of dashboard-panel-header,
+   which is only loaded on the dashboard page) */
+.meeting-details-page .meetings-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 56px;
+    padding: 16px 22px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.meeting-details-page .meetings-panel-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.meeting-details-page .meetings-panel-header h5 i { color: var(--primary); }
+
+/* Info grid (2 columns of fields) */
+.meeting-detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+    .meeting-detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.meeting-detail-full { grid-column: 1 / -1; }
+
+.meeting-detail-item {
+    padding: var(--space-3) var(--space-4);
+    background: var(--surface-soft);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+}
+
+.meeting-detail-label {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.meeting-detail-value {
+    font-size: .93rem;
+    line-height: 1.5;
+    color: var(--text);
+    word-break: break-word;
+}
+
+.meeting-detail-value i {
+    color: var(--primary);
+    margin-right: 4px;
+}
+
+/* Attendees list (scrollable when long) */
+.attendee-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 360px;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+}
+
+.attendee-list::-webkit-scrollbar { width: 6px; }
+.attendee-list::-webkit-scrollbar-track { background: transparent; }
+.attendee-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+
+.attendee-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+}
+
+.attendee-avatar {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-700);
+    color: #fff;
+    font-weight: 700;
+    font-size: .82rem;
+    letter-spacing: .02em;
+}
+
+.attendee-name {
+    font-size: .88rem;
+    font-weight: 500;
+    color: var(--text);
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Documents grid */
+.documents-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+    .documents-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 1200px) {
+    .documents-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.document-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    background: var(--surface);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.document-card:hover {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.document-icon {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+}
+
+.document-icon--pdf   { background: var(--danger-soft);  color: var(--danger); }
+.document-icon--ppt   { background: var(--warning-soft); color: var(--warning-600); }
+.document-icon--word  { background: var(--primary-soft); color: var(--primary); }
+.document-icon--text  { background: var(--surface-soft); color: var(--muted); }
+.document-icon--generic { background: var(--info-soft);  color: var(--info); }
+
+.document-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.document-name {
+    font-size: .84rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.document-meta {
+    font-size: .72rem;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* ============================================================
+   DARK MODE - contrast corrections
+   ============================================================ */
+
+html[data-theme="dark"] .meetings-stat-icon--neutral {
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .meetings-page .meeting-card-completed::after {
+    background: var(--surface-muted);
+}
+
+html[data-theme="dark"] .meetings-empty-icon {
+    background: var(--surface-muted);
+    color: var(--text-light);
+}
+
+html[data-theme="dark"] .document-icon--text {
+    background: var(--surface-muted);
+    color: var(--text-light);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 991.98px) {
+    /* Stats: 2 across, last card spans full row (2 + 1) */
+    .meetings-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .meetings-stats .meetings-stat-card:last-child { grid-column: 1 / -1; }
+}
+
+@media (max-width: 575.98px) {
+    .meetings-stats { grid-template-columns: minmax(0, 1fr); }
+    .meetings-stats .meetings-stat-card:last-child { grid-column: auto; }
+
+    .meeting-detail-item { padding: var(--space-2) var(--space-3); }
+    .meeting-detail-value { font-size: .88rem; }
+
+    .meeting-details-page .meetings-join-bar { justify-content: stretch; }
+    .meetings-join-btn { width: 100%; justify-content: center; }
+}
