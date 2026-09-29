@@ -8,10 +8,10 @@
 
 .detail-card {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-xl);
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
 }
 
 .detail-card .card-header {
@@ -198,12 +198,12 @@
 .employee-profile-summary {
     background: var(--surface);
     border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     box-shadow: var(--shadow-sm);
-    padding: var(--space-5);
+    padding: var(--space-6) var(--space-5);
     text-align: center;
     position: sticky;
-    top: var(--space-4);
+    top: calc(var(--navbar-height) + 16px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -215,13 +215,19 @@
     height: 150px;
     border-radius: var(--radius-full);
     overflow: hidden;
-    border: 3px solid var(--primary-400);
+    border: 3px solid var(--primary-200);
+    outline: 4px solid var(--primary-50);
     background: var(--primary-50);
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: var(--space-2);
     flex-shrink: 0;
+    box-shadow: var(--shadow-md);
+}
+
+html[data-theme="dark"] .employee-profile-avatar {
+    outline-color: var(--primary-soft);
 }
 
 .employee-profile-avatar img {
@@ -268,8 +274,13 @@
     background: var(--surface);
     border: 1px solid var(--border-light);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-xs);
     padding: var(--space-4) var(--space-5);
+    transition: box-shadow var(--transition);
+}
+
+.employee-info-section:hover {
+    box-shadow: var(--shadow-sm);
 }
 
 .employee-info-section h5 {

@@ -68,6 +68,7 @@ class Employee_model extends CI_Model
     public function countEmployees()
     {
         $this->db->where('deleted_at', NULL);
+        $this->db->where('status', 'Active');
 
         return $this->db->count_all_results('tbl_employee');
     }

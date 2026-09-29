@@ -22,7 +22,7 @@
                     </div>
                     <div class="col-lg-4 text-lg-end">
                         <div class="hero-chip justify-content-lg-end">
-                            <i class="bi bi-circle-fill text-success"></i>
+                            <span class="live-dot" aria-hidden="true"></span>
                             System Live
                         </div>
                     </div>

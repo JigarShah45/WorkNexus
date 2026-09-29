@@ -1,0 +1,242 @@
+=====================================================================
+WORKNEXUS - EMPLOYEE MANAGEMENT SYSTEM | SUPPORT & PRODUCT GUIDE
+=====================================================================
+
+OVERVIEW
+---------------------------------------------------------------------
+WorkNexus is a web-based HR and employee management platform. Teams
+use it to manage employee records, attendance, leave requests,
+client meetings, salary hikes, reports, and notifications.
+Users sign in at the login page with a username and password.
+What each person can see depends on their role (see ROLES below).
+
+TECH AT A GLANCE
+- Web application: works in any modern browser (Chrome, Edge, Firefox).
+- Built on CodeIgniter 3 (PHP) with MySQL/MariaDB.
+- Google Calendar + Google Meet integration for client meetings.
+- Email notifications via SMTP.
+
+=====================================================================
+USER ROLES AND WHAT THEY CAN ACCESS
+=====================================================================
+
+ADMIN - Full access to everything:
+Employees, Departments, User Management, Reports, Settings,
+Attendance (manage all), Leave, Meetings, Salary & Compensation,
+Audit Trail, User Logs, view/edit all data including salary.
+
+HR - Almost everything except system administration:
+Employees, Departments, Reports, Attendance (manage all), Leave,
+Meetings, Salary & Compensation. NO user management, settings,
+audit trail, or user logs. Can edit employee data but not salary.
+
+MANAGER - Supervisory access:
+Dashboard, Employees (view only), Reports, Attendance, Leave,
+Meetings. No departments, users, settings, audit, or salary access.
+
+EMPLOYEE - Self-service access:
+Dashboard, My Attendance, My Leave requests, My Meetings,
+My Compensation (own salary page only). Cannot manage other
+employees or see anyone else's data.
+
+If a user says they cannot find a menu item, it is almost always
+because their role does not include that permission. They should
+contact an Admin if they believe they need more access.
+
+=====================================================================
+MODULES AND HOW TO USE THEM
+=====================================================================
+
+1) DASHBOARD
+The first page after login. Shows overview statistics and charts
+about employees, attendance, leave, and meetings depending on role.
+
+2) EMPLOYEES (Admin, HR; Managers can view)
+Purpose: Maintain the company employee directory.
+How to add an employee:
+  1. Go to "Employees" in the left sidebar.
+  2. Click the "Add Employee" button.
+  3. Fill in personal details (name, email, phone), job details
+     (department, designation, joining date) and upload a profile
+     photo.
+  4. Save. The employee now appears in the directory.
+Other actions: View full profile, Edit details, Delete.
+Deleting an employee is a SOFT DELETE - the record is archived,
+not permanently erased.
+
+3) DEPARTMENTS (Admin, HR)
+Purpose: Organize employees into departments (e.g., Engineering,
+Sales, HR).
+Steps: Sidebar > "Departments" > Add / Edit / Delete. Each
+department page shows its employees.
+
+4) USER MANAGEMENT (Admin only)
+Purpose: Create login accounts and assign roles.
+Steps: Sidebar > "User Management" > Add User > choose role
+(Admin/HR/Manager/Employee) > save. Use Edit to change a role or
+reset a password. If someone forgets their password, an Admin
+resets it here.
+
+5) ATTENDANCE
+Official shift: 11:00 AM to 7:00 PM IST (Asia/Kolkata).
+Key rules every user should know:
+  - GRACE PERIOD: You may clock in up to 11:15 AM without penalty.
+    Logging in AFTER 11:15 AM marks the day as HALF-DAY.
+  - CLOCK-OUT WINDOW: A valid final clock-out counts from 6:30 PM.
+    Logging out before 6:30 PM only ends your web session - it is
+    NOT recorded as your attendance clock-out.
+  - AUTO-CLOSURE: If you never clock out, the record automatically
+    closes at 7:00 PM and your worked hours are counted until 7 PM.
+  - OVERTIME: Only real clock-outs after 7:00 PM generate overtime
+    (actual logout time minus 7:00 PM). An auto-closed record never
+    produces overtime.
+How employees use it: Sidebar > "My Attendance" > filter by month
+and year to see your records, hours worked, and status.
+Admins/HR use "Manage Attendance" to view and correct records for
+all employees.
+
+6) LEAVE MANAGEMENT
+Leave types available: Sick, Casual, Personal, Maternity,
+Paternity, Paid, Unpaid, Other.
+Urgency levels: Low, Medium, High, Critical.
+How to request leave (Employee):
+  1. Sidebar > "Leave Management" > "Request Leave".
+  2. Choose leave type, urgency, from-date, to-date, total days,
+     and add a reason.
+  3. Submit. The request goes to HR/Admin for review.
+  4. Track status under "My Leaves" (Pending / Approved / Rejected).
+How to approve/reject (HR/Admin):
+  1. Sidebar > "Leave Management" > Manage Leave.
+  2. Open a pending request, review details, click Approve or
+     Reject and add remarks.
+  3. The employee is notified instantly and by email.
+
+7) CLIENT MEETINGS
+Purpose: Schedule client meetings with Google Calendar and Google
+Meet integration, plus file attachments (minutes, presentations).
+How to schedule a meeting (HR/Admin):
+  1. Sidebar > "Client Meetings" > Add Meeting.
+  2. Enter title, client, date/time, agenda, location/link.
+  3. Attach supporting files if needed.
+  4. On first use you may be redirected to Google to authorize
+     calendar access (one-time OAuth consent).
+  5. Save - the meeting is added to Google Calendar with a Meet
+     link and invites are emailed to participants.
+Employees see "My Meetings" - read-only list of meetings they
+attend. Edit or delete from the meeting detail page.
+
+8) SALARY & COMPENSATION (HIKES)
+Purpose: Propose and review salary hikes backed by attendance
+scoring.
+Workflow:
+  1. HR/Admin opens "Salary & Compensation".
+  2. Propose a hike for an employee - the system computes an
+     attendance-based score to support the proposal.
+  3. Proposal sits in Pending until reviewed.
+  4. Reviewer Approves or Rejects; everything is visible under
+     History.
+Employees see only "My Compensation" - their own current salary
+and hike history. Nobody else's.
+
+9) REPORTS (Admin, HR, Manager)
+Sidebar > "Reports". Attendance reports, leave summaries, and
+employee analytics. Every table supports export buttons:
+Copy, Excel, PDF, and Print. Filter by date range before exporting.
+
+10) NOTIFICATIONS
+Bell icon in the top header shows an unread count badge.
+New notification alerts pop up automatically; the bell polls for
+updates every 15 seconds while the tab is open.
+Click any notification to jump to the related page.
+Use "Mark all read" to clear the badge, or open Notifications >
+View All for the full history.
+You receive notifications for: leave approval/rejection decisions,
+meeting updates, and other activity relevant to you.
+
+11) AUDIT TRAIL (Admin only)
+Every create/update/delete across the system is logged with who
+did it, when, and the before/after values. Use it to answer "who
+changed this?" questions.
+
+12) USER LOGS (Admin only)
+Records every login and logout with timestamp, IP address, and
+browser/device info. Useful for security reviews.
+
+13) PROFILE
+Top-right avatar > "My Profile": update your personal information
+and profile picture. Change Password is also available here.
+
+14) SETTINGS (Admin only)
+Application-wide configuration.
+
+=====================================================================
+UI TIPS FOR ALL USERS
+=====================================================================
+- DARK/LIGHT THEME: Moon/sun icon in the top header. Your choice
+  is remembered per browser.
+- QUICK PAGE SEARCH: Press Ctrl+K (or click the header search box)
+  and type a page name like "leave" to jump anywhere instantly.
+- TABLES: All lists have search, sorting, pagination, and rows per
+  page (10/25/50/100).
+- FULLSCREEN: The expand icon in the header toggles fullscreen mode.
+- LOGOUT: Top-right avatar > Logout. Remember logging out during
+  work hours does NOT clock you out of attendance.
+
+=====================================================================
+FREQUENTLY ASKED QUESTIONS
+=====================================================================
+
+Q: I forgot my password. What do I do?
+A: Contact an Administrator. Admins can reset your password under
+User Management.
+
+Q: Why can't I see some menus my colleague has?
+A: Menus depend on your role. Ask an Admin if your role needs
+updating.
+
+Q: I logged in after 11:15 AM. What happens?
+A: That day is automatically marked Half-Day.
+
+Q: I logged out at 5 PM but my attendance still shows active?
+A: Logging out before 6:30 PM only ends your session, not your
+attendance. Your attendance will auto-close at 7:00 PM with hours
+counted till 7 PM.
+
+Q: I forgot to clock out yesterday. Will I lose pay?
+A: No. The record auto-closes at 7:00 PM and hours are counted
+until 7 PM. Contact HR/Admin if the record looks wrong.
+
+Q: How do I get overtime credit?
+A: Clock out normally after 7:00 PM. Overtime = your actual logout
+time minus 7:00 PM.
+
+Q: Who approves my leave?
+A: HR or Admin. You will get a notification and email once decided.
+
+Q: Where is the Google Meet link for a meeting?
+A: Open the meeting from Client Meetings (or My Meetings). The
+Meet link and calendar entry are attached after scheduling.
+
+Q: Why am I redirected to Google when creating my first meeting?
+A: One-time Google OAuth consent so WorkNexus can add events to
+Google Calendar. After approving once, it will not ask again.
+
+Q: How do I export a report?
+A: Open Reports, filter what you need, then use the Copy, Excel,
+PDF, or Print buttons above the table.
+
+Q: Can employees see each other's salaries?
+A: No. Employees can only view their own compensation page.
+
+Q: Something in my record was changed wrongly - how do we find out
+who did it?
+A: Admins can check the Audit Trail which stores before/after
+values of every change.
+
+=====================================================================
+ESCALATION
+=====================================================================
+For anything the assistant cannot resolve (password resets, role
+changes, attendance corrections, salary disputes), collect the
+user's name, role, and a description, and escalate to the HR team
+or a WorkNexus administrator.

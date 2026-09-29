@@ -23,7 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://localhost:7328/employee_management/';
+ $config['base_url'] = getenv('WN_BASE_URL') !== FALSE ? getenv('WN_BASE_URL') : 'http://localhost:7328/employee_management/';
+//$config['base_url'] = 'http://192.168.0.115:7328/employee_management/';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -325,8 +327,11 @@ $config['cache_query_string'] = FALSE;
 |
 | https://codeigniter.com/userguide3/libraries/encryption.html
 |
+| Set WN_ENCRYPTION_KEY in the gitignored .env file (see .env.example).
+| Generate one with: php -r "echo bin2hex(random_bytes(16));"
+|
 */
-$config['encryption_key'] = 'EmpMgmt2026SecureKey!@#$%^&*()';
+$config['encryption_key'] = getenv('WN_ENCRYPTION_KEY') !== FALSE ? getenv('WN_ENCRYPTION_KEY') : '';
 
 /*
 |--------------------------------------------------------------------------

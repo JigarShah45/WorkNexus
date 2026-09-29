@@ -226,38 +226,36 @@
 
     font-weight:600;
 
+    font-size:.78rem;
+
 }
 
 .status-present{
-
-    background:#16a34a;
-
-    color:#fff;
-
+    background:var(--success-soft);
+    color:var(--success);
 }
 
 .status-halfday{
-
-    background:#f59e0b;
-
-    color:#fff;
-
+    background:var(--warning-soft);
+    color:var(--warning-600);
 }
 
 .status-late{
-
-    background:#7c3aed;
-
-    color:#fff;
-
+    background:rgba(139,92,246,.14);
+    color:#7c3aed;
 }
 
 .status-absent{
+    background:var(--danger-soft);
+    color:var(--danger);
+}
 
-    background:#dc2626;
+[data-theme="dark"] .status-late{
+    color:#a78bfa;
+}
 
-    color:#fff;
-
+[data-theme="dark"] .status-halfday{
+    color:var(--warning);
 }
 
 
@@ -405,69 +403,41 @@
 }
 
 /* ==========================================================
-   ATTENDANCE TABLE BORDERS
-========================================================== */
+   ATTENDANCE TABLE — minimal WorkNexus style (no column grid)
+   ========================================================== */
 
 #attendanceTable,
 #manageAttendanceTable{
     width:100%;
-    border-collapse:collapse !important;
-    border:1px solid var(--border);
+    border-collapse:separate;
+    border-spacing:0;
+    border:1px solid var(--border-light);
 }
 
 #attendanceTable thead th,
 #manageAttendanceTable thead th{
-
     background:var(--surface-soft);
-
-    color:var(--text);
-
+    color:var(--muted);
     font-weight:700;
-
-    border-right:1px solid var(--border);
-
     border-bottom:1px solid var(--border);
-
-    padding:14px 16px;
-
+    padding:13px 16px;
     white-space:nowrap;
-
 }
 
 #attendanceTable tbody td,
 #manageAttendanceTable tbody td{
-
-    border-right:1px solid var(--border);
-
-    border-bottom:1px solid var(--border);
-
-    padding:14px 16px;
-
+    border-bottom:1px solid var(--border-light);
+    padding:13px 16px;
     color:var(--text);
-
     vertical-align:middle;
-
-}
-
-#attendanceTable thead th:last-child,
-#attendanceTable tbody td:last-child,
-#manageAttendanceTable thead th:last-child,
-#manageAttendanceTable tbody td:last-child{
-
-    border-right:none;
-
 }
 
 #attendanceTable tbody tr:last-child td,
 #manageAttendanceTable tbody tr:last-child td{
-
     border-bottom:none;
-
 }
 
 #attendanceTable tbody tr:hover td,
 #manageAttendanceTable tbody tr:hover td{
-
-    background:var(--primary-soft);
-
+    background:var(--primary-50);
 }

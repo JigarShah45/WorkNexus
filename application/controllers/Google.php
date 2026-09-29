@@ -50,6 +50,34 @@ class Google extends CI_Controller
 
     /**
      * ---------------------------------------------------------
+     * PRIVATE IP DETECTION (Google OAuth requirement)
+     * ---------------------------------------------------------
+     *
+     * Google blocks OAuth consent for redirect URIs pointing to
+     * private/LAN IP addresses (e.g. http://192.168.0.115) unless
+     * the authorization request includes device_id and
+     * device_name parameters identifying the device.
+     *
+     * Returns TRUE when the given host is an RFC1918 private IP
+     * (loopback / real domains are excluded).
+     */
+    private function isPrivateIpHost($host)
+    {
+        if (!$host || !filter_var($host, FILTER_VALIDATE_IP)) {
+            return FALSE;
+        }
+
+        // NO_PRIV_RANGE fails validation for private ranges,
+        // so a FALSE result here means the IP is private.
+        return filter_var(
+            $host,
+            FILTER_VALIDATE_IP,
+            FILTER_FLAG_NO_PRIV_RANGE
+        ) === FALSE;
+    }
+
+    /**
+     * ---------------------------------------------------------
      * CONNECT GOOGLE CALENDAR
      * ---------------------------------------------------------
      *
@@ -74,6 +102,37 @@ class Google extends CI_Controller
         }
 
         $authUrl = $this->client->createAuthUrl();
+
+        /*
+         * Google OAuth policy for private IP development:
+         *
+         * When the redirect URI points at a private/LAN IP
+         * (http://192.168.x.x etc.), Google rejects the consent
+         * screen with:
+         *   "Error 400: invalid_request -
+         *    device_id and device_name are required for private IP"
+         *
+         * Fix: append device_id and device_name to the auth URL so
+         * Google can attribute the authorization to this device.
+         */
+        $redirectHost = parse_url(
+            $this->client->getRedirectUri(),
+            PHP_URL_HOST
+        );
+
+        if ($this->isPrivateIpHost($redirectHost)) {
+
+            $deviceName = php_uname('n') ?: 'WorkNexus Server';
+
+            // Stable pseudo-device id derived from host + machine name
+            $deviceId = 'worknexus-' . md5($redirectHost . '|' . $deviceName);
+
+            $authUrl .= (strpos($authUrl, '?') === FALSE ? '?' : '&')
+                . http_build_query(array(
+                    'device_id'   => $deviceId,
+                    'device_name' => $deviceName,
+                ));
+        }
 
         redirect($authUrl);
     }

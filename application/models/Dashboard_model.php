@@ -146,7 +146,8 @@ class Dashboard_model extends CI_Model
      *                           (the stored clock_in is the effective clock-in,
      *                           so clock_in > 11:15:00 is equivalent)
      *   - half_day            : today's records with status = 'Half-Day'
-     *   - currently_working   : clocked in but no valid final clock-out yet
+     *   - currently_working   : clocked in but no clock-out and not yet
+     *                           auto-closed at the 7:00 PM shift end
      *   - overtime_employees  : today's records with overtime_hours > 0
      *   - overtime_total_hours: total overtime hours today
      */
@@ -163,7 +164,7 @@ class Dashboard_model extends CI_Model
         $sql = "SELECT
             COUNT(CASE WHEN TIME(clock_in) > ? THEN 1 END) AS late_arrivals,
             COUNT(CASE WHEN status = 'Half-Day' THEN 1 END) AS half_day,
-            COUNT(CASE WHEN clock_in IS NOT NULL AND clock_out IS NULL THEN 1 END) AS currently_working,
+            COUNT(CASE WHEN clock_in IS NOT NULL AND clock_out IS NULL AND auto_closed = 0 THEN 1 END) AS currently_working,
             COUNT(CASE WHEN overtime_hours > 0 THEN 1 END) AS overtime_employees,
             COALESCE(SUM(overtime_hours), 0) AS overtime_total_hours
         FROM tbl_attendance

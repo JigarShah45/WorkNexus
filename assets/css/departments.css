@@ -10,12 +10,28 @@
 }
 
 .department-card {
-    transition: all 0.2s ease;
+    transition: all 0.22s var(--ease-out);
 }
 
 .department-card:hover {
-    border-color: var(--primary);
-    box-shadow: var(--shadow);
+    border-color: var(--primary-200);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+}
+
+/* Gentle staggered entrance */
+.department-grid > * {
+    animation: wn-fade-up 0.45s var(--ease-out) both;
+}
+
+.department-grid > *:nth-child(2) { animation-delay: 0.06s; }
+.department-grid > *:nth-child(3) { animation-delay: 0.12s; }
+.department-grid > *:nth-child(4) { animation-delay: 0.18s; }
+.department-grid > *:nth-child(5) { animation-delay: 0.24s; }
+.department-grid > *:nth-child(6) { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .department-grid > * { animation: none !important; }
 }
 
 .department-card .card-body {

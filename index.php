@@ -53,8 +53,65 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	// define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
-	define('ENVIRONMENT', 'development');
+/*
+ *---------------------------------------------------------------
+ * ENVIRONMENT (.env) LOADER
+ *---------------------------------------------------------------
+ *
+ * CodeIgniter 3 has no built-in .env support, so we load the
+ * project root .env file here - before any config file is read -
+ * and expose every value to getenv() / $_ENV / $_SERVER.
+ *
+ * The .env file is gitignored. Copy .env.example to .env and set
+ * your real credentials there. Values already present in the real
+ * environment always win over values from the file.
+ *
+ * Missing or malformed .env files are ignored silently.
+ *---------------------------------------------------------------
+ */
+	$env_file = __DIR__ . DIRECTORY_SEPARATOR . '.env';
+	if (is_readable($env_file) && ($env_lines = file($env_file, FILE_IGNORE_NEW_LINES)) !== FALSE)
+	{
+		foreach ($env_lines as $env_line)
+		{
+			$env_line = trim($env_line);
+
+			// Skip blank lines and comments
+			if ($env_line === '' OR $env_line[0] === '#')
+			{
+				continue;
+			}
+
+			// Only KEY=VALUE pairs
+			$env_pos = strpos($env_line, '=');
+			if ($env_pos === FALSE)
+			{
+				continue;
+			}
+
+			$env_key = trim(substr($env_line, 0, $env_pos));
+			$env_val = trim(substr($env_line, $env_pos + 1));
+
+			// Strip optional surrounding quotes
+			if (strlen($env_val) > 1 AND ($env_val[0] === '"' OR $env_val[0] === "'") AND $env_val[0] === substr($env_val, -1))
+			{
+				$env_val = substr($env_val, 1, -1);
+			}
+
+			if ($env_key === '' OR getenv($env_key) !== FALSE)
+			{
+				continue;
+			}
+
+			putenv($env_key.'='.$env_val);
+			$_ENV[$env_key] = $env_val;
+			$_SERVER[$env_key] = $env_val;
+		}
+	}
+	unset($env_file, $env_lines, $env_line, $env_pos, $env_key, $env_val);
+
+	// CI_ENV from .env or the web server wins; default is development
+	define('ENVIRONMENT', getenv('CI_ENV') !== FALSE ? getenv('CI_ENV') : 'development');
 
 /*
  *---------------------------------------------------------------

@@ -26,9 +26,6 @@ $CI =& get_instance();
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <!-- Global JS -->
     <script>
         const base_url = "<?= base_url(); ?>";
@@ -248,30 +245,45 @@ $CI =& get_instance();
         // ==========================================
         // Mobile Menu
         // ==========================================
+        function closeMobileSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('sidebarOverlay');
+            if (sidebar) sidebar.classList.remove('mobile-open');
+            if (overlay) overlay.classList.remove('active');
+            document.body.classList.remove('mobile-sidebar-open');
+        }
+
         $(document).on('click', '#mobileMenuBtn', function(e) {
             e.preventDefault();
             e.stopPropagation();
             var sidebar = document.getElementById('sidebar');
             var overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.toggle('mobile-open');
-            if (overlay) overlay.classList.toggle('active');
+            if (!sidebar) return;
+            var willOpen = !sidebar.classList.contains('mobile-open');
+            sidebar.classList.toggle('mobile-open', willOpen);
+            if (overlay) overlay.classList.toggle('active', willOpen);
+            // Lock background scroll while the drawer is open
+            document.body.classList.toggle('mobile-sidebar-open', willOpen);
         });
 
         $(document).on('click', '#sidebarOverlay', function(e) {
             e.preventDefault();
-            var sidebar = document.getElementById('sidebar');
-            var overlay = document.getElementById('sidebarOverlay');
-            sidebar.classList.remove('mobile-open');
-            if (overlay) overlay.classList.remove('active');
+            closeMobileSidebar();
         });
 
-        // Close sidebar when nav link clicked on tablet/mobile
-        $(document).on('click', '.sidebar-nav .nav-link', function(e) {
+        // Close sidebar when nav link clicked on tablet/mobile.
+        // NOTE: no preventDefault() — the browser must still follow
+        // the link so navigation works on touch devices.
+        $(document).on('click', '.sidebar-nav .nav-link', function() {
             if (window.innerWidth < 1200) {
-                var sidebar = document.getElementById('sidebar');
-                var overlay = document.getElementById('sidebarOverlay');
-                sidebar.classList.remove('mobile-open');
-                if (overlay) overlay.classList.remove('active');
+                closeMobileSidebar();
+            }
+        });
+
+        // Close drawer with Escape key
+        $(document).on('keydown', function(e) {
+            if (e.key === 'Escape' && document.body.classList.contains('mobile-sidebar-open')) {
+                closeMobileSidebar();
             }
         });
 
@@ -645,6 +657,21 @@ $CI =& get_instance();
     <script src="<?= base_url('assets/js/department.js'); ?>"></script>
     <script src="<?= base_url('assets/js/reports.js'); ?>"></script>
     <script src="<?= base_url('assets/js/hikes.js'); ?>"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/6a8d7fb6f242a0344a3cd589/1k0sbloc4';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 
 </body>
 </html>

@@ -1,17 +1,69 @@
 /* ============================================================
-   THEME - Dark mode overrides
+   WORKNEXUS THEME — Dark mode overrides
+   Proper dark surfaces with adjusted elevation & contrast.
    ============================================================ */
 
+/* ---- Top bar / legacy navbar ---- */
 html[data-theme="dark"] .navbar {
-    background: rgba(17, 24, 39, 0.92);
+    background: rgba(13, 20, 36, 0.9);
 }
 
+/* ---- Cards ---- */
+html[data-theme="dark"] .card,
 html[data-theme="dark"] .table-card,
-html[data-theme="dark"] .detail-card,
-html[data-theme="dark"] .card {
-    box-shadow: var(--shadow-md);
+html[data-theme="dark"] .report-table-card,
+html[data-theme="dark"] .profile-card,
+html[data-theme="dark"] .form-card,
+html[data-theme="dark"] .department-card,
+html[data-theme="dark"] .report-tile,
+html[data-theme="dark"] .filter-bar,
+html[data-theme="dark"] .summary-card,
+html[data-theme="dark"] .dashboard-panel-card,
+html[data-theme="dark"] .report-summary-card,
+html[data-theme="dark"] .settings-card,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .photo-section {
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
 }
 
+html[data-theme="dark"] .card-header,
+html[data-theme="dark"] .table-card .card-header,
+html[data-theme="dark"] .profile-card .card-header,
+html[data-theme="dark"] .form-card .card-header {
+    background: var(--surface);
+    border-bottom-color: var(--border-light);
+}
+
+/* ---- Sidebar ---- */
+html[data-theme="dark"] .sidebar {
+    background: #0e1526;
+    border-right-color: var(--border-light);
+}
+
+html[data-theme="dark"] .sidebar-nav .nav-link:hover {
+    background: rgba(96, 165, 250, 0.09);
+}
+
+html[data-theme="dark"] .sidebar-version {
+    background: var(--surface-muted);
+}
+
+/* ---- Tables (Bootstrap variable bridge) ---- */
+[data-theme="dark"] .table {
+    --bs-table-bg: var(--surface);
+    --bs-table-striped-bg: var(--surface-soft);
+    --bs-table-hover-bg: var(--primary-soft);
+    --bs-table-color: var(--text);
+    --bs-table-border-color: var(--border);
+    color: var(--text);
+}
+
+[data-theme="dark"] .table thead th {
+    background: var(--surface-soft);
+}
+
+/* ---- DataTables ---- */
 html[data-theme="dark"] .dataTables_wrapper .dataTables-toolbar {
     background: linear-gradient(180deg, var(--surface-soft) 0%, var(--surface) 100%);
 }
@@ -21,21 +73,34 @@ html[data-theme="dark"] .dataTables_wrapper .dataTables-length select {
     background-color: var(--surface-soft);
 }
 
-html[data-theme="dark"] .swal2-popup {
+[data-theme="dark"] table.dataTable {
+    border-color: var(--border);
+}
+
+[data-theme="dark"] table.dataTable thead th {
+    background: var(--surface-soft);
+}
+
+[data-theme="dark"] table.dataTable tbody td {
     background: var(--surface);
+}
+
+[data-theme="dark"] table.dataTable tbody tr:nth-child(even) td {
+    background: var(--surface-soft);
+}
+
+[data-theme="dark"] table.dataTable tbody tr:hover td {
+    background: rgba(96, 165, 250, 0.1);
+}
+
+/* ---- Forms / inputs ---- */
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+    background-color: var(--surface-soft);
+    border-color: var(--border);
     color: var(--text);
-}
-
-html[data-theme="dark"] .swal2-title {
-    color: var(--text);
-}
-
-html[data-theme="dark"] .swal2-html-container {
-    color: var(--muted);
-}
-
-html[data-theme="dark"] .sidebar-overlay {
-    background: rgba(0, 0, 0, 0.6);
 }
 
 html[data-theme="dark"] .form-control:focus,
@@ -46,28 +111,24 @@ html[data-theme="dark"] textarea:focus {
     color: var(--text);
 }
 
-/* Bootstrap Table Theme Override */
-
-[data-theme="dark"] .table{
-
-    --bs-table-bg: var(--surface);
-
-    --bs-table-striped-bg: var(--surface-soft);
-
-    --bs-table-hover-bg: var(--primary-soft);
-
-    --bs-table-color: var(--text);
-
-    --bs-table-border-color: var(--border);
-
-    color:var(--text);
-
+html[data-theme="dark"] input[readonly].form-control,
+html[data-theme="dark"] .form-control[readonly] {
+    background-color: var(--surface-sunken);
 }
 
-/* ============================================================
-   MODAL - Dark mode overrides (all modals)
-   ============================================================ */
+html[data-theme="dark"] .input-group-text {
+    background: var(--surface-sunken);
+    border-color: var(--border);
+    color: var(--muted);
+}
 
+/* ---- Dropdowns ---- */
+html[data-theme="dark"] .dropdown-menu {
+    background: var(--surface);
+    border-color: var(--border);
+}
+
+/* ---- Modals ---- */
 html[data-theme="dark"] .modal-content {
     background-color: var(--surface);
     color: var(--text);
@@ -83,7 +144,7 @@ html[data-theme="dark"] .modal-header .modal-title {
 }
 
 html[data-theme="dark"] .modal-header .btn-close {
-    filter: invert(1);
+    filter: invert(1) grayscale(100%);
 }
 
 html[data-theme="dark"] .modal-body {
@@ -98,7 +159,7 @@ html[data-theme="dark"] .modal-body label {
 html[data-theme="dark"] .modal-body .form-control,
 html[data-theme="dark"] .modal-body .form-select,
 html[data-theme="dark"] .modal-body textarea {
-    background-color: var(--surface-soft);
+    background-color: var(--surface-sunken);
     color: var(--text);
     border-color: var(--border);
 }
@@ -119,7 +180,38 @@ html[data-theme="dark"] .modal-footer {
     border-top-color: var(--border);
 }
 
-/* Dark mode SweetAlert confirm button fix */
+/* ---- SweetAlert2 ---- */
+html[data-theme="dark"] .swal2-popup {
+    background: var(--surface);
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+html[data-theme="dark"] .swal2-title {
+    color: var(--text);
+}
+
+html[data-theme="dark"] .swal2-html-container {
+    color: var(--muted);
+}
+
 html[data-theme="dark"] .swal2-styled {
     border: none;
+}
+
+/* ---- Misc ---- */
+html[data-theme="dark"] .sidebar-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+html[data-theme="dark"] ::selection {
+    background: rgba(96, 165, 250, 0.28);
+}
+
+/* Dark scrollbars for main areas */
+html[data-theme="dark"] body::-webkit-scrollbar { width: 10px; }
+html[data-theme="dark"] body::-webkit-scrollbar-track { background: var(--bg); }
+html[data-theme="dark"] body::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 8px;
 }

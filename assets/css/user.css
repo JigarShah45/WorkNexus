@@ -1,31 +1,33 @@
 /* ============================================================
-   USER TABLE COLUMN BORDERS
+   USER TABLE — aligned with WorkNexus minimal table style
    ============================================================ */
 
 #userTable {
     width: 100%;
-    border-collapse: collapse !important;
+    border-collapse: separate !important;
+    border-spacing: 0;
 }
 
 #userTable thead th {
-    border-right: 1px solid var(--border) !important;
     border-bottom: 1px solid var(--border) !important;
     background: var(--surface-soft);
 }
 
 #userTable tbody td {
-    border-right: 1px solid var(--border) !important;
-    border-bottom: 1px solid var(--border) !important;
-    background: var(--surface);
-}
-
-#userTable thead th:last-child,
-#userTable tbody td:last-child {
-    border-right: none !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    background: transparent;
 }
 
 #userTable tbody tr:last-child td {
     border-bottom: none !important;
+}
+
+#userTable tbody tr {
+    transition: background-color var(--transition);
+}
+
+#userTable tbody tr:hover td {
+    background: var(--primary-50);
 }
 
 

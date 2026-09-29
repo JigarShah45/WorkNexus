@@ -1,15 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#5B8DEF"/>
-      <stop offset="100%" style="stop-color:#4A7CF0"/>
+    <linearGradient id="wnBg" x1="2" y1="2" x2="46" y2="46" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="0.55" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
     </linearGradient>
+    <linearGradient id="wnGloss" x1="24" y1="1" x2="24" y2="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="wnNode" x1="24" y1="8" x2="24" y2="38" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dbeafe"/>
+    </linearGradient>
+    <filter id="wnShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="1.6" stdDeviation="1.5" flood-color="#1e1b4b" flood-opacity="0.5"/>
+    </filter>
   </defs>
-  <circle cx="24" cy="24" r="22" fill="url(#grad)"/>
-  <circle cx="24" cy="14" r="5.5" fill="#fff"/>
-  <circle cx="13" cy="30" r="4.5" fill="#fff" opacity="0.9"/>
-  <circle cx="35" cy="30" r="4.5" fill="#fff" opacity="0.9"/>
-  <line x1="24" y1="19.5" x2="15.5" y2="26" stroke="#fff" stroke-width="2" opacity="0.7"/>
-  <line x1="24" y1="19.5" x2="32.5" y2="26" stroke="#fff" stroke-width="2" opacity="0.7"/>
-  <line x1="16.5" y1="30" x2="31.5" y2="30" stroke="#fff" stroke-width="2" opacity="0.5"/>
+
+  <!-- Tile -->
+  <rect x="1" y="1" width="46" height="46" rx="12.5" fill="url(#wnBg)"/>
+  <!-- Glass highlight (top half) -->
+  <path d="M13.5 1h21c6.35 0 11.5 5.15 11.5 11.5V21H1v-8.5C1 6.15 6.15 1 12.5 1Z" transform="translate(1 0)" fill="url(#wnGloss)" opacity="0.9"/>
+
+  <!-- Connections -->
+  <g stroke="#ffffff" stroke-linecap="round" fill="none">
+    <path d="M24 15.2 15.6 30.4" stroke-width="5" opacity="0.25"/>
+    <path d="M24 15.2 32.4 30.4" stroke-width="5" opacity="0.25"/>
+    <path d="M16.8 32.6h14.4" stroke-width="5" opacity="0.2"/>
+    <path d="M24 15.2 15.6 30.4" stroke-width="2.6" opacity="0.95"/>
+    <path d="M24 15.2 32.4 30.4" stroke-width="2.6" opacity="0.95"/>
+    <path d="M16.8 32.6h14.4" stroke-width="2.4" opacity="0.8"/>
+  </g>
+
+  <!-- Nodes (3D lift via drop shadow + gradient fill) -->
+  <g filter="url(#wnShadow)">
+    <circle cx="15.6" cy="32.6" r="4.1" fill="url(#wnNode)"/>
+    <circle cx="32.4" cy="32.6" r="4.1" fill="url(#wnNode)"/>
+    <circle cx="24" cy="13.4" r="5" fill="url(#wnNode)"/>
+  </g>
 </svg>

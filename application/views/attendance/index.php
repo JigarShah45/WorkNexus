@@ -112,10 +112,23 @@ $this->load->view('layouts/navbar');
                         <tr>
                             <td><?= date('d M Y', strtotime($row->attendance_date)); ?></td>
                             <td><?= !empty($row->clock_in) ? date('h:i A', strtotime($row->clock_in)) : '-'; ?></td>
-                            <td><?= !empty($row->clock_out) ? date('h:i A', strtotime($row->clock_out)) : '-'; ?></td>
+                            <td>
+                                <?php if (!empty($row->clock_out)) {
+                                    echo date('h:i A', strtotime($row->clock_out));
+                                } else {
+                                    $att_date = date('Y-m-d', strtotime($row->attendance_date));
+                                    $today_date = date('Y-m-d');
+                                    $now_time = date('H:i:s');
+                                    if ($att_date === $today_date && $now_time < '19:00:00') {
+                                        echo '-';
+                                    } else {
+                                        echo '7:00 PM';
+                                    }
+                                } ?>
+                            </td>
                             <td><span class="badge bg-primary"><?= $row->shift_name; ?></span></td>
-                            <td><?= (!empty($row->hours_worked) && $row->hours_worked > 0) ? $row->hours_worked . ' hrs' : '-'; ?></td>
-                            <td><?= (!empty($row->overtime_hours) && $row->overtime_hours > 0) ? $row->overtime_hours . ' hrs' : '-'; ?></td>
+                            <td><?= isset($row->hours_display) ? $row->hours_display : '-'; ?></td>
+                            <td><?= isset($row->overtime_display) ? $row->overtime_display : '-'; ?></td>
                             <td>
                                 <?php
                                 $status = isset($row->status) ? $row->status : '';

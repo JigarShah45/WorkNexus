@@ -341,8 +341,22 @@
 
 .report-tile:hover {
     transform: translateY(-4px);
-    border-color: var(--primary);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-200);
+    box-shadow: var(--shadow-md);
+}
+
+/* Gentle staggered entrance */
+.reports-grid > .report-item {
+    animation: wn-fade-up 0.45s var(--ease-out) both;
+}
+
+.reports-grid > .report-item:nth-child(2) { animation-delay: 0.05s; }
+.reports-grid > .report-item:nth-child(3) { animation-delay: 0.1s; }
+.reports-grid > .report-item:nth-child(4) { animation-delay: 0.15s; }
+.reports-grid > .report-item:nth-child(5) { animation-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .reports-grid > .report-item { animation: none !important; }
 }
 
 .report-icon {

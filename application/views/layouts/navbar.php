@@ -137,7 +137,7 @@ if ( ! function_exists('notification_format_time'))
                     <a class="header-dropdown-item" href="<?= site_url('profile'); ?>">
                         <i class="bi bi-person"></i> My Profile
                     </a>
-                    <a class="header-dropdown-item" href="<?= site_url('profile'); ?>">
+                    <a class="header-dropdown-item" href="<?= site_url('profile'); ?>#security">
                         <i class="bi bi-key"></i> Change Password
                     </a>
                     <div class="header-dropdown-divider"></div>

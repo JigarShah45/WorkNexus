@@ -1,30 +1,376 @@
 /* ============================================================
-   UTILITIES - Background soft colors and helpers
+   WORKNEXUS UTILITIES
+   Motion, skeleton loading, empty states, semantic badges,
+   soft color helpers.
    ============================================================ */
 
-/* Background Utilities */
-.bg-primary-soft {
+/* ==========================================
+   Soft background helpers (existing API kept)
+   ========================================== */
+.bg-primary-soft { background: var(--primary-soft); color: var(--primary); }
+.bg-success-soft { background: var(--success-soft); color: var(--success); }
+.bg-warning-soft { background: var(--warning-soft); color: var(--warning-600); }
+.bg-danger-soft  { background: var(--danger-soft);  color: var(--danger); }
+.bg-info-soft    { background: var(--info-soft);    color: var(--info); }
+
+.bg-primary-gradient {
+    background: var(--gradient-primary);
+    color: #fff;
+}
+
+/* ==========================================
+   Keyframes
+   ========================================== */
+@keyframes wn-fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes wn-fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wn-fade-down {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wn-slide-in-left {
+    from { opacity: 0; transform: translateX(-18px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes wn-scale-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes wn-pulse-dot {
+    0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    70%  { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+@keyframes wn-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes wn-shimmer {
+    from { background-position: -400px 0; }
+    to   { background-position: 400px 0; }
+}
+
+@keyframes wn-float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50%      { transform: translateY(-14px) rotate(3deg); }
+}
+
+@keyframes wn-drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%      { transform: translate(24px, -18px) scale(1.06); }
+    66%      { transform: translate(-16px, 14px) scale(0.96); }
+}
+
+/* Spin helper (used by loading spinners) */
+.spin,
+i.spin {
+    animation: wn-spin 0.8s linear infinite;
+}
+
+/* ==========================================
+   Entrance animation utilities
+   Apply .anim + optional modifier; stagger via --anim-delay
+   ========================================== */
+.anim {
+    animation: wn-fade-up 0.5s var(--ease-out) both;
+    animation-delay: var(--anim-delay, 0s);
+}
+
+.anim-fade      { animation-name: wn-fade-in; }
+.anim-down      { animation-name: wn-fade-down; }
+.anim-scale     { animation-name: wn-scale-in; animation-timing-function: var(--ease-spring); }
+.anim-slide     { animation-name: wn-slide-in-left; }
+.anim-none      { animation: none !important; }
+
+.d-1 { --anim-delay: 0.05s; }
+.d-2 { --anim-delay: 0.1s; }
+.d-3 { --anim-delay: 0.15s; }
+.d-4 { --anim-delay: 0.2s; }
+.d-5 { --anim-delay: 0.25s; }
+.d-6 { --anim-delay: 0.3s; }
+
+/* Live "system online" dot */
+.live-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: wn-pulse-dot 2s infinite;
+}
+
+/* ==========================================
+   Skeleton loading
+   ========================================== */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-sunken);
+    border-radius: var(--radius-sm);
+    pointer-events: none;
+    user-select: none;
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.55) 50%,
+        transparent 100%
+    );
+    animation: wn-shimmer 1.4s infinite;
+}
+
+html[data-theme="dark"] .skeleton::after {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.06) 50%,
+        transparent 100%
+    );
+}
+
+.skeleton-text {
+    height: 12px;
+    margin-bottom: 8px;
+    border-radius: var(--radius-full);
+}
+
+.skeleton-text:last-child { margin-bottom: 0; }
+.skeleton-title  { height: 20px; width: 60%; }
+.skeleton-avatar { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; }
+.skeleton-card   { min-height: 120px; border-radius: var(--radius-lg); }
+.skeleton-row td { height: 52px; }
+
+/* ==========================================
+   Empty states
+   ========================================== */
+.empty-state {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--muted);
+}
+
+.empty-state-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 16px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.9rem;
     background: var(--primary-soft);
     color: var(--primary);
+    box-shadow: var(--shadow-xs);
 }
 
-.bg-success-soft {
+.empty-state h5,
+.empty-state h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    max-width: 340px;
+    margin: 0 auto 16px;
+}
+
+.empty-state.compact { padding: 28px 16px; }
+.empty-state.compact .empty-state-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+}
+
+/* Inline empty message inside list-groups / panels */
+.list-empty {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--muted);
+    font-size: var(--fs-sm);
+}
+
+.list-empty i {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 10px;
+    opacity: 0.45;
+    color: var(--text-light);
+}
+
+/* ==========================================
+   Semantic status badges
+   ACTIVE / INACTIVE / PRESENT / ABSENT /
+   PENDING / APPROVED / REJECTED / LATE ...
+   ========================================== */
+.badge,
+.status-badge {
+    letter-spacing: 0.02em;
+}
+
+.badge > i { font-size: 0.85em; }
+
+.badge-active,
+.badge-present,
+.badge-approved,
+.badge-completed,
+.badge-scheduled {
     background: var(--success-soft);
     color: var(--success);
+    font-weight: 600;
 }
 
-.bg-warning-soft {
+.badge-pending,
+.badge-half-day {
     background: var(--warning-soft);
-    color: var(--warning);
+    color: var(--warning-600);
+    font-weight: 600;
 }
 
-.bg-danger-soft {
+.badge-rejected,
+.badge-absent,
+.badge-inactive {
     background: var(--danger-soft);
     color: var(--danger);
+    font-weight: 600;
 }
 
-.bg-info-soft {
+.badge-late {
+    background: rgba(249, 115, 22, 0.14);
+    color: #ea580c;
+    font-weight: 600;
+}
+
+html[data-theme="dark"] .badge-late {
+    background: rgba(251, 146, 60, 0.15);
+    color: #fb923c;
+}
+
+.badge-on-leave {
     background: var(--info-soft);
     color: var(--info);
+    font-weight: 600;
 }
 
+.badge-neutral {
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* ==========================================
+   Section heading helper
+   ========================================== */
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    letter-spacing: var(--ls-caps);
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: var(--space-3);
+}
+
+.section-heading::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-light);
+}
+
+/* ==========================================
+   Text helpers
+   ========================================== */
+.text-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+}
+
+.text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+kbd.kbd {
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--surface-sunken);
+    border: 1px solid var(--border-light);
+    border-bottom-width: 2px;
+    color: var(--text-secondary);
+}
+
+/* ==========================================
+   Focus visibility (keyboard users)
+   ========================================== */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+.btn:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: none; /* handled by the component focus ring */
+}
+
+/* ==========================================
+   Reduced motion — respect user preference
+   ========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .anim,
+    .anim-fade,
+    .anim-down,
+    .anim-scale,
+    .anim-slide {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .skeleton::after { animation: none !important; }
+}

@@ -1,35 +1,119 @@
-.DS_Store
+# ============================================================
+# WorkNexus - Git Ignore
+# ============================================================
 
+# ------------------------------------------------------------
+# Environment & Secrets (NEVER commit these)
+# ------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ------------------------------------------------------------
+# Google OAuth Credentials (NEVER commit these)
+# ------------------------------------------------------------
+application/config/google/credentials.json
+application/config/google/token.json
+
+# ------------------------------------------------------------
+# Local config overrides (may contain SMTP/DB credentials)
+# ------------------------------------------------------------
+application/config/email_local.php
+
+# ------------------------------------------------------------
+# Debug, diagnostic & one-off scripts (stay on disk, keep out
+# of the repo - several contain hardcoded DB credentials or
+# default admin passwords)
+# ------------------------------------------------------------
+setup_admin.php
+import_images.php
+smtp_check.php
+debug_attendance.php
+syntax_check.php
+create_logo_png.php
+
+# ------------------------------------------------------------
+# Local tooling / machine-specific helper scripts
+# ------------------------------------------------------------
+run_git.ps1
+cleanup_and_push.ps1
+update_gitignore.ps1
+
+# ------------------------------------------------------------
+# Internal documents (not part of the published project)
+# ------------------------------------------------------------
+TODO.md
+readme.rst
+
+# ------------------------------------------------------------
+# Personal data - employee profile photos (source for import
+# only; images are stored in the database)
+# ------------------------------------------------------------
+employee_images/
+
+# ------------------------------------------------------------
+# Application Runtime
+# ------------------------------------------------------------
 application/cache/*
 !application/cache/index.html
 
 application/logs/*
 !application/logs/index.html
 
-!application/*/.htaccess
+# ------------------------------------------------------------
+# Vendor / Dependencies (install via Composer)
+# ------------------------------------------------------------
+/vendor/
 
-composer.lock
+# ------------------------------------------------------------
+# IDE & Editor Files
+# ------------------------------------------------------------
+.idea/
+.vscode/
+/nbproject/
+*.sublime-workspace
+*.sublime-project
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# ------------------------------------------------------------
+# OS Generated Files
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ------------------------------------------------------------
+# Test Artifacts
+# ------------------------------------------------------------
 tests/mocks/database/ci_test.sqlite
+phpunit.result.cache
+coverage/
+/tests/tests/
+/tests/results/
 
+# ------------------------------------------------------------
+# CodeIgniter User Guide Build
+# ------------------------------------------------------------
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
 
-# IDE Files
-#-------------------------
-/nbproject/
-.idea/*
+# ------------------------------------------------------------
+# Application Uploads (user-generated content)
+# ------------------------------------------------------------
+application/uploads/*
+!application/uploads/index.html
 
-## Sublime Text cache files
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-*.sublime-workspace
-*.sublime-project
-/tests/tests/
-/tests/results/
-
-application/config/google/credentials.json
-application/config/google/token.json
+# ------------------------------------------------------------
+# Temporary, backup & editor files
+# ------------------------------------------------------------
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*.swo
+*~

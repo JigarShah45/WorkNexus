@@ -29,8 +29,6 @@ class Attendance_model extends CI_Model {
     private function _shiftStart()        { return $this->_cfg('attendance_shift_start', '11:00:00'); }
     private function _shiftEnd()          { return $this->_cfg('attendance_shift_end', '19:00:00'); }
     private function _graceEnd()          { return $this->_cfg('attendance_grace_end', '11:15:00'); }
-    private function _lunchStart()        { return $this->_cfg('attendance_lunch_start', '14:00:00'); }
-    private function _lunchEnd()          { return $this->_cfg('attendance_lunch_end', '15:00:00'); }
     private function _validLogoutFrom()   { return $this->_cfg('attendance_valid_logout_from', '18:30:00'); }
 
     /* =====================================================================
@@ -82,9 +80,10 @@ class Attendance_model extends CI_Model {
      * =================================================================== */
 
     /**
-     * Only ACTIVE employees with the 'Employee' role are eligible for
-     * automatic attendance. Admin, HR, Manager and inactive employee
-     * accounts never get auto-created attendance records.
+     * Only ACTIVE users are eligible for automatic attendance.
+     * All roles (Employee, HR, Admin, Manager) are treated consistently.
+     * Inactive or deleted employee accounts never get auto-created
+     * attendance records.
      */
     private function _attendanceEligible($employee_id)
     {
@@ -93,9 +92,8 @@ class Attendance_model extends CI_Model {
             return FALSE;
         }
 
-        $this->db->select('tbl_employee.status AS employee_status, tbl_users.role');
+        $this->db->select('tbl_employee.status AS employee_status');
         $this->db->from('tbl_employee');
-        $this->db->join('tbl_users', 'tbl_users.employee_id = tbl_employee.employee_id', 'left');
         $this->db->where('tbl_employee.employee_id', $employee_id);
         $this->db->where('tbl_employee.deleted_at', NULL);
         $this->db->limit(1);
@@ -107,7 +105,7 @@ class Attendance_model extends CI_Model {
             return FALSE;
         }
 
-        return $row->role === 'Employee';
+        return TRUE;
     }
 
     /**
@@ -141,34 +139,108 @@ class Attendance_model extends CI_Model {
     }
 
     /**
-     * Overlap (in seconds) between the attendance interval and the fixed
-     * 2:00 PM - 3:00 PM unpaid lunch period.
+     * Compute hours worked and overtime for a single attendance record,
+     * returning formatted display strings and raw decimal values.
+     *
+     * Rules:
+     *  - No clock_in  => everything is NULL/dash
+     *  - clock_in only, today, before 7 PM => live elapsed = current_time - clock_in
+     *  - clock_in only, today, at/after 7 PM => 7 PM - clock_in
+     *  - clock_in + clock_out => actual clock_out - clock_in
+     *  - Regular hours capped at 7 PM shift end
+     *  - Overtime = actual clock_out - 7 PM (only when real clock_out > 7 PM)
      */
-    private function _lunchOverlapSeconds($clock_in, $clock_out)
+    private function _computeHoursForRecord($row)
     {
-        $in = $this->_dt($clock_in);
-        $out = $this->_dt($clock_out);
-
-        $lunch_start = $this->_buildDate($in->format('Y-m-d'), $this->_lunchStart());
-        $lunch_end   = $this->_buildDate($in->format('Y-m-d'), $this->_lunchEnd());
-
-        $overlap_start = ($in > $lunch_start) ? $in : $lunch_start;
-        $overlap_end   = ($out < $lunch_end) ? $out : $lunch_end;
-
-        if ($overlap_end <= $overlap_start)
+        if (empty($row->clock_in))
         {
-            return 0;
+            $row->hours_worked   = 0;
+            $row->overtime_hours = 0;
+            $row->hours_display  = '-';
+            $row->overtime_display = '-';
+            return $row;
         }
 
-        return $overlap_end->getTimestamp() - $overlap_start->getTimestamp();
+        $start = $this->_dt($row->clock_in);
+        $shift_end = $this->_buildDate($row->attendance_date, $this->_shiftEnd());
+        $today = $this->_today();
+        $now_dt = new DateTime('now', $this->_tz());
+
+        $has_actual_clockout = !empty($row->clock_out);
+
+        if ($has_actual_clockout)
+        {
+            $effective_out = $this->_dt($row->clock_out);
+        }
+        elseif ($row->attendance_date === $today && $now_dt < $shift_end)
+        {
+            $effective_out = $now_dt;
+        }
+        else
+        {
+            $effective_out = $shift_end;
+        }
+
+        $regular_end = ($effective_out < $shift_end) ? $effective_out : $shift_end;
+
+        $working_seconds = 0;
+        if ($regular_end > $start)
+        {
+            $working_seconds = $regular_end->getTimestamp() - $start->getTimestamp();
+        }
+        $hours_worked = round($working_seconds / 3600, 2);
+
+        $overtime_seconds = 0;
+        if ($has_actual_clockout)
+        {
+            $actual_out = $this->_dt($row->clock_out);
+            if ($actual_out > $shift_end)
+            {
+                $overtime_seconds = $actual_out->getTimestamp() - $shift_end->getTimestamp();
+            }
+        }
+        $overtime_hours = round($overtime_seconds / 3600, 2);
+
+        $row->hours_worked   = $hours_worked;
+        $row->overtime_hours = $overtime_hours;
+        $row->hours_display  = $this->_formatHours($hours_worked);
+        $row->overtime_display = ($overtime_hours > 0) ? $this->_formatHours($overtime_hours) : '-';
+
+        return $row;
+    }
+
+    /**
+     * Format decimal hours into a human-readable "Xh Ym" string.
+     */
+    private function _formatHours($decimal_hours)
+    {
+        if ($decimal_hours <= 0)
+        {
+            return '-';
+        }
+
+        $hours = floor($decimal_hours);
+        $minutes = round(($decimal_hours - $hours) * 60);
+
+        if ($minutes >= 60)
+        {
+            $hours += 1;
+            $minutes = 0;
+        }
+
+        return $hours . 'h ' . str_pad($minutes, 2, '0', STR_PAD_LEFT) . 'm';
     }
 
     /**
      * Finalize a single attendance record with the official rules:
      *  - Effective Clock In  (already stored / normalized at login)
-     *  - Clock Out           (the final valid logout, or 7:00 PM auto-close)
-     *  - Lunch break         (2:00-3:00 PM) never counted as working time
-     *  - Regular hours end at 7:00 PM; anything after is overtime (separate)
+     *  - Clock Out           (the ACTUAL clock-out; NULL when not clocked out)
+     *  - Effective Clock Out (actual clock-out, else 7:00 PM as a DERIVED
+     *                         default - the 7:00 PM value is only used for
+     *                         calculation and is never written to the DB)
+     *  - Hours Worked        Clock In -> Effective Clock Out, capped at 7:00 PM
+     *  - Overtime            Actual Clock Out - 7:00 PM (only a real logout
+     *                         can prove work beyond 7:00 PM)
      *  - Status              Present / Half-Day based on the login time
      */
     private function _finalizeAttendance($attendance_id, $clock_out, $auto_closed)
@@ -179,53 +251,57 @@ class Attendance_model extends CI_Model {
             return FALSE;
         }
 
-        // Never move the clock-out backwards.
-        if (!empty($record->clock_out))
+        // A real logout must never move the clock-out backwards.
+        if (!empty($clock_out) && !empty($record->clock_out))
         {
-            $existing = $this->_dt($record->clock_out);
-            $new = $this->_dt($clock_out);
-            if ($new <= $existing)
+            if ($this->_dt($clock_out) <= $this->_dt($record->clock_out))
             {
                 return FALSE;
             }
         }
 
         $start = $this->_dt($record->clock_in);
-        $end = $this->_dt($clock_out);
-        $shift_end = $this->_buildDate($start->format('Y-m-d'), $this->_shiftEnd());
+        $shift_end = $this->_buildDate($record->attendance_date, $this->_shiftEnd());
+
+        // Derived / effective clock-out: a real logout, else the 7:00 PM shift end.
+        $effective_out = !empty($clock_out) ? $this->_dt($clock_out) : $shift_end;
 
         // Regular working time ends at shift end (7:00 PM). Overtime is separate.
-        $regular_end = ($end < $shift_end) ? $end : $shift_end;
+        $regular_end = ($effective_out < $shift_end) ? $effective_out : $shift_end;
 
         $working_seconds = 0;
         if ($regular_end > $start)
         {
             $working_seconds = $regular_end->getTimestamp() - $start->getTimestamp();
         }
-
-        // Subtract the 1-hour lunch window from working time.
-        $working_seconds -= $this->_lunchOverlapSeconds($record->clock_in, $clock_out);
-        if ($working_seconds < 0)
-        {
-            $working_seconds = 0;
-        }
-
         $hours_worked = round($working_seconds / 3600, 2);
 
-        // Overtime = time worked after 7:00 PM.
+        // Overtime = time actually worked after 7:00 PM. Only a real logout
+        // can produce overtime - never an open (no clock-out) record.
         $overtime_seconds = 0;
-        if ($end > $shift_end)
+        if (!empty($clock_out))
         {
-            $overtime_seconds = $end->getTimestamp() - $shift_end->getTimestamp();
+            $actual_out = $this->_dt($clock_out);
+            if ($actual_out > $shift_end)
+            {
+                $overtime_seconds = $actual_out->getTimestamp() - $shift_end->getTimestamp();
+            }
         }
         $overtime_hours = round($overtime_seconds / 3600, 2);
 
         $data = array(
-            'clock_out'      => $clock_out,
             'hours_worked'   => $hours_worked,
             'overtime_hours' => $overtime_hours,
             'status'         => $this->_loginStatus($record->clock_in)
         );
+
+        // Only a REAL clock-out is persisted. When the employee has not
+        // clocked out, the column stays NULL and the effective 7:00 PM value
+        // is derived for every calculation/display.
+        if (!empty($clock_out))
+        {
+            $data['clock_out'] = $clock_out;
+        }
 
         if ($this->_hasAutoClosedColumn())
         {
@@ -298,17 +374,25 @@ class Attendance_model extends CI_Model {
 
         $shift_id = $shift ? $shift->shift_id : 1;
 
-        $data = array(
-            'employee_id'     => $employee_id,
-            'attendance_date' => $today,
-            'clock_in'        => $effective_in,
-            'shift_id'        => $shift_id,
-            'hours_worked'    => 0,
-            'overtime_hours'  => 0,
-            'status'          => $this->_loginStatus($now)
-        );
+        // Race-safe insert: if a concurrent login already created today's
+        // record, MySQL keeps the existing row (the original clock-in is
+        // preserved) and returns its attendance_id instead of raising a
+        // duplicate-key error. Sequential logins are caught by the SELECT
+        // check above; this protects against simultaneous requests and any
+        // database-level unique key.
+        $sql = "INSERT INTO tbl_attendance
+                (employee_id, attendance_date, clock_in, shift_id, hours_worked, overtime_hours, status)
+                VALUES (?, ?, ?, ?, 0, 0, ?)
+                ON DUPLICATE KEY UPDATE attendance_id = LAST_INSERT_ID(attendance_id)";
 
-        $this->db->insert('tbl_attendance', $data);
+        $this->db->query($sql, array(
+            $employee_id,
+            $today,
+            $effective_in,
+            $shift_id,
+            $this->_loginStatus($now)
+        ));
+
         return $this->db->insert_id();
     }
 
@@ -353,8 +437,9 @@ class Attendance_model extends CI_Model {
 
         if (!$record)
         {
-            // Already closed (possibly by the 7:00 PM auto-closer). A later
-            // real logout upgrades the clock-out and records the overtime.
+            // Today's record already has a REAL clock-out (e.g. an earlier
+            // logout today). A later logout may upgrade it, but never
+            // backwards (guarded in _finalizeAttendance).
             $closed = $this->db->where('employee_id', $employee_id)
                 ->where('attendance_date', $today)
                 ->where('clock_out IS NOT NULL', NULL, FALSE)
@@ -378,9 +463,11 @@ class Attendance_model extends CI_Model {
      * Automatic 7:00 PM closure.
      *
      * Closes every open attendance record whose shift-end (7:00 PM IST on the
-     * attendance date) has already passed. Clock Out is set to 7:00 PM and the
-     * record is marked as auto-closed. Idempotent - only touches records with
-     * clock_out IS NULL.
+     * attendance date) has already passed. Regular hours are computed using the
+     * DERIVED effective clock-out of 7:00 PM and the record is marked as
+     * auto-closed, but the clock_out column stays NULL - the employee never
+     * actually clocked out, so no fake clock-out is persisted. Idempotent -
+     * only touches records with clock_out IS NULL.
      *
      * Called from:
      *  - a scheduled task  => php index.php cron auto_close_attendance
@@ -414,7 +501,7 @@ class Attendance_model extends CI_Model {
                 continue;
             }
 
-            $this->_finalizeAttendance($row->attendance_id, $shift_end_dt->format('Y-m-d H:i:s'), TRUE);
+            $this->_finalizeAttendance($row->attendance_id, NULL, TRUE);
             $closed++;
         }
 
@@ -480,7 +567,47 @@ class Attendance_model extends CI_Model {
         $this->db->where('YEAR(tbl_attendance.attendance_date)', $year);
         $this->db->order_by('tbl_attendance.attendance_date', 'DESC');
 
-        return $this->db->get()->result();
+        $results = $this->db->get()->result();
+
+        $today = $this->_today();
+        $now_dt = new DateTime('now', $this->_tz());
+        $shift_end_dt = $this->_buildDate($today, $this->_shiftEnd());
+
+        foreach ($results as $row)
+        {
+            $computed = $this->_computeHoursForRecord($row);
+
+            $needs_update = (
+                ($computed->hours_worked != $row->hours_worked || $computed->overtime_hours != $row->overtime_hours)
+                && !empty($computed->clock_in)
+            );
+
+            if ($needs_update)
+            {
+                $update_data = array(
+                    'hours_worked'   => $computed->hours_worked,
+                    'overtime_hours' => $computed->overtime_hours
+                );
+
+                if (empty($row->clock_out) && $row->attendance_date === $today && $now_dt >= $shift_end_dt)
+                {
+                    if ($this->_hasAutoClosedColumn())
+                    {
+                        $update_data['auto_closed'] = 1;
+                    }
+                }
+
+                $this->db->where('attendance_id', $row->attendance_id);
+                $this->db->update('tbl_attendance', $update_data);
+            }
+
+            $row->hours_worked    = $computed->hours_worked;
+            $row->overtime_hours  = $computed->overtime_hours;
+            $row->hours_display   = $computed->hours_display;
+            $row->overtime_display = $computed->overtime_display;
+        }
+
+        return $results;
     }
 
     /**
@@ -507,7 +634,47 @@ class Attendance_model extends CI_Model {
 
         $this->db->order_by('tbl_attendance.attendance_date', 'DESC');
 
-        return $this->db->get()->result();
+        $results = $this->db->get()->result();
+
+        $today = $this->_today();
+        $now_dt = new DateTime('now', $this->_tz());
+        $shift_end_dt = $this->_buildDate($today, $this->_shiftEnd());
+
+        foreach ($results as $row)
+        {
+            $computed = $this->_computeHoursForRecord($row);
+
+            $needs_update = (
+                ($computed->hours_worked != $row->hours_worked || $computed->overtime_hours != $row->overtime_hours)
+                && !empty($computed->clock_in)
+            );
+
+            if ($needs_update)
+            {
+                $update_data = array(
+                    'hours_worked'   => $computed->hours_worked,
+                    'overtime_hours' => $computed->overtime_hours
+                );
+
+                if (empty($row->clock_out) && $row->attendance_date === $today && $now_dt >= $shift_end_dt)
+                {
+                    if ($this->_hasAutoClosedColumn())
+                    {
+                        $update_data['auto_closed'] = 1;
+                    }
+                }
+
+                $this->db->where('attendance_id', $row->attendance_id);
+                $this->db->update('tbl_attendance', $update_data);
+            }
+
+            $row->hours_worked    = $computed->hours_worked;
+            $row->overtime_hours  = $computed->overtime_hours;
+            $row->hours_display   = $computed->hours_display;
+            $row->overtime_display = $computed->overtime_display;
+        }
+
+        return $results;
     }
 
     /**
