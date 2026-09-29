@@ -20,6 +20,11 @@ A full-featured employee management system built with CodeIgniter 3. WorkNexus g
 - **Profile Management** — User profile pictures and personal information
 - **Dark Theme** — Full dark mode support across all pages
 
+## ScreenShots
+-*Logged in As Admin: *
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9f96f6bc-2a36-467c-a985-11162aa7c559" />
+
+
 ## What has been done
 
 The application is feature-complete for its first release:
@@ -329,6 +334,9 @@ Gitignored (kept out of the repository on purpose): `.env`, Google OAuth files, 
 | `max_allowed_packet` error | Increase `max_allowed_packet` in MySQL config (e.g. `64M`) |
 | Session not saving | Ensure `application/cache/` is writable |
 
+
 ## License
 
 This project is licensed under the MIT License. See [license.txt](license.txt) for details.
+
+
