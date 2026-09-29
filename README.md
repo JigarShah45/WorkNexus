@@ -1,4 +1,4 @@
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d649a81b-1807-4287-98f8-925c0e07bc42" /># WorkNexus
+WorkNexus
 
 A full-featured employee management system built with CodeIgniter 3. WorkNexus gives HR teams and administrators one place to manage employees, attendance, leave, client meetings, salary hikes and reports — with Google Calendar/Meet integration for client meetings and role-based access for Admin, HR, Manager and Employee users.
 
@@ -21,7 +21,7 @@ A full-featured employee management system built with CodeIgniter 3. WorkNexus g
 - **Dark Theme** — Full dark mode support across all pages
 
 ## ScreenShots
-- **Logged in As Admin: **
+- **Logged in As Admin:**
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/9f96f6bc-2a36-467c-a985-11162aa7c559" />
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/c3be6638-ef0d-4853-b91e-1e2dba80ee57" />
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/84efa12c-9d8f-4b30-9d25-97f33712f19a" />
@@ -30,6 +30,7 @@ A full-featured employee management system built with CodeIgniter 3. WorkNexus g
 - **Logged in As HR:**
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/32190770-cfd7-4b81-8a0b-105c5a97eaa2" />
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/de05c921-bed7-4d7c-95dc-43e3b750c526" />
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d649a81b-1807-4287-98f8-925c0e07bc42" /># 
 
 - **Logged in As Employee:**
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/f091593c-429f-4a65-b5d0-45c38f81f865" />
