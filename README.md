@@ -30,7 +30,6 @@ A full-featured employee management system built with CodeIgniter 3. WorkNexus g
 - **Logged in As HR:**
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/32190770-cfd7-4b81-8a0b-105c5a97eaa2" />
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/de05c921-bed7-4d7c-95dc-43e3b750c526" />
-<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/d649a81b-1807-4287-98f8-925c0e07bc42" /># 
 
 - **Logged in As Employee:**
 <img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/f091593c-429f-4a65-b5d0-45c38f81f865" />
